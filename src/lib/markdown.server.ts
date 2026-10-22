@@ -38,7 +38,7 @@ export function renderMarkdown(md: string, cube: CubeUrls) {
         const t = title ? ` title="${escapeAttr(title)}"` : "";
         const m = /^cube:(principal|secondaire)$/i.exec(href.trim());
         if (m) {
-          const url = m[1].toLowerCase() === "principal" ? cube.principal : cube.secondaire;
+          const url = (m[1] ?? "").toLowerCase() === "principal" ? cube.principal : cube.secondaire;
           if (!url) return `<span>${inner}</span>`;
           return `<a href="${escapeAttr(url)}" class="lien-partenaire" rel="sponsored noopener" target="_blank"${t}>${inner}</a>`;
         }
@@ -66,7 +66,7 @@ export function parseFaq(raw: string, cube: CubeUrls): FaqItem[] {
       const [first, ...rest] = block.split("\n");
       const answer = rest.join("\n").trim();
       return {
-        question: first.trim(),
+        question: (first ?? "").trim(),
         answerHtml: renderMarkdown(answer, cube).html,
         answerText: answer.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/[*_#>`]/g, "").trim(),
       };
