@@ -45,6 +45,12 @@ function Legal() {
             <br />
             Contact : <a href="mailto:privacy@lovable.dev">privacy@lovable.dev</a>
           </p>
+          <h2 id="independance">Indépendance</h2>
+          <p>
+            Ce site est édité à titre personnel, à la seule initiative de son éditeur. Il est
+            indépendant de l'École Cube : ce n'est pas un site officiel de l'école, qui n'intervient
+            ni dans sa conception ni dans ses contenus.
+          </p>
           <h2 id="liens-partenaires">Liens partenaires</h2>
           <p>
             Ce site contient des liens partenaires vers l'École Cube. Lorsqu'une inscription est

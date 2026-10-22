@@ -67,8 +67,8 @@ export function SiteFooter({
           <div className="flex max-w-md flex-col gap-2">
             <span className="font-serif text-lg font-extrabold text-paper">{SITE_NAME}</span>
             <span className="leading-relaxed">
-              Ce site contient des liens partenaires vers l'École Cube, signalés dans chaque
-              article.
+              Site indépendant, créé à titre personnel : ce n'est pas un site officiel de l'École
+              Cube. Il contient des liens partenaires vers l'école, signalés dans chaque article.
             </span>
           </div>
           <nav aria-label="Catégories (pied de page)" className="flex flex-col gap-2">

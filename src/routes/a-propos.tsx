@@ -44,6 +44,12 @@ function About() {
               inventés.
             </li>
           </ul>
+          <h2 id="independance">Un site indépendant</h2>
+          <p>
+            J'ai créé ce site de ma propre initiative. Il est totalement indépendant de l'École Cube
+            : ce n'est pas un site officiel de l'école, qui n'intervient ni dans le choix des sujets
+            ni dans la rédaction des articles. Les avis exprimés ici sont les miens.
+          </p>
           <h2 id="liens-partenaires">Les liens partenaires</h2>
           <p>
             Je suis ambassadeur de l'École Cube. Certains liens de ce site sont des liens
