@@ -13,7 +13,7 @@ export const Route = createFileRoute("/llms.txt")({
           "",
           `> ${SITE_DESCRIPTION}`,
           "",
-          "Guides écrits par un ingénieur BTP devenu product builder certifié (École Cube, RNCP niveau 6). Chaque article indique sa date de mise à jour et ses sources. Les liens vers l'École Cube sont des liens partenaires signalés.",
+          "Guides écrits par un ingénieur BTP devenu product builder certifié (École Cube, RNCP niveau 6). Chaque article indique sa date de mise à jour et ses sources. Site indépendant, créé à titre personnel : ce n'est pas un site officiel de l'École Cube. Les liens vers l'École Cube sont des liens partenaires signalés.",
           "",
         ];
         for (const c of CATEGORIES) {
