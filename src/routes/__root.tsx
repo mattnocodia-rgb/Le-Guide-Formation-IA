@@ -12,26 +12,27 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { getLayoutData } from "../lib/content.functions";
+import { PageFrame } from "../components/site/SiteChrome";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_PROMISE } from "../lib/site";
+
+const FONTS_HREF =
+  "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+    <PageFrame>
+      <div className="container-wide flex min-h-[60vh] flex-col items-start justify-center gap-6 py-20">
+        <p className="note m-0 -rotate-2 text-[30px]">Oups, page introuvable</p>
+        <h1 className="m-0 text-5xl leading-none">Cette page n'existe pas (ou plus).</h1>
+        <p className="m-0 max-w-lg text-lg text-ink-soft">
+          L'article a peut-être changé d'adresse. Le plus simple : repartir de l'accueil.
         </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
+        <Link to="/" className="btn-ink">
+          Retour à l'accueil
+        </Link>
       </div>
-    </div>
+    </PageFrame>
   );
 }
 
@@ -43,56 +44,51 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Try again
-          </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
-            Go home
-          </a>
-        </div>
+    <main className="container-wide flex min-h-[70vh] flex-col items-start justify-center gap-6 py-20">
+      <h1 className="m-0 text-4xl">La page n'a pas pu se charger.</h1>
+      <p className="m-0 max-w-lg text-lg text-ink-soft">
+        Un souci de notre côté. Vous pouvez réessayer, ou revenir à l'accueil.
+      </p>
+      <div className="flex flex-wrap gap-4">
+        <button
+          type="button"
+          onClick={() => {
+            router.invalidate();
+            reset();
+          }}
+          className="btn-ink cursor-pointer border-0"
+        >
+          Réessayer
+        </button>
+        <a href="/" className="btn-outline">
+          Accueil
+        </a>
       </div>
-    </div>
+    </main>
   );
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  loader: () => getLayoutData(),
+  staleTime: 5 * 60 * 1000,
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
-      { property: "og:type", content: "website" },
+      { title: `${SITE_NAME} — ${SITE_PROMISE}` },
+      { name: "description", content: SITE_DESCRIPTION },
+      { name: "theme-color", content: "#f3eee3" },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:locale", content: "fr_FR" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "stylesheet", href: FONTS_HREF },
+      { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "alternate", type: "text/plain", href: "/llms.txt", title: "llms.txt" },
     ],
   }),
   shellComponent: RootShell,
@@ -103,7 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
         <HeadContent />
       </head>

@@ -1,0 +1,440 @@
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useState } from "react";
+import type React from "react";
+
+import { ArticleCard, LinkedInIcon } from "@/components/site/Cards";
+import { PageFrame } from "@/components/site/SiteChrome";
+import { getArticle } from "@/lib/content.functions";
+import {
+  LINKEDIN_URL,
+  ORGANIZATION_LD,
+  SITE_NAME,
+  absUrl,
+  authorLd,
+  categoryBySlug,
+  formatDateFr,
+  jsonLdScript,
+  ogImageFor,
+  pageHead,
+} from "@/lib/site";
+
+export const Route = createFileRoute("/$slug")({
+  loader: async ({ params }) => {
+    const article = await getArticle({ data: { slug: params.slug } });
+    if (!article) throw notFound();
+    return article;
+  },
+  head: ({ loaderData: a }) => {
+    if (!a)
+      return {
+        meta: [
+          { title: `Page introuvable — ${SITE_NAME}` },
+          { name: "robots", content: "noindex" },
+        ],
+      };
+    const path = `/${a.slug}`;
+    const title = a.metaTitle || `${a.title} — ${SITE_NAME}`;
+    const description = a.metaDescription || a.excerpt;
+    const category = a.categorySlug ? categoryBySlug(a.categorySlug) : undefined;
+    const ld: unknown[] = [
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: a.title,
+        description,
+        inLanguage: "fr-FR",
+        mainEntityOfPage: absUrl(path),
+        image: ogImageFor(a.categorySlug),
+        ...(a.publishedAt ? { datePublished: a.publishedAt } : {}),
+        ...(a.updatedAt ? { dateModified: a.updatedAt } : {}),
+        author: authorLd(a.authorName),
+        publisher: ORGANIZATION_LD,
+        ...(a.category ? { articleSection: a.category } : {}),
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Accueil", item: absUrl("/") },
+          ...(category
+            ? [
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: category.name,
+                  item: absUrl(`/categorie/${category.slug}`),
+                },
+              ]
+            : []),
+          { "@type": "ListItem", position: category ? 3 : 2, name: a.title, item: absUrl(path) },
+        ],
+      },
+    ];
+    if (a.faq.length > 0) {
+      ld.push({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: a.faq.map((f) => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: { "@type": "Answer", text: f.answerText },
+        })),
+      });
+    }
+    const head = pageHead({
+      title,
+      description,
+      path,
+      image: ogImageFor(a.categorySlug),
+      type: "article",
+    });
+    return {
+      ...head,
+      meta: [
+        ...head.meta,
+        ...(a.publishedAt ? [{ property: "article:published_time", content: a.publishedAt }] : []),
+        ...(a.updatedAt ? [{ property: "article:modified_time", content: a.updatedAt }] : []),
+      ],
+      scripts: ld.map(jsonLdScript),
+    };
+  },
+  component: ArticlePage,
+});
+
+const r = (deg: string) => ({ "--r": deg }) as React.CSSProperties;
+
+function ArticlePage() {
+  const a = Route.useLoaderData();
+  const category = a.categorySlug ? categoryBySlug(a.categorySlug) : undefined;
+
+  return (
+    <PageFrame activeSlug={a.categorySlug ?? undefined}>
+      <div className="container-wide pt-2">
+        <nav
+          aria-label="Fil d'Ariane"
+          className="flex flex-wrap gap-2 text-sm text-muted-foreground"
+        >
+          <Link to="/" className="text-muted-foreground">
+            Accueil
+          </Link>
+          <span aria-hidden="true">›</span>
+          {category ? (
+            <>
+              <Link
+                to="/categorie/$slug"
+                params={{ slug: category.slug }}
+                className="text-muted-foreground"
+              >
+                {category.name}
+              </Link>
+              <span aria-hidden="true">›</span>
+            </>
+          ) : null}
+          <span className="text-ink">{a.title}</span>
+        </nav>
+      </div>
+
+      <div className="container-wide flex flex-wrap items-start gap-14 pt-9 pb-20">
+        <article className="flex max-w-[740px] min-w-0 flex-[999_1_560px] flex-col gap-8">
+          <header className="flex flex-col gap-4">
+            {a.category ? (
+              <p className="note settle m-0 self-start text-[28px]" style={r("-2deg")}>
+                {a.category}
+              </p>
+            ) : null}
+            <h1 className="settle delay-1 m-0 text-[clamp(34px,4.6vw,56px)] leading-[1.05] tracking-[-0.025em]">
+              {a.title}
+            </h1>
+            {a.excerpt ? (
+              <p className="settle delay-2 m-0 text-xl leading-normal text-ink-soft md:text-[21px]">
+                {a.excerpt}
+              </p>
+            ) : null}
+            <p className="m-0 text-sm text-muted-foreground">
+              {a.updatedAt ? (
+                <strong className="font-semibold text-ink">
+                  Mis à jour le <time dateTime={a.updatedAt}>{formatDateFr(a.updatedAt)}</time>
+                </strong>
+              ) : null}
+              {a.publishedAt && a.publishedAt !== a.updatedAt
+                ? ` · Publié le ${formatDateFr(a.publishedAt)}`
+                : ""}
+              {` · ${a.readingMinutes} min de lecture`}
+            </p>
+          </header>
+
+          <aside
+            aria-label="Transparence"
+            className="flex gap-3.5 border border-dashed border-[#c9bfa8] bg-paper-light px-4.5 py-4 text-sm leading-normal text-ink-soft"
+          >
+            <svg
+              aria-hidden="true"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--accent-ink)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mt-px shrink-0"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 16v-4" />
+              <path d="M12 8h.01" />
+            </svg>
+            <span>
+              Cet article contient des liens partenaires vers l'École Cube. Si vous vous inscrivez
+              via ces liens, je perçois une commission, sans surcoût pour vous.
+            </span>
+          </aside>
+
+          <div className="prose-article" dangerouslySetInnerHTML={{ __html: a.html }} />
+
+          {a.dansMonCasHtml ? (
+            <aside
+              aria-label="Dans mon cas"
+              className="lined tilt relative py-7 pr-7 pl-16 shadow-[var(--shadow-card)]"
+              style={r("-0.5deg")}
+            >
+              <div
+                aria-hidden="true"
+                className="tape tape-yellow top-[-12px] right-10 w-24 rotate-3"
+              />
+              <p className="m-0 font-hand text-[34px] leading-tight font-bold">Dans mon cas</p>
+              <div
+                className="prose-article prose-compact mt-2 leading-[32px]"
+                dangerouslySetInnerHTML={{ __html: a.dansMonCasHtml }}
+              />
+            </aside>
+          ) : null}
+
+          {a.principal ? (
+            <div
+              className="tilt flex flex-col gap-3.5 bg-ink p-6 text-paper shadow-[var(--shadow-card)] md:p-7"
+              style={r("0.6deg")}
+            >
+              <p className="m-0 font-hand text-[26px] font-semibold text-[#f1a08f]">
+                Pour aller plus loin
+              </p>
+              <p className="m-0 text-lg leading-normal">
+                {a.masterclass
+                  ? `L'École Cube propose une masterclass gratuite sur ce sujet : « ${a.masterclass} ».`
+                  : "L'École Cube propose des masterclass gratuites et des formations certifiantes sur ce sujet."}
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href={a.principal.url}
+                  rel="sponsored noopener"
+                  target="_blank"
+                  className="btn-paper text-[15px]"
+                >
+                  {a.principal.label} ↗
+                </a>
+                {a.secondaire ? (
+                  <a
+                    href={a.secondaire.url}
+                    rel="sponsored noopener"
+                    target="_blank"
+                    className="px-1.5 py-3 text-[15px] font-semibold text-paper"
+                  >
+                    {a.secondaire.label} ↗
+                  </a>
+                ) : null}
+              </div>
+              <p className="m-0 text-xs text-[#b7af9f]">Liens partenaires</p>
+            </div>
+          ) : null}
+
+          <AuthorBox />
+
+          {a.faq.length > 0 ? <Faq items={a.faq} /> : null}
+
+          {a.sourcesHtml ? (
+            <section
+              aria-labelledby="sources"
+              className="flex flex-col gap-2.5 border-t border-dashed border-[#c9bfa8] pt-6"
+            >
+              <h2 id="sources" className="m-0 text-xl">
+                Sources
+              </h2>
+              <div
+                className="prose-article prose-compact text-[15px] text-ink-soft"
+                dangerouslySetInnerHTML={{ __html: a.sourcesHtml }}
+              />
+            </section>
+          ) : null}
+
+          {a.ressources || a.rdv ? (
+            <section
+              aria-labelledby="suite"
+              className="postit tilt flex flex-wrap items-center justify-between gap-5 p-7"
+              style={r("-0.5deg")}
+            >
+              <div className="flex flex-[1_1_280px] flex-col gap-1.5">
+                <h2
+                  id="suite"
+                  className="m-0 font-hand text-4xl leading-none font-bold tracking-normal"
+                >
+                  Et maintenant ?
+                </h2>
+                <p className="m-0 text-[15px] leading-normal text-[#3a362f]">
+                  Regardez une masterclass gratuite, ou parlez directement à un conseiller de
+                  l'école.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-3">
+                {a.ressources ? (
+                  <a
+                    href={a.ressources.url}
+                    rel="sponsored noopener"
+                    target="_blank"
+                    className="btn-ink text-[15px]"
+                  >
+                    Les masterclass ↗
+                  </a>
+                ) : null}
+                {a.rdv ? (
+                  <a
+                    href={a.rdv.url}
+                    rel="sponsored noopener"
+                    target="_blank"
+                    className="px-1.5 py-3 text-[15px] font-semibold text-ink"
+                  >
+                    Un conseiller ↗
+                  </a>
+                ) : null}
+              </div>
+              <p className="m-0 basis-full text-xs text-muted-foreground">Liens partenaires</p>
+            </section>
+          ) : null}
+        </article>
+
+        <aside
+          aria-label="Sommaire"
+          className="flex flex-[1_1_260px] flex-col gap-6 lg:sticky lg:top-6"
+        >
+          {a.toc.length > 1 ? (
+            <div className="sheet flex flex-col gap-2.5 p-5">
+              <p className="m-0 font-hand text-[26px] font-semibold">Sommaire</p>
+              <nav className="flex flex-col text-[15px]">
+                {a.toc.map((t, i) => (
+                  <a
+                    key={t.id}
+                    href={`#${t.id}`}
+                    className={`py-2 text-ink no-underline hover:text-accent-ink ${i < a.toc.length - 1 ? "border-b border-dashed border-rule" : ""}`}
+                  >
+                    {t.text}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          ) : null}
+          {a.rdv ? (
+            <div className="postit tilt flex flex-col gap-2.5 p-5" style={r("2deg")}>
+              <p className="m-0 font-hand text-[28px] leading-[1.05] font-bold">Vous hésitez ?</p>
+              <p className="m-0 text-sm leading-normal text-[#3a362f]">
+                Un conseiller de l'École Cube vous aide à choisir et à financer votre formation.
+                C'est gratuit.
+              </p>
+              <a
+                href={a.rdv.url}
+                rel="sponsored noopener"
+                target="_blank"
+                className="btn-ink min-h-11 text-sm"
+              >
+                Prendre rendez-vous ↗
+              </a>
+              <p className="m-0 text-[11px] text-muted-foreground">Lien partenaire</p>
+            </div>
+          ) : null}
+        </aside>
+      </div>
+
+      {a.related.length > 0 ? (
+        <section aria-labelledby="lies" className="border-t border-rule bg-paper-light">
+          <div className="container-wide flex flex-col gap-7 py-16">
+            <h2 id="lies" className="m-0 text-3xl">
+              À lire aussi
+            </h2>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6">
+              {a.related.map((rel, i) => (
+                <ArticleCard key={rel.slug} article={rel} index={i} />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+    </PageFrame>
+  );
+}
+
+function AuthorBox() {
+  return (
+    <aside
+      aria-label="L'auteur"
+      className="flex flex-col gap-2.5 border-t-[3px] border-ink bg-paper-light p-6"
+    >
+      <p className="note m-0 text-[26px]">Pourquoi je recommande Cube</p>
+      <p className="m-0 text-[17px] leading-[1.65] text-[#2b2823]">
+        Ingénieur BTP de formation, je suis devenu product builder certifié par l'École Cube (RNCP
+        niveau 6), et j'en suis content. J'y ai appris une méthode qui a fait de moi un expert en
+        automatisation. Aujourd'hui, je crée des sites web et j'améliore les process des
+        entreprises. Je ne vends pas de formation : je partage mon parcours, et je signale mes liens
+        partenaires.
+      </p>
+      <a
+        href={LINKEDIN_URL}
+        rel="noopener me"
+        target="_blank"
+        className="inline-flex items-center gap-2 self-start py-1.5 text-[15px] font-semibold"
+      >
+        <LinkedInIcon />
+        Mon profil LinkedIn →
+      </a>
+    </aside>
+  );
+}
+
+function Faq({ items }: { items: { question: string; answerHtml: string }[] }) {
+  const [open, setOpen] = useState(0);
+  return (
+    <section aria-labelledby="faq" className="flex flex-col gap-3">
+      <h2 id="faq" className="m-0 mb-2 text-[31px]">
+        Questions fréquentes
+      </h2>
+      {items.map((f, i) => {
+        const isOpen = open === i;
+        const panelId = `faq-panel-${i}`;
+        return (
+          <div key={f.question} className="bg-sheet shadow-[0_6px_16px_-12px_rgb(31_29_26/0.4)]">
+            <h3 className="m-0 font-sans text-base font-semibold tracking-normal">
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => setOpen(isOpen ? -1 : i)}
+                className="flex min-h-14 w-full cursor-pointer items-center justify-between gap-4 border-0 bg-transparent px-5 py-4 text-left text-ink"
+              >
+                <span>{f.question}</span>
+                <span
+                  aria-hidden="true"
+                  className="font-hand text-3xl leading-none text-accent-ink"
+                >
+                  {isOpen ? "−" : "+"}
+                </span>
+              </button>
+            </h3>
+            {/* Answers stay in the HTML (hidden, not removed) so crawlers read every one. */}
+            <div
+              id={panelId}
+              hidden={!isOpen}
+              className="prose-article prose-compact px-5 pb-5 text-ink-soft"
+              dangerouslySetInnerHTML={{ __html: f.answerHtml }}
+            />
+          </div>
+        );
+      })}
+    </section>
+  );
+}
