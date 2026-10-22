@@ -1,9 +1,15 @@
 // Server-only Airtable access. Never import from client code.
+// Airtable is the single source of truth: articles, partner links, the logbook
+// ("Carnet de bord") and the author's personal facts ("Mon parcours").
 import { categoryByName } from "./site";
 
 const BASE_ID = "app6gtf0nc4rI82yH";
-const ARTICLES_TABLE = "tblG61pdKCFtR0eJY";
-const LINKS_TABLE = "tblmEC5w2FEWaOwLV";
+const TABLES = {
+  articles: "tblG61pdKCFtR0eJY",
+  links: "tblmEC5w2FEWaOwLV",
+  carnet: "tbl9Y59XRWlIN5c1l",
+  parcours: "tblVFyBP0XotwEUWZ",
+} as const;
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
 type AirtableRecord = { id: string; fields: Record<string, unknown> };
@@ -11,8 +17,19 @@ type AirtableRecord = { id: string; fields: Record<string, unknown> };
 const cache = new Map<string, { at: number; data: AirtableRecord[] }>();
 const inflight = new Map<string, Promise<AirtableRecord[]>>();
 
-async function fetchAll(table: string, params: Record<string, string> = {}): Promise<AirtableRecord[]> {
-  const token = process.env["AIRTABLE_TOKEN"];
+function readToken(): string | undefined {
+  // `process` exists on the server runtime; guard so a missing global never throws.
+  const env = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process
+    ?.env;
+  const token = env?.["AIRTABLE_TOKEN"];
+  return token && token.trim() ? token.trim() : undefined;
+}
+
+async function fetchAll(
+  table: string,
+  params: Record<string, string> = {},
+): Promise<AirtableRecord[]> {
+  const token = readToken();
   if (!token) return [];
   const key = `${table}?${new URLSearchParams(params).toString()}`;
   const hit = cache.get(key);
@@ -52,7 +69,10 @@ async function fetchAll(table: string, params: Record<string, string> = {}): Pro
 }
 
 const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
-const firstId = (v: unknown) => (Array.isArray(v) && typeof v[0] === "string" ? (v[0] as string) : null);
+const firstId = (v: unknown) =>
+  Array.isArray(v) && typeof v[0] === "string" ? (v[0] as string) : null;
+
+/* ------------------------------------------------------------------ Articles */
 
 export type ArticleRecord = {
   id: string;
@@ -68,22 +88,28 @@ export type ArticleRecord = {
   content: string;
   faq: string;
   sources: string;
+  dansMonCas: string;
+  masterclass: string;
   principalId: string | null;
   secondaryId: string | null;
   readingMinutes: number;
 };
 
-export type CubeLink = { id: string; label: string; type: string; url: string; active: boolean; expires: string | null };
-
 export function readingMinutes(text: string) {
-  const words = text.replace(/[#*_>`|\-[\]()]/g, " ").split(/\s+/).filter(Boolean).length;
+  const words = text
+    .replace(/[#*_>`|\-[\]()]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean).length;
   return Math.max(1, Math.round(words / 220));
 }
 
 export async function getPublishedArticles(): Promise<ArticleRecord[]> {
-  const records = await fetchAll(ARTICLES_TABLE, { filterByFormula: "{Statut}='Publié'" });
+  const records = await fetchAll(TABLES.articles, { filterByFormula: "{Statut}='Publié'" });
   return records
-    .filter((r) => str(r.fields["Statut"]) === "Publié" && str(r.fields["Slug"]) && str(r.fields["Titre"]))
+    .filter(
+      (r) =>
+        str(r.fields["Statut"]) === "Publié" && str(r.fields["Slug"]) && str(r.fields["Titre"]),
+    )
     .map((r) => {
       const f = r.fields;
       const category = str(f["Catégorie"]);
@@ -103,6 +129,8 @@ export async function getPublishedArticles(): Promise<ArticleRecord[]> {
         content,
         faq: str(f["FAQ"]),
         sources: str(f["Sources"]),
+        dansMonCas: str(f["Dans mon cas"]),
+        masterclass: str(f["Masterclass source"]),
         principalId: firstId(f["Lien principal"]),
         secondaryId: firstId(f["Lien secondaire"]),
         readingMinutes: readingMinutes(content),
@@ -111,12 +139,25 @@ export async function getPublishedArticles(): Promise<ArticleRecord[]> {
     .sort((a, b) => (b.updatedAt ?? "").localeCompare(a.updatedAt ?? ""));
 }
 
+/* -------------------------------------------------------------- Liens Cube */
+
+export type CubeLink = {
+  id: string;
+  label: string;
+  type: string;
+  theme: string;
+  url: string;
+  active: boolean;
+  expires: string | null;
+};
+
 export async function getCubeLinks(): Promise<CubeLink[]> {
-  const records = await fetchAll(LINKS_TABLE);
+  const records = await fetchAll(TABLES.links);
   return records.map((r) => ({
     id: r.id,
     label: str(r.fields["Libellé"]),
     type: str(r.fields["Type"]),
+    theme: str(r.fields["Thème"]),
     url: str(r.fields["URL"]),
     active: r.fields["Actif"] === true,
     expires: str(r.fields["Expire le"]) || null,
@@ -125,7 +166,12 @@ export async function getCubeLinks(): Promise<CubeLink[]> {
 
 /** Today's date (YYYY-MM-DD) in Europe/Paris. */
 export function todayParis(now = new Date()) {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Paris",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(now);
 }
 
 export function isLinkValid(link: CubeLink | undefined, today = todayParis()): link is CubeLink {
@@ -134,13 +180,49 @@ export function isLinkValid(link: CubeLink | undefined, today = todayParis()): l
   return link.expires.slice(0, 10) >= today;
 }
 
-/** Resolve the URLs for cube:principal / cube:secondaire, falling back to the "ressources" link. */
-export function resolveCubeUrls(article: Pick<ArticleRecord, "principalId" | "secondaryId">, links: CubeLink[], today = todayParis()) {
+/** First valid link of a given type (e.g. "ressources", "rdv", "evenement", "communaute"). */
+export function linkOfType(links: CubeLink[], type: string, today = todayParis()) {
+  return links.find((l) => l.type === type && isLinkValid(l, today)) ?? null;
+}
+
+/** Resolve the links used by cube:principal / cube:secondaire, falling back to the "ressources" link. */
+export function resolveArticleLinks(
+  article: Pick<ArticleRecord, "principalId" | "secondaryId">,
+  links: CubeLink[],
+  today = todayParis(),
+) {
   const byId = new Map(links.map((l) => [l.id, l]));
-  const fallback = links.find((l) => l.type === "ressources" && isLinkValid(l, today)) ?? links.find((l) => l.type === "ressources" && l.url);
+  const fallback = linkOfType(links, "ressources", today);
   const pick = (id: string | null) => {
     const l = id ? byId.get(id) : undefined;
-    return isLinkValid(l, today) ? l.url : (fallback?.url ?? null);
+    return isLinkValid(l, today) ? l : fallback;
   };
   return { principal: pick(article.principalId), secondaire: pick(article.secondaryId) };
+}
+
+/* ------------------------------------------------------------ Carnet de bord */
+
+export type CarnetEntry = { id: string; texte: string; date: string | null };
+
+export async function getCarnet(limit = 3): Promise<CarnetEntry[]> {
+  const records = await fetchAll(TABLES.carnet, { filterByFormula: "{Visible}" });
+  return records
+    .filter((r) => r.fields["Visible"] === true && str(r.fields["Texte"]))
+    .map((r) => ({ id: r.id, texte: str(r.fields["Texte"]), date: str(r.fields["Date"]) || null }))
+    .sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""))
+    .slice(0, limit);
+}
+
+/* ------------------------------------------------------------- Mon parcours */
+
+/** Key/value facts about the author. Empty values are left out, so they never reach the page. */
+export async function getParcours(): Promise<Record<string, string>> {
+  const records = await fetchAll(TABLES.parcours);
+  const out: Record<string, string> = {};
+  for (const r of records) {
+    const key = str(r.fields["Clé"]);
+    const value = str(r.fields["Valeur"]);
+    if (key && value) out[key] = value;
+  }
+  return out;
 }

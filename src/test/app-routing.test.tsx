@@ -4,14 +4,20 @@ import { describe, expect, it } from "vitest";
 
 import { routeTree } from "@/routeTree.gen";
 
-// Match routes without running loaders or rendering: loaders may need a server or
-// network the test run lacks, and jsdom never loads the stylesheets React waits on.
+// Match routes without running loaders or rendering: loaders need Airtable,
+// which the test run does not have.
 describe("App routing", () => {
-  it("matches a page for / instead of falling back to not found", () => {
-    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+  const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+  const leaf = (path: string) => router.matchRoutes(path).at(-1)?.routeId;
 
-    const matches = router.matchRoutes("/");
-
-    expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
+  it.each([
+    ["/", "/"],
+    ["/vibe-coding-lovable", "/$slug"],
+    ["/categorie/financement", "/categorie/$slug"],
+    ["/a-propos", "/a-propos"],
+    ["/mentions-legales", "/mentions-legales"],
+  ])("matches %s", (path, routeId) => {
+    expect(leaf(path)).toBe(routeId);
+    expect(leaf(path)).not.toBe(rootRouteId);
   });
 });
