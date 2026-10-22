@@ -16,6 +16,31 @@ export type ArticleSummary = {
 
 export type PartnerLink = { url: string; label: string; type: string };
 
+export type ProgrammeCard = { url: string; title: string; description: string; theme: string };
+
+/** Display order and one-line description of each programme theme (the "marque" link is left out on purpose). */
+const PROGRAMME_THEMES: { theme: string; description: string }[] = [
+  {
+    theme: "ia",
+    description: "IA générative, gestion de projet IA : intégrer l'IA dans son métier.",
+  },
+  {
+    theme: "automatisation",
+    description: "Make, n8n, agents IA : automatiser des tâches et des processus.",
+  },
+  {
+    theme: "dev-ia",
+    description: "Créer des applications web avec l'IA, du prototype à la mise en ligne.",
+  },
+  { theme: "seo-geo", description: "Être trouvé sur Google et cité par les IA." },
+  { theme: "growth", description: "Piloter l'acquisition et le marketing avec l'IA." },
+  { theme: "acquisition", description: "La publicité en ligne, assistée par l'IA." },
+  {
+    theme: "general",
+    description: "Le catalogue complet, dont le parcours métier Product Builder (RNCP niveau 6).",
+  },
+];
+
 export type RecoCard = PartnerLink & {
   tag: string;
   title: string;
@@ -127,7 +152,14 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
       cta: "Rejoindre",
     });
 
+  const { isLinkValid } = await import("./airtable.server");
+  const programmes: ProgrammeCard[] = PROGRAMME_THEMES.flatMap(({ theme, description }) => {
+    const l = links.find((x) => x.type === "programme" && x.theme === theme && isLinkValid(x));
+    return l ? [{ url: l.url, title: l.label, description, theme }] : [];
+  });
+
   return {
+    programmes,
     articles: articles.slice(0, 6).map(toSummary),
     totalArticles: articles.length,
     carnet,

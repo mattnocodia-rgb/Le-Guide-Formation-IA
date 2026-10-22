@@ -44,7 +44,7 @@ export const Route = createFileRoute("/")({
 const r = (deg: string) => ({ "--r": deg }) as React.CSSProperties;
 
 function Home() {
-  const { articles, carnet, reco, photoUrl, totalArticles } = Route.useLoaderData();
+  const { articles, carnet, reco, programmes, photoUrl, totalArticles } = Route.useLoaderData();
 
   return (
     <PageFrame>
@@ -210,6 +210,44 @@ function Home() {
           <p className="note m-0 -rotate-[1.5deg] self-start text-[25px]">
             ↑ la masterclass, c'est par là que j'aurais commencé
           </p>
+        </section>
+      ) : null}
+
+      {/* Programmes de formation */}
+      {programmes.length > 0 ? (
+        <section aria-labelledby="programmes" className="container-wide flex flex-col gap-7 pt-20">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <div className="flex flex-col gap-2">
+              <p className="note m-0 -rotate-1 self-start text-[24px]">prêt à vous lancer ?</p>
+              <h2 id="programmes" className="m-0 text-[clamp(30px,3.2vw,38px)]">
+                Les formations Cube, par objectif
+              </h2>
+            </div>
+            <p className="m-0 text-[13px] text-muted-foreground">
+              Liens partenaires · programmes détaillés à télécharger
+            </p>
+          </div>
+          <ul className="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-5 p-0">
+            {programmes.map((p, i) => (
+              <li key={p.url}>
+                <a
+                  href={p.url}
+                  rel="sponsored noopener"
+                  target="_blank"
+                  className={`tilt flex h-full flex-col gap-2 p-5 text-ink no-underline ${p.theme === "general" ? "postit" : "sheet"}`}
+                  style={r(tiltFor(i + 2))}
+                >
+                  <span className="font-serif text-[20px] leading-[1.2] font-extrabold">
+                    {p.title}
+                  </span>
+                  <span className="text-sm leading-normal text-ink-soft">{p.description}</span>
+                  <span className="mt-auto pt-2 text-sm font-bold text-accent-ink">
+                    Voir le programme ↗
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </section>
       ) : null}
 
