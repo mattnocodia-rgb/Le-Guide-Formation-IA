@@ -25,20 +25,25 @@ function Legal() {
           <p>
             Site : {SITE_URL}
             <br />
-            Éditeur : [À COMPLÉTER : nom, ou dénomination et numéro SIREN]
+            Éditeur : M. Audineau, entrepreneur individuel
             <br />
-            Adresse : [À COMPLÉTER]
+            Activité : Product Builder No-Code &amp; IA
             <br />
-            Contact : [À COMPLÉTER : adresse e-mail]
+            SIRET : 852 848 415 00034
             <br />
-            Directeur de la publication : [À COMPLÉTER]
+            Adresse : Nantes, France
+            <br />
+            Contact : <a href="mailto:contact@optimatt.fr">contact@optimatt.fr</a>
+            <br />
+            Directeur de la publication : M. Audineau
           </p>
           <h2 id="hebergeur">Hébergeur</h2>
           <p>
-            Le site est hébergé par Lovable.
+            Lovable Labs Sweden AB
             <br />
-            [À COMPLÉTER : dénomination, adresse et téléphone de l'hébergeur, à reprendre des
-            conditions de Lovable]
+            Regeringsgatan 25, 111 53 Stockholm, Suède
+            <br />
+            Contact : <a href="mailto:privacy@lovable.dev">privacy@lovable.dev</a>
           </p>
           <h2 id="liens-partenaires">Liens partenaires</h2>
           <p>
