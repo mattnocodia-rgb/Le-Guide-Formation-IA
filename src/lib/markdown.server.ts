@@ -46,18 +46,12 @@ export function renderMarkdown(md: string, cube: CubeUrls) {
         const external = /^https?:\/\//i.test(href);
         return `<a href="${escapeAttr(href)}"${external ? ' rel="noopener" target="_blank"' : ""}${t}>${inner}</a>`;
       },
-      table(this: unknown, token: Tokens.Table) {
-        return `<div class="table-wrap">${Marked.prototype.parser ? "" : ""}${defaultTable(token)}</div>`;
-      },
     },
   });
-  const html = marked.parse(md, { async: false }) as string;
+  const html = (marked.parse(md, { async: false }) as string)
+    .replace(/<table>/g, '<div class="table-wrap"><table>')
+    .replace(/<\/table>/g, "</table></div>");
   return { html, toc };
-}
-
-const tableRenderer = new Marked({ gfm: true });
-function defaultTable(token: Tokens.Table) {
-  return tableRenderer.parser([token]);
 }
 
 export type FaqItem = { question: string; answerHtml: string; answerText: string };
