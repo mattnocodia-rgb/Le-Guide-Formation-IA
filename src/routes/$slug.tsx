@@ -219,7 +219,7 @@ function ArticlePage() {
               </p>
               <p className="m-0 text-lg leading-normal">
                 {a.masterclass
-                  ? `L'École Cube propose une masterclass gratuite sur ce sujet : « ${a.masterclass} ».`
+                  ? `L'École Cube propose des masterclass gratuites en replay, dont une sur ce sujet : « ${a.masterclass} ».`
                   : "L'École Cube propose des masterclass gratuites et des formations certifiantes sur ce sujet."}
               </p>
               <div className="flex flex-wrap items-center gap-3">
