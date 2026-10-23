@@ -210,12 +210,16 @@ function About() {
       <section aria-labelledby="ecole" className="mt-16 border-y border-rule bg-paper-light">
         <div className="container-wide py-14 md:py-16">
           <div className="max-w-[780px]">
-            <p className="note m-0 -rotate-1 text-[26px]">9 semaines, 7 modules, 1 méthode</p>
+            <p className="note m-0 -rotate-1 text-[26px]">
+              été 2025 : 9 semaines, 7 modules, 1 méthode
+            </p>
             <h2 id="ecole" className="m-0 mt-2 text-[clamp(28px,3.2vw,38px)] leading-[1.1]">
               Ce que l'École Cube m'a appris
             </h2>
             <p className="m-0 mt-4 text-lg leading-relaxed text-ink-soft">
-              Les outils ont beaucoup évolué depuis, et je n'utilise plus certains d'entre eux. Mais
+              Mon bootcamp, en juillet-août 2025 : 9 semaines à temps complet, des cas concrets à
+              chaque module, puis un projet professionnel construit de bout en bout. Beaucoup de
+              choses ont changé depuis dans l'approche, et je n'utilise plus certains outils. Mais
               chacun m'a appris quelque chose qui reste : l'école forme à la méthode, les outils
               font le reste.
             </p>
