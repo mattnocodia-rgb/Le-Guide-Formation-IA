@@ -101,7 +101,7 @@ function Home() {
           <div className="flex flex-[1_1_340px] flex-col gap-4">
             <p className="note m-0 -rotate-2 self-start text-[26px]">qui écrit ce guide ?</p>
             <h2 id="qui" className="m-0 text-[clamp(30px,3.4vw,42px)] leading-[1.08]">
-              Commercial et product builder, les deux à la fois. Je ne vends pas de formation.
+              Responsable commercial et product builder, les deux à la fois.
             </h2>
             <a
               href={LINKEDIN_URL}
@@ -371,7 +371,7 @@ function HeroVisual({ photoUrl }: { photoUrl: string | null }) {
         >
           Ingénieur BTP de formation.
           <br />
-          Commercial et product builder.
+          Responsable commercial et product builder.
           <br />
           <span className="text-accent-ink">Les deux à la fois.</span>
         </div>
