@@ -56,9 +56,11 @@ export function SiteHeader({
 export function SiteFooter({
   ressources,
   rdv,
+  communaute = null,
 }: {
   ressources: PartnerLink | null;
   rdv: PartnerLink | null;
+  communaute?: PartnerLink | null;
 }) {
   return (
     <footer className="bg-ink text-[#d8d1c2]">
@@ -105,6 +107,16 @@ export function SiteFooter({
                 Parler à un conseiller Cube
               </a>
             ) : null}
+            {communaute ? (
+              <a
+                href={communaute.url}
+                rel="sponsored noopener"
+                target="_blank"
+                className="text-[#f1a08f]"
+              >
+                Communauté Cube (ouverte à tous)
+              </a>
+            ) : null}
           </nav>
         </div>
         <p className="text-xs text-[#b7af9f]">Liens partenaires signalés · Aucun cookie de suivi</p>
@@ -122,14 +134,16 @@ export function PageFrame({
   activeSlug?: string | undefined;
 }) {
   const layout = useLoaderData({ from: rootRouteId }) as
-    { ressources: PartnerLink | null; rdv: PartnerLink | null } | undefined;
+    | { ressources: PartnerLink | null; rdv: PartnerLink | null; communaute?: PartnerLink | null }
+    | undefined;
   const ressources = layout?.ressources ?? null;
   const rdv = layout?.rdv ?? null;
+  const communaute = layout?.communaute ?? null;
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader ressources={ressources} activeSlug={activeSlug} />
       <main className="flex-1">{children}</main>
-      <SiteFooter ressources={ressources} rdv={rdv} />
+      <SiteFooter ressources={ressources} rdv={rdv} communaute={communaute} />
     </div>
   );
 }

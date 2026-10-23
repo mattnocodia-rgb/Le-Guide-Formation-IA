@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, rootRouteId, useLoaderData } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 
 import { LinkedInIcon } from "@/components/site/Cards";
@@ -140,6 +140,9 @@ export const Route = createFileRoute("/a-propos")({
 });
 
 function About() {
+  const layout = useLoaderData({ from: rootRouteId }) as
+    { communaute?: { url: string } | null } | undefined;
+  const communaute = layout?.communaute ?? null;
   return (
     <PageFrame>
       {/* Intro */}
@@ -255,6 +258,26 @@ function About() {
               </a>
             </li>
           </ol>
+          {communaute ? (
+            <div className="sheet mt-10 flex max-w-[780px] flex-wrap items-center gap-x-8 gap-y-4 p-6">
+              <div className="flex min-w-[240px] flex-1 flex-col gap-1">
+                <p className="note m-0 text-[22px]">pas besoin d'être alumni</p>
+                <p className="m-0 text-[17px] leading-relaxed text-ink-soft">
+                  La communauté de l'École Cube est ouverte à tous, même sans avoir suivi de
+                  formation. C'est le meilleur moyen d'échanger avec des apprenants et des alumni
+                  avant de se décider.
+                </p>
+              </div>
+              <a
+                href={communaute.url}
+                rel="sponsored noopener"
+                target="_blank"
+                className="btn-outline text-[15px]"
+              >
+                Rejoindre la communauté
+              </a>
+            </div>
+          ) : null}
           <p className="m-0 mt-10">
             <Link to="/$slug" params={{ slug: BOOTCAMP_SLUG }} className="btn-ink">
               Lire mon retour sur le bootcamp
@@ -304,9 +327,9 @@ function About() {
           <p className="m-0 mt-3 text-[17px] leading-relaxed text-ink-soft">
             J'ai mis ce nouveau savoir au service d'un projet qui me tient à cœur, né d'un besoin
             réel observé dans mon entourage. Endo-sérénité est une application web qui analyse
-            chaque repas selon 5 indicateurs nutritionnels : inflammation, confort digestif,
-            énergie, microbiote et stress métabolique. Elle aide les femmes atteintes d'endométriose
-            à comprendre l'impact de leur assiette sur leurs symptômes.
+            chaque repas selon 4 indicateurs nutritionnels : inflammation, confort digestif, énergie
+            et microbiote. Elle aide les femmes atteintes d'endométriose à comprendre l'impact de
+            leur assiette sur leurs symptômes.
           </p>
           <a
             href={ENDO_URL}
