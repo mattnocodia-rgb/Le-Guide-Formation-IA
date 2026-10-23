@@ -1,5 +1,6 @@
 import { Link, rootRouteId, useLoaderData } from "@tanstack/react-router";
 import { track } from "@/lib/track";
+import { useEffect, useState } from "react";
 import type React from "react";
 
 import type { PartnerLink } from "@/lib/content.functions";
@@ -13,43 +14,45 @@ export function SiteHeader({
   activeSlug?: string | undefined;
 }) {
   return (
-    <header className="container-wide flex flex-wrap items-center justify-between gap-x-6 gap-y-1 py-5">
-      <Link
-        to="/"
-        className="font-serif text-[22px] font-extrabold tracking-[-0.01em] text-ink no-underline"
-      >
-        {SITE_NAME}
-      </Link>
-      <nav aria-label="Catégories" className="flex flex-wrap gap-x-6 text-[15px] font-medium">
-        {NAV_CATEGORIES.map((c) => {
-          const active = c.slug === activeSlug;
-          return (
-            <Link
-              key={c.slug}
-              to="/categorie/$slug"
-              params={{ slug: c.slug }}
-              aria-current={active ? "page" : undefined}
-              className={
-                active
-                  ? "py-2.5 font-semibold text-ink underline decoration-accent decoration-[3px] underline-offset-8"
-                  : "py-2.5 text-ink-soft no-underline hover:text-ink"
-              }
+    <header className="z-40 border-b border-transparent bg-paper md:sticky md:top-0 md:border-ink/10">
+      <div className="container-wide flex flex-wrap items-center justify-between gap-x-6 gap-y-1 py-4">
+        <Link
+          to="/"
+          className="font-serif text-[22px] font-extrabold tracking-[-0.01em] text-ink no-underline"
+        >
+          {SITE_NAME}
+        </Link>
+        <nav aria-label="Catégories" className="flex flex-wrap gap-x-6 text-[15px] font-medium">
+          {NAV_CATEGORIES.map((c) => {
+            const active = c.slug === activeSlug;
+            return (
+              <Link
+                key={c.slug}
+                to="/categorie/$slug"
+                params={{ slug: c.slug }}
+                aria-current={active ? "page" : undefined}
+                className={
+                  active
+                    ? "py-2.5 font-semibold text-ink underline decoration-accent decoration-[3px] underline-offset-8"
+                    : "py-2.5 text-ink-soft no-underline hover:text-ink"
+                }
+              >
+                {c.short}
+              </Link>
+            );
+          })}
+          {ressources ? (
+            <a
+              href={track(ressources.url, "entete")}
+              rel="sponsored noopener"
+              target="_blank"
+              className="py-2.5 font-semibold text-accent-ink no-underline"
             >
-              {c.short}
-            </Link>
-          );
-        })}
-        {ressources ? (
-          <a
-            href={track(ressources.url, "entete")}
-            rel="sponsored noopener"
-            target="_blank"
-            className="py-2.5 font-semibold text-accent-ink no-underline"
-          >
-            Masterclass gratuites ↗
-          </a>
-        ) : null}
-      </nav>
+              Masterclass gratuites ↗
+            </a>
+          ) : null}
+        </nav>
+      </div>
     </header>
   );
 }
@@ -150,6 +153,35 @@ export function PageFrame({
       <SiteHeader ressources={ressources} activeSlug={activeSlug} />
       <main className="flex-1">{children}</main>
       <SiteFooter ressources={ressources} rdv={rdv} communaute={communaute} />
+      <BackToTop />
     </div>
+  );
+}
+
+function BackToTop() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 600);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const goTop = () => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  };
+  return (
+    <button
+      type="button"
+      onClick={goTop}
+      aria-label="Remonter en haut de la page"
+      tabIndex={visible ? 0 : -1}
+      aria-hidden={!visible}
+      className={`fixed right-4 bottom-4 z-50 flex items-center gap-1.5 rounded-full border-2 border-ink bg-paper-light px-4 py-2.5 text-[14px] font-semibold text-ink shadow-[3px_3px_0_var(--ink)] transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:right-6 sm:bottom-6 ${
+        visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
+      }`}
+    >
+      <span aria-hidden="true">↑</span> Haut
+    </button>
   );
 }
