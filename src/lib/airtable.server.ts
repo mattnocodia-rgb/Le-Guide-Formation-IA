@@ -18,7 +18,7 @@ type AirtableRecord = { id: string; fields: Record<string, unknown> };
 const cache = new Map<string, { at: number; data: AirtableRecord[] }>();
 const inflight = new Map<string, Promise<AirtableRecord[]>>();
 
-function readToken(name = "AIRTABLE_TOKEN"): string | undefined {
+export function readToken(name = "AIRTABLE_TOKEN"): string | undefined {
   // `process` exists on the server runtime; guard so a missing global never throws.
   const env = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process
     ?.env;
@@ -235,7 +235,12 @@ export async function getParcours(): Promise<Record<string, string>> {
  * AIRTABLE_TOKEN (which then needs the data.records:write scope). Never throws:
  * a failed write must never block the redirect.
  */
-export async function recordClick(click: { linkId: string; page: string; place: string }) {
+export async function recordClick(click: {
+  linkId: string;
+  page: string;
+  place: string;
+  test: boolean;
+}) {
   const token = readToken("AIRTABLE_WRITE_TOKEN") ?? readToken();
   if (!token) return;
   try {
@@ -251,6 +256,7 @@ export async function recordClick(click: { linkId: string; page: string; place: 
               Lien: [click.linkId],
               Page: click.page.slice(0, 200),
               Emplacement: click.place,
+              Test: click.test,
             },
           },
         ],

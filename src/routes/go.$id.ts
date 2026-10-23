@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { isTestDevice } from "@/lib/test-mode";
 import { PLACES, type Place } from "@/lib/track";
 
 const BOT_UA =
@@ -25,7 +26,8 @@ function isPrefetch(request: Request) {
 
 /**
  * /go/<linkId>?e=<placement> : counts the click in Airtable, then redirects to the
- * partner URL. No cookie and no personal data: only the link, the page and the date.
+ * partner URL. No personal data: only the link, the page and the date. Clicks from the
+ * owner's devices (test-mode cookie, see /mode-test) are flagged "Test".
  */
 export const Route = createFileRoute("/go/$id")({
   server: {
@@ -45,7 +47,12 @@ export const Route = createFileRoute("/go/$id")({
           const place = e in PLACES ? PLACES[e as Place] : "Autre";
           // Bounded wait so a slow Airtable never delays the visitor much.
           await Promise.race([
-            recordClick({ linkId: target.id, page: originPage(request), place }),
+            recordClick({
+              linkId: target.id,
+              page: originPage(request),
+              place,
+              test: isTestDevice(request),
+            }),
             new Promise((resolve) => setTimeout(resolve, 1500)),
           ]);
         }
