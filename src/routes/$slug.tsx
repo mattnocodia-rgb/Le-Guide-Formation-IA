@@ -369,6 +369,24 @@ function ArticlePage() {
   );
 }
 
+/** Why the author recommends the school, in his own words. */
+const RAISONS = [
+  {
+    titre: "Une promo, pas une plateforme :",
+    texte:
+      "en bootcamp, on échange tous les jours avec ses collègues de promo dans une classe virtuelle (WorkAdventure).",
+  },
+  {
+    titre: "Des mentors chaque jour :",
+    texte: "quand on est bloqué, on n'attend pas la semaine suivante.",
+  },
+  {
+    titre: "Une école qui écoute :",
+    texte:
+      "elle a fait évoluer son bootcamp à partir des retours des élèves, avec un projet fil rouge mené pendant l'acquisition des nouvelles compétences.",
+  },
+];
+
 function AuthorBox() {
   return (
     <aside
@@ -377,12 +395,24 @@ function AuthorBox() {
     >
       <p className="note m-0 text-[26px]">Pourquoi je recommande Cube</p>
       <p className="m-0 text-[17px] leading-[1.65] text-[#2b2823]">
-        Ingénieur BTP de formation, je suis commercial et product builder certifié par l'École Cube
-        (RNCP niveau 6) : j'allie les deux au quotidien, et je suis content de ma formation. J'y ai
-        appris une méthode qui a fait de moi un expert en automatisation. Aujourd'hui, je crée des
-        sites web et j'améliore les process des entreprises. Je ne vends pas de formation : je
-        partage mon parcours, et je signale mes liens partenaires.
+        Ingénieur BTP de formation, je suis responsable commercial et product builder certifié par
+        l'École Cube (RNCP niveau 6) : j'allie les deux au quotidien. J'y ai appris une méthode qui
+        a fait de moi un expert en automatisation et qui permet de décrypter les étapes du
+        développement. Aujourd'hui, je crée des sites web et j'améliore les process des entreprises.
+        Je partage mon parcours ici.
       </p>
+      <ul className="m-0 flex list-none flex-col gap-2 p-0 text-[16px] leading-[1.6] text-[#2b2823]">
+        {RAISONS.map((r) => (
+          <li key={r.titre} className="flex gap-2.5">
+            <span aria-hidden="true" className="font-hand text-[20px] leading-none text-accent-ink">
+              →
+            </span>
+            <span>
+              <strong>{r.titre}</strong> {r.texte}
+            </span>
+          </li>
+        ))}
+      </ul>
       <a
         href={LINKEDIN_URL}
         rel="noopener me"
