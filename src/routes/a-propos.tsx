@@ -52,6 +52,28 @@ const PARCOURS: Step[] = [
   },
 ];
 
+/** How the author came to AI and automation, in his own words. */
+const PARCOURS_IA = [
+  {
+    titre: "Les macros PowerPoint, avec ChatGPT.",
+    texte: "Mes premières automatisations, sans rien connaître au code.",
+  },
+  {
+    titre: "Des scripts Python sur ma machine,",
+    texte: "pour automatiser de petits scénarios du quotidien.",
+  },
+  {
+    titre: "Make, connecté au web :",
+    texte:
+      "l'ouverture au monde des outils connectés. Voir un scénario se compléter tout seul, c'était magique, et interagir automatiquement avec notre CRM devenait possible.",
+  },
+  {
+    titre: "La formation à l'École Cube,",
+    texte:
+      "pour aller plus loin : les automatisations avec n8n, puis la création d'applications et de sites web.",
+  },
+];
+
 type Module = { tool: string; learned: string; note?: string };
 
 /** The bootcamp modules, in the order they were taught, with what each one brought. */
@@ -178,6 +200,34 @@ function About() {
             service gratuit, ou l'organisme de formation lui-même sont les bons interlocuteurs.
           </p>
         </div>
+      </section>
+
+      {/* Mon parcours avec l'IA */}
+      <section aria-labelledby="parcours-ia" className="container-wide max-w-[780px] pt-14">
+        <h2 id="parcours-ia" className="m-0 text-[clamp(28px,3.2vw,38px)] leading-[1.1]">
+          Mon parcours avec l'IA
+        </h2>
+        <div className="sheet relative mt-8 p-6 md:p-8" style={r("0.6deg")}>
+          <span aria-hidden="true" className="tape -top-2.5 left-10" style={r("-3deg")} />
+          <p className="note m-0 text-[24px]">mon tout premier effet wahou</p>
+          <p className="m-0 mt-2 text-[17px] leading-relaxed text-ink-soft">
+            C'est quand ChatGPT m'a aidé à construire des macros pour mes présentations PowerPoint.
+            Je ne comprenais rien aux macros, et l'IA m'a permis de créer mes propres
+            automatisations : un temps fou gagné sur mes présentations d'offres commerciales.
+          </p>
+        </div>
+        <ol className="m-0 mt-8 flex list-none flex-col gap-4 p-0">
+          {PARCOURS_IA.map((e, i) => (
+            <li key={e.titre} className="flex gap-4">
+              <span className="font-serif text-[22px] leading-none font-extrabold text-accent-ink">
+                {i + 1}
+              </span>
+              <p className="m-0 text-[17px] leading-relaxed">
+                <strong>{e.titre}</strong> {e.texte}
+              </p>
+            </li>
+          ))}
+        </ol>
       </section>
 
       {/* Parcours */}
