@@ -119,9 +119,9 @@ const AUJOURDHUI: Usage[] = [
 export const Route = createFileRoute("/a-propos")({
   head: () => {
     const head = pageHead({
-      title: `À propos : ingénieur BTP devenu product builder — ${SITE_NAME}`,
+      title: `À propos : commercial et product builder — ${SITE_NAME}`,
       description:
-        "Ingénieur BTP et commercial devenu product builder No-Code & IA : mon parcours, ce que l'École Cube m'a appris, ce que j'en fais aujourd'hui et comment ce guide est écrit.",
+        "Ingénieur BTP de formation, commercial et product builder No-Code & IA : mon parcours, ce que l'École Cube m'a appris, ce que j'en fais aujourd'hui et comment ce guide est écrit.",
       path: "/a-propos",
     });
     return {

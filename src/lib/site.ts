@@ -3,7 +3,7 @@ export const SITE_URL = "https://formation-ia.optimatt.fr";
 export const SITE_NAME = "Le Guide Formation IA";
 export const SITE_PROMISE = "Se former à l'IA, sans se tromper de voie";
 export const SITE_DESCRIPTION =
-  "Métiers, outils, financement CPF : les guides d'un ingénieur BTP devenu product builder pour choisir sa formation à l'IA et au no-code.";
+  "Métiers, outils, financement CPF : les guides d'un commercial et product builder certifié, ingénieur BTP de formation, pour choisir sa formation à l'IA et au no-code.";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/matthieuaudineau/";
 
 export const CATEGORIES = [

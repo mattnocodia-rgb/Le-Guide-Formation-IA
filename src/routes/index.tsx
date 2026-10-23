@@ -77,8 +77,8 @@ function Home() {
             de voie.
           </h1>
           <p className="settle delay-2 m-0 max-w-[560px] text-xl leading-relaxed text-ink-soft">
-            Métiers, outils, financement CPF : les guides que j'aurais aimé lire avant ma
-            reconversion. Chaque chiffre est sourcé et daté.
+            Métiers, outils, financement CPF : les guides que j'aurais aimé lire avant de me former.
+            Chaque chiffre est sourcé et daté.
           </p>
           <div className="settle delay-3 flex flex-wrap items-center gap-5">
             {articles[0] ? (
@@ -101,7 +101,7 @@ function Home() {
           <div className="flex flex-[1_1_340px] flex-col gap-4">
             <p className="note m-0 -rotate-2 self-start text-[26px]">qui écrit ce guide ?</p>
             <h2 id="qui" className="m-0 text-[clamp(30px,3.4vw,42px)] leading-[1.08]">
-              Ingénieur BTP devenu product builder. Je ne vends pas de formation.
+              Commercial et product builder, les deux à la fois. Je ne vends pas de formation.
             </h2>
             <a
               href={LINKEDIN_URL}
@@ -369,11 +369,11 @@ function HeroVisual({ photoUrl }: { photoUrl: string | null }) {
           className="postit tilt p-5 font-hand text-[25px] leading-[1.25] font-semibold"
           style={r("0deg")}
         >
-          Avant : ingénieur VRD.
+          Ingénieur BTP de formation.
           <br />
-          Aujourd'hui : product builder certifié.
+          Commercial et product builder.
           <br />
-          <span className="text-accent-ink">Entre les deux : une méthode.</span>
+          <span className="text-accent-ink">Les deux à la fois.</span>
         </div>
       </div>
       <svg

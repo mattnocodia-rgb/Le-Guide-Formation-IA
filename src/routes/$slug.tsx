@@ -377,11 +377,11 @@ function AuthorBox() {
     >
       <p className="note m-0 text-[26px]">Pourquoi je recommande Cube</p>
       <p className="m-0 text-[17px] leading-[1.65] text-[#2b2823]">
-        Ingénieur BTP de formation, je suis devenu product builder certifié par l'École Cube (RNCP
-        niveau 6), et j'en suis content. J'y ai appris une méthode qui a fait de moi un expert en
-        automatisation. Aujourd'hui, je crée des sites web et j'améliore les process des
-        entreprises. Je ne vends pas de formation : je partage mon parcours, et je signale mes liens
-        partenaires.
+        Ingénieur BTP de formation, je suis commercial et product builder certifié par l'École Cube
+        (RNCP niveau 6) : j'allie les deux au quotidien, et je suis content de ma formation. J'y ai
+        appris une méthode qui a fait de moi un expert en automatisation. Aujourd'hui, je crée des
+        sites web et j'améliore les process des entreprises. Je ne vends pas de formation : je
+        partage mon parcours, et je signale mes liens partenaires.
       </p>
       <a
         href={LINKEDIN_URL}
