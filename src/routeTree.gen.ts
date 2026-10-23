@@ -14,6 +14,7 @@ import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
+import { Route as ModeTestRouteImport } from './routes/mode-test'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as CategorieSlugRouteImport } from './routes/categorie/$slug'
@@ -44,6 +45,11 @@ const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
   path: '/mentions-legales',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ModeTestRoute = ModeTestRouteImport.update({
+  id: '/mode-test',
+  path: '/mode-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/a-propos': typeof AProposRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/mode-test': typeof ModeTestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/categorie/$slug': typeof CategorieSlugRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/a-propos': typeof AProposRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/mode-test': typeof ModeTestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/categorie/$slug': typeof CategorieSlugRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/a-propos': typeof AProposRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/mode-test': typeof ModeTestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/categorie/$slug': typeof CategorieSlugRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/a-propos'
     | '/llms.txt'
     | '/mentions-legales'
+    | '/mode-test'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/categorie/$slug'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/a-propos'
     | '/llms.txt'
     | '/mentions-legales'
+    | '/mode-test'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/categorie/$slug'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/a-propos'
     | '/llms.txt'
     | '/mentions-legales'
+    | '/mode-test'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/categorie/$slug'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   AProposRoute: typeof AProposRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
+  ModeTestRoute: typeof ModeTestRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CategorieSlugRoute: typeof CategorieSlugRoute
@@ -184,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MentionsLegalesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mode-test': {
+      id: '/mode-test'
+      path: '/mode-test'
+      fullPath: '/mode-test'
+      preLoaderRoute: typeof ModeTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/robots.txt': {
       id: '/robots.txt'
       path: '/robots.txt'
@@ -221,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   AProposRoute: AProposRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
+  ModeTestRoute: ModeTestRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   CategorieSlugRoute: CategorieSlugRoute,
