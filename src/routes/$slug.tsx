@@ -393,7 +393,7 @@ function AuthorBox() {
       aria-label="L'auteur"
       className="flex flex-col gap-2.5 border-t-[3px] border-ink bg-paper-light p-6"
     >
-      <p className="note m-0 text-[26px]">Pourquoi je recommande Cube</p>
+      <p className="note m-0 text-[26px]">Ce que l'École Cube m'a apporté</p>
       <p className="m-0 text-[17px] leading-[1.65] text-[#2b2823]">
         Ingénieur BTP de formation, je suis responsable commercial et product builder certifié par
         l'École Cube (RNCP niveau 6) : j'allie les deux au quotidien. J'y ai appris une méthode qui
