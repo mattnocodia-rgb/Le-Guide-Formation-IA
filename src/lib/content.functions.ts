@@ -107,7 +107,7 @@ export const getLayoutData = createServerFn({ method: "GET" }).handler(async () 
 export const getHomeData = createServerFn({ method: "GET" }).handler(async () => {
   const { getPublishedArticles, getCarnet, getParcours, linkOfType } =
     await import("./airtable.server");
-  const { formatDateFr } = await import("./site");
+  const { formatDateFr, START_GUIDE_SLUG } = await import("./site");
   const [{ links }, articles, carnet, parcours] = await Promise.all([
     sharedLinks(),
     getPublishedArticles(),
@@ -160,8 +160,12 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
     return l ? [{ url: l.url, title: l.label, description, theme }] : [];
   });
 
+  const startGuide =
+    articles.find((a) => a.slug === START_GUIDE_SLUG)?.slug ?? articles[0]?.slug ?? null;
+
   return {
     programmes,
+    startGuide,
     articles: articles.slice(0, 6).map(toSummary),
     totalArticles: articles.length,
     carnet,

@@ -44,7 +44,8 @@ export const Route = createFileRoute("/")({
 const r = (deg: string) => ({ "--r": deg }) as React.CSSProperties;
 
 function Home() {
-  const { articles, carnet, reco, programmes, photoUrl, totalArticles } = Route.useLoaderData();
+  const { articles, carnet, reco, programmes, photoUrl, totalArticles, startGuide } =
+    Route.useLoaderData();
 
   return (
     <PageFrame>
@@ -81,8 +82,8 @@ function Home() {
             Chaque chiffre est sourcé et daté.
           </p>
           <div className="settle delay-3 flex flex-wrap items-center gap-5">
-            {articles[0] ? (
-              <Link to="/$slug" params={{ slug: articles[0].slug }} className="btn-ink">
+            {startGuide ? (
+              <Link to="/$slug" params={{ slug: startGuide }} className="btn-ink">
                 Lire le guide de départ
               </Link>
             ) : null}

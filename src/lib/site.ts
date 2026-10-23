@@ -4,6 +4,9 @@ export const SITE_NAME = "Le Guide Formation IA";
 export const SITE_PROMISE = "Se former à l'IA, sans se tromper de voie";
 export const SITE_DESCRIPTION =
   "Métiers, outils, financement CPF : les guides d'un commercial et product builder certifié, ingénieur BTP de formation, pour choisir sa formation à l'IA et au no-code.";
+/** Article opened by the "Lire le guide de départ" button on the home page. */
+export const START_GUIDE_SLUG = "devenir-product-builder";
+
 export const LINKEDIN_URL = "https://www.linkedin.com/in/matthieuaudineau/";
 
 export const CATEGORIES = [
