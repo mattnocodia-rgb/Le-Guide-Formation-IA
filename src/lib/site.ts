@@ -76,14 +76,13 @@ export function formatDateFr(iso: string | null | undefined) {
   }).format(d);
 }
 
-/** Short date for handwritten notes, e.g. "22/10". */
+/** Month and year for handwritten notes, e.g. "nov. 2025". */
 export function formatDateShort(iso: string | null | undefined) {
   if (!iso) return "";
   const d = new Date(iso.length === 10 ? `${iso}T12:00:00Z` : iso);
   if (Number.isNaN(d.getTime())) return "";
   return new Intl.DateTimeFormat("fr-FR", {
-    day: "2-digit",
-    month: "2-digit",
+    month: "short",
     year: "numeric",
     timeZone: "Europe/Paris",
   }).format(d);

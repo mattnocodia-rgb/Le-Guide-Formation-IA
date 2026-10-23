@@ -160,7 +160,7 @@ function Home() {
               {carnet.map((c) => (
                 <li key={c.id} className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                   {c.date ? (
-                    <span className="note w-24 shrink-0 text-[22px]">
+                    <span className="note w-28 shrink-0 text-[22px]">
                       {formatDateShort(c.date)}
                     </span>
                   ) : null}
@@ -170,7 +170,7 @@ function Home() {
                 </li>
               ))}
             </ul>
-            <p className="note m-0 -rotate-2 self-end text-2xl">→ mis à jour chaque semaine</p>
+            <p className="note m-0 -rotate-2 self-end text-2xl">→ mis à jour régulièrement</p>
           </div>
         </section>
       ) : null}
