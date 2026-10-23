@@ -115,14 +115,18 @@ function Home() {
           </div>
           <div className="flex flex-[2_1_480px] flex-col gap-4 text-lg leading-[1.7] text-[#3a362f] md:text-[19px]">
             <p className="m-0">
-              Ingénieur BTP de formation, avec un parcours technique et commercial, je suis certifié
-              Product Builder No-Code &amp; IA par l'École Cube (titre RNCP niveau 6). J'en suis
-              content : j'y ai appris une méthode qui a fait de moi un expert en automatisation.
+              Ingénieur BTP de formation et commercial expérimenté, je suis certifié Product Builder
+              No-Code &amp; IA par l'École Cube (titre RNCP niveau 6). L'école m'a ouvert les portes
+              d'un monde que je n'aurais jamais imaginé explorer, et m'a appris une méthode qui a
+              fait de moi un expert en automatisation.
             </p>
             <p className="m-0">
-              Aujourd'hui, je crée des sites web, des applications et des outils internes, et
-              j'améliore les process des entreprises. J'écris ici ce que j'aurais aimé lire avant de
-              me lancer.
+              Aujourd'hui, je transforme des besoins métiers en sites web, outils internes et
+              automatisations, y compris pour mon propre métier de commercial. J'écris ici ce que
+              j'aurais aimé lire avant de me lancer.{" "}
+              <Link to="/a-propos" className="font-semibold text-ink underline underline-offset-4">
+                Mon parcours en détail
+              </Link>
             </p>
             <p className="m-0 text-sm text-muted-foreground">
               En toute transparence : si vous vous inscrivez via mes liens, je perçois une
