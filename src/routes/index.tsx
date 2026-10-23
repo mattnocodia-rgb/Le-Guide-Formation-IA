@@ -123,8 +123,9 @@ function Home() {
             </p>
             <p className="m-0">
               Aujourd'hui, je transforme des besoins métiers en sites web, outils internes et
-              automatisations, y compris pour mon propre métier de commercial. J'écris ici ce que
-              j'aurais aimé lire avant de me lancer.{" "}
+              automatisations, y compris pour mon propre métier de responsable commercial. Je ne
+              suis pas là pour vous orienter ni vous conseiller : je partage de l'information et mon
+              parcours.{" "}
               <Link to="/a-propos" className="font-semibold text-ink underline underline-offset-4">
                 Mon parcours en détail
               </Link>

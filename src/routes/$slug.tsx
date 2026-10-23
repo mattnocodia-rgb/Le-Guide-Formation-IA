@@ -399,7 +399,8 @@ function AuthorBox() {
         l'École Cube (RNCP niveau 6) : j'allie les deux au quotidien. J'y ai appris une méthode qui
         a fait de moi un expert en automatisation et qui permet de décrypter les étapes du
         développement. Aujourd'hui, je crée des sites web et j'améliore les process des entreprises.
-        Je partage mon parcours ici.
+        Je ne suis pas là pour vous orienter ni vous conseiller : je partage de l'information et mon
+        parcours.
       </p>
       <ul className="m-0 flex list-none flex-col gap-2 p-0 text-[16px] leading-[1.6] text-[#2b2823]">
         {RAISONS.map((r) => (

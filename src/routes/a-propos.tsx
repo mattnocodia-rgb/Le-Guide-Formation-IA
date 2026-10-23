@@ -167,7 +167,15 @@ function About() {
             Ma valeur ajoutée, c'est un profil hybride. Commercial, je sais comprendre les enjeux
             business et transformer un besoin en solution concrète. Product builder, je sais
             construire cette solution moi-même. Ce guide rassemble ce que j'aurais aimé lire avant
-            de me lancer. Je ne vends pas de formation.
+            de me lancer.
+          </p>
+          <p>
+            <strong>
+              Je ne suis pas là pour vous orienter ni pour vous conseiller : je partage de
+              l'information et mon parcours.
+            </strong>{" "}
+            Pour un avis adapté à votre situation, un conseiller en évolution professionnelle (CEP),
+            service gratuit, ou l'organisme de formation lui-même sont les bons interlocuteurs.
           </p>
         </div>
       </section>
@@ -347,6 +355,10 @@ function About() {
         <div className="prose-article">
           <h2 id="ligne-editoriale">Ma ligne éditoriale</h2>
           <ul>
+            <li>
+              De l'information et un retour d'expérience, pas du conseil en orientation : à vous de
+              faire votre choix.
+            </li>
             <li>Des guides pratiques, écrits pour des personnes qui ne sont pas développeuses.</li>
             <li>Chaque chiffre est sourcé, et chaque article affiche sa date de mise à jour.</li>
             <li>
