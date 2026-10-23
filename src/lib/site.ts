@@ -108,6 +108,17 @@ export function authorLd(name?: string | null) {
     url: LINKEDIN_URL,
     sameAs: [LINKEDIN_URL],
     jobTitle: "Product Builder No-Code & IA",
+    knowsAbout: [
+      "No-code",
+      "Automatisation",
+      "Make",
+      "n8n",
+      "Airtable",
+      "IA générative",
+      "Product management",
+      "BIM",
+      "BTP",
+    ],
     hasCredential: {
       "@type": "EducationalOccupationalCredential",
       name: "Titre RNCP niveau 6 — Product Builder No-Code",
