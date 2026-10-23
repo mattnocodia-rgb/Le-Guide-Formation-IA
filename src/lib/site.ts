@@ -84,6 +84,7 @@ export function formatDateShort(iso: string | null | undefined) {
   return new Intl.DateTimeFormat("fr-FR", {
     day: "2-digit",
     month: "2-digit",
+    year: "numeric",
     timeZone: "Europe/Paris",
   }).format(d);
 }
