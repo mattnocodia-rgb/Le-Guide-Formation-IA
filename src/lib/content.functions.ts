@@ -95,12 +95,13 @@ async function sharedLinks() {
     links,
     ressources: toPartner(linkOfType(links, "ressources")),
     rdv: toPartner(linkOfType(links, "rdv")),
+    communaute: toPartner(linkOfType(links, "communaute")),
   };
 }
 
 export const getLayoutData = createServerFn({ method: "GET" }).handler(async () => {
-  const { ressources, rdv } = await sharedLinks();
-  return { ressources, rdv };
+  const { ressources, rdv, communaute } = await sharedLinks();
+  return { ressources, rdv, communaute };
 });
 
 export const getHomeData = createServerFn({ method: "GET" }).handler(async () => {
@@ -146,9 +147,10 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
   if (communaute)
     reco.push({
       ...toPartner(communaute)!,
-      tag: "communauté",
+      tag: "ouverte à tous",
       title: "Rejoindre la communauté",
-      description: "Échanger avec des apprenants et des alumni.",
+      description:
+        "Pas besoin d'avoir suivi une formation : échangez avec des apprenants et des alumni.",
       cta: "Rejoindre",
     });
 
