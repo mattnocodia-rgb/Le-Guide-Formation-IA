@@ -25,7 +25,7 @@ const PARCOURS: Step[] = [
   },
   {
     when: "Depuis 2018",
-    role: "Ingénieur commercial, logiciels pour le BTP",
+    role: "Responsable commercial",
     points: [
       "Prospection, démonstrations et négociation face à des experts métier",
       "Gestion autonome d'un secteur : portefeuille clients, suivi, fidélisation",
@@ -59,7 +59,7 @@ const MODULES: Module[] = [
   {
     tool: "Framer",
     learned: "Architecturer et publier un site web, le rendre lisible sur mobile, gérer un CMS.",
-    note: "mon premier site en ligne, une semaine après le bootcamp",
+    note: "mon premier site, fait à la main sur Framer, une semaine après le bootcamp",
   },
   {
     tool: "Airtable",
