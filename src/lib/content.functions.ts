@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import type { CubeLink } from "./airtable.server";
+import { goPath } from "./track";
 
 export type ArticleSummary = {
   title: string;
@@ -84,7 +85,7 @@ function ctaFor(link: CubeLink) {
 }
 
 function toPartner(link: CubeLink | null): PartnerLink | null {
-  return link ? { url: link.url, label: ctaFor(link), type: link.type } : null;
+  return link ? { url: goPath(link.id), label: ctaFor(link), type: link.type } : null;
 }
 
 /** Shared partner links used by the header, footer and side boxes. */
@@ -157,7 +158,7 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
   const { isLinkValid } = await import("./airtable.server");
   const programmes: ProgrammeCard[] = PROGRAMME_THEMES.flatMap(({ theme, description }) => {
     const l = links.find((x) => x.type === "programme" && x.theme === theme && isLinkValid(x));
-    return l ? [{ url: l.url, title: l.label, description, theme }] : [];
+    return l ? [{ url: goPath(l.id), title: l.label, description, theme }] : [];
   });
 
   const startGuide =
@@ -201,8 +202,8 @@ export const getArticle = createServerFn({ method: "GET" })
 
     const resolved = resolveArticleLinks(article, links);
     const cube = {
-      principal: resolved.principal?.url ?? null,
-      secondaire: resolved.secondaire?.url ?? null,
+      principal: resolved.principal ? `${goPath(resolved.principal.id)}?e=article` : null,
+      secondaire: resolved.secondaire ? `${goPath(resolved.secondaire.id)}?e=article` : null,
     };
     const body = renderMarkdown(applyParcours(article.content, parcours), cube);
     const dansMonCas = applyParcours(article.dansMonCas, parcours);
@@ -223,7 +224,7 @@ export const getArticle = createServerFn({ method: "GET" })
       dansMonCasHtml: dansMonCas ? renderMarkdown(dansMonCas, cube).html : "",
       principal: toPartner(resolved.principal),
       secondaire:
-        resolved.secondaire && resolved.secondaire.url !== resolved.principal?.url
+        resolved.secondaire && resolved.secondaire.id !== resolved.principal?.id
           ? toPartner(resolved.secondaire)
           : null,
       ressources,

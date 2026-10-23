@@ -63,6 +63,12 @@ function Legal() {
             collecte aucune donnée personnelle via un formulaire. Les polices de caractères sont
             chargées depuis Google Fonts.
           </p>
+          <p>
+            Les clics sur les liens partenaires sont comptés de façon anonyme, pour savoir quels
+            contenus sont utiles : seuls le lien cliqué, la page d'origine et la date sont
+            enregistrés. Aucun cookie n'est déposé, et ni l'adresse IP ni aucune donnée permettant
+            d'identifier le visiteur n'est conservée.
+          </p>
           <h2 id="propriete">Propriété intellectuelle</h2>
           <p>
             Les textes de ce site sont la propriété de leur auteur. Toute reproduction intégrale

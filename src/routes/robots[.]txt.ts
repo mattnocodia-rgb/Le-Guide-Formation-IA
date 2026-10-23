@@ -19,9 +19,11 @@ export const Route = createFileRoute("/robots.txt")({
         const body = [
           "User-agent: *",
           "Allow: /",
+          // Partner-link redirects: nothing to index, and bots must not inflate click counts.
+          "Disallow: /go/",
           "",
           // Explicitly welcome AI crawlers: being cited by answer engines is a goal of this site.
-          ...AI_BOTS.flatMap((bot) => [`User-agent: ${bot}`, "Allow: /", ""]),
+          ...AI_BOTS.flatMap((bot) => [`User-agent: ${bot}`, "Allow: /", "Disallow: /go/", ""]),
           `Sitemap: ${absUrl("/sitemap.xml")}`,
           "",
         ].join("\n");

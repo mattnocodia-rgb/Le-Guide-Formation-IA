@@ -1,4 +1,5 @@
 import { Link, createFileRoute, rootRouteId, useLoaderData } from "@tanstack/react-router";
+import { track } from "@/lib/track";
 import type { CSSProperties } from "react";
 
 import { LinkedInIcon } from "@/components/site/Cards";
@@ -327,7 +328,7 @@ function About() {
                 </p>
               </div>
               <a
-                href={communaute.url}
+                href={track(communaute.url, "apropos")}
                 rel="sponsored noopener"
                 target="_blank"
                 className="btn-outline text-[15px]"
