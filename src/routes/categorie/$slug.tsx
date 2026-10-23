@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { track } from "@/lib/track";
 import type React from "react";
 
 import { ArticleCard } from "@/components/site/Cards";
@@ -89,7 +90,7 @@ function CategoryPage() {
       {ressources ? (
         <section aria-label="Recommandation" className="container-wide pb-12">
           <a
-            href={ressources.url}
+            href={track(ressources.url, "categorie")}
             rel="sponsored noopener"
             target="_blank"
             className="tilt flex flex-wrap items-center justify-between gap-4 bg-ink px-7 py-6 text-paper no-underline shadow-[var(--shadow-card)]"

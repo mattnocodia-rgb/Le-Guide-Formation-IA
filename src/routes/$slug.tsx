@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { track } from "@/lib/track";
 import { useState } from "react";
 import type React from "react";
 
@@ -224,7 +225,7 @@ function ArticlePage() {
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <a
-                  href={a.principal.url}
+                  href={track(a.principal.url, "encadre")}
                   rel="sponsored noopener"
                   target="_blank"
                   className="btn-paper text-[15px]"
@@ -233,7 +234,7 @@ function ArticlePage() {
                 </a>
                 {a.secondaire ? (
                   <a
-                    href={a.secondaire.url}
+                    href={track(a.secondaire.url, "encadre")}
                     rel="sponsored noopener"
                     target="_blank"
                     className="px-1.5 py-3 text-[15px] font-semibold text-paper"
@@ -286,7 +287,7 @@ function ArticlePage() {
               <div className="flex flex-wrap items-center gap-3">
                 {a.ressources ? (
                   <a
-                    href={a.ressources.url}
+                    href={track(a.ressources.url, "encadre")}
                     rel="sponsored noopener"
                     target="_blank"
                     className="btn-ink text-[15px]"
@@ -296,7 +297,7 @@ function ArticlePage() {
                 ) : null}
                 {a.rdv ? (
                   <a
-                    href={a.rdv.url}
+                    href={track(a.rdv.url, "encadre")}
                     rel="sponsored noopener"
                     target="_blank"
                     className="px-1.5 py-3 text-[15px] font-semibold text-ink"
@@ -338,7 +339,7 @@ function ArticlePage() {
                 C'est gratuit.
               </p>
               <a
-                href={a.rdv.url}
+                href={track(a.rdv.url, "encadre")}
                 rel="sponsored noopener"
                 target="_blank"
                 className="btn-ink min-h-11 text-sm"

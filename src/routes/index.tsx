@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { track } from "@/lib/track";
 import type React from "react";
 
 import { ArticleCard, LinkedInIcon } from "@/components/site/Cards";
@@ -197,7 +198,7 @@ function Home() {
               return (
                 <a
                   key={c.url}
-                  href={c.url}
+                  href={track(c.url, "accueil")}
                   rel="sponsored noopener"
                   target="_blank"
                   className={`tilt flex min-h-[200px] flex-col gap-3 p-6 no-underline shadow-[var(--shadow-card)] ${tone}`}
@@ -237,7 +238,7 @@ function Home() {
             {programmes.map((p, i) => (
               <li key={p.url}>
                 <a
-                  href={p.url}
+                  href={track(p.url, "accueil")}
                   rel="sponsored noopener"
                   target="_blank"
                   className={`tilt flex h-full flex-col gap-2 p-5 text-ink no-underline ${p.theme === "general" ? "postit" : "sheet"}`}

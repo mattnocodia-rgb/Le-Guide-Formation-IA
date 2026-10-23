@@ -1,4 +1,5 @@
 import { Link, rootRouteId, useLoaderData } from "@tanstack/react-router";
+import { track } from "@/lib/track";
 import type React from "react";
 
 import type { PartnerLink } from "@/lib/content.functions";
@@ -40,7 +41,7 @@ export function SiteHeader({
         })}
         {ressources ? (
           <a
-            href={ressources.url}
+            href={track(ressources.url, "entete")}
             rel="sponsored noopener"
             target="_blank"
             className="py-2.5 font-semibold text-accent-ink no-underline"
@@ -94,7 +95,7 @@ export function SiteFooter({
             </Link>
             {ressources ? (
               <a
-                href={ressources.url}
+                href={track(ressources.url, "pied")}
                 rel="sponsored noopener"
                 target="_blank"
                 className="text-[#f1a08f]"
@@ -103,13 +104,18 @@ export function SiteFooter({
               </a>
             ) : null}
             {rdv ? (
-              <a href={rdv.url} rel="sponsored noopener" target="_blank" className="text-[#f1a08f]">
+              <a
+                href={track(rdv.url, "pied")}
+                rel="sponsored noopener"
+                target="_blank"
+                className="text-[#f1a08f]"
+              >
                 Parler à un conseiller Cube
               </a>
             ) : null}
             {communaute ? (
               <a
-                href={communaute.url}
+                href={track(communaute.url, "pied")}
                 rel="sponsored noopener"
                 target="_blank"
                 className="text-[#f1a08f]"

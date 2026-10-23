@@ -9,6 +9,7 @@ const TABLES = {
   links: "tblmEC5w2FEWaOwLV",
   carnet: "tbl9Y59XRWlIN5c1l",
   parcours: "tblVFyBP0XotwEUWZ",
+  clics: "tbliZYx7zZoIm5kvR",
 } as const;
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
@@ -17,11 +18,11 @@ type AirtableRecord = { id: string; fields: Record<string, unknown> };
 const cache = new Map<string, { at: number; data: AirtableRecord[] }>();
 const inflight = new Map<string, Promise<AirtableRecord[]>>();
 
-function readToken(): string | undefined {
+function readToken(name = "AIRTABLE_TOKEN"): string | undefined {
   // `process` exists on the server runtime; guard so a missing global never throws.
   const env = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process
     ?.env;
-  const token = env?.["AIRTABLE_TOKEN"];
+  const token = env?.[name];
   return token && token.trim() ? token.trim() : undefined;
 }
 
@@ -225,4 +226,38 @@ export async function getParcours(): Promise<Record<string, string>> {
     if (key && value) out[key] = value;
   }
   return out;
+}
+
+/* -------------------------------------------------------------------- Clics */
+
+/**
+ * Records one click on a partner link. Uses AIRTABLE_WRITE_TOKEN when set, otherwise
+ * AIRTABLE_TOKEN (which then needs the data.records:write scope). Never throws:
+ * a failed write must never block the redirect.
+ */
+export async function recordClick(click: { linkId: string; page: string; place: string }) {
+  const token = readToken("AIRTABLE_WRITE_TOKEN") ?? readToken();
+  if (!token) return;
+  try {
+    const res = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABLES.clics}`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        typecast: true,
+        records: [
+          {
+            fields: {
+              Date: new Date().toISOString(),
+              Lien: [click.linkId],
+              Page: click.page.slice(0, 200),
+              Emplacement: click.place,
+            },
+          },
+        ],
+      }),
+    });
+    if (!res.ok) console.error(`Airtable clics [${res.status}]: ${await res.text()}`);
+  } catch (e) {
+    console.error("Airtable click write failed", e);
+  }
 }
