@@ -10,6 +10,7 @@ const TABLES = {
   carnet: "tbl9Y59XRWlIN5c1l",
   parcours: "tblVFyBP0XotwEUWZ",
   clics: "tbliZYx7zZoIm5kvR",
+  fichiers: "tblZa7YMlY3bQyvOY",
 } as const;
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
@@ -265,5 +266,45 @@ export async function recordClick(click: {
     if (!res.ok) console.error(`Airtable clics [${res.status}]: ${await res.text()}`);
   } catch (e) {
     console.error("Airtable click write failed", e);
+  }
+}
+
+/* --------------------------------------------------------- Fichiers vendus */
+
+/**
+ * The file sold under `key` (table "Fichiers vendus", first attachment). Read without the
+ * shared cache: Airtable attachment URLs are signed and expire after a few hours.
+ */
+export async function getSoldFile(
+  key: string,
+): Promise<{ url: string; filename: string; type: string } | null> {
+  const token = readToken();
+  if (!token) return null;
+  const qs = new URLSearchParams({
+    filterByFormula: `{Clé}='${key.replace(/'/g, "")}'`,
+    maxRecords: "1",
+  });
+  try {
+    const res = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABLES.fichiers}?${qs}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) {
+      console.error(`Airtable fichiers [${res.status}]: ${await res.text()}`);
+      return null;
+    }
+    const json = (await res.json()) as { records: AirtableRecord[] };
+    const files = json.records[0]?.fields["Fichier"];
+    const file = Array.isArray(files)
+      ? (files[0] as { url?: string; filename?: string; type?: string } | undefined)
+      : undefined;
+    if (!file?.url) return null;
+    return {
+      url: file.url,
+      filename: file.filename || `${key}.zip`,
+      type: file.type || "application/zip",
+    };
+  } catch (e) {
+    console.error("Airtable file read failed", e);
+    return null;
   }
 }

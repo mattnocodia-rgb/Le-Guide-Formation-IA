@@ -93,8 +93,17 @@ export function SiteFooter({
             <Link to="/a-propos" className="text-[#d8d1c2] no-underline hover:text-paper">
               À propos
             </Link>
+            <Link to="/skill-seo-aeo-geo" className="text-[#d8d1c2] no-underline hover:text-paper">
+              Le skill SEO, AEO et GEO
+            </Link>
             <Link to="/mentions-legales" className="text-[#d8d1c2] no-underline hover:text-paper">
               Mentions légales
+            </Link>
+            <Link
+              to="/conditions-de-vente"
+              className="text-[#d8d1c2] no-underline hover:text-paper"
+            >
+              Conditions de vente
             </Link>
             {ressources ? (
               <a
