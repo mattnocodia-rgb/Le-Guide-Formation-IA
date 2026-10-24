@@ -193,7 +193,8 @@ function BuyBox({ className = "" }: { className?: string }) {
         </span>
       )}
       <span className="text-[15px] text-ink-soft">
-        Paiement sécurisé par Stripe · fichier .zip · sans abonnement
+        Paiement sécurisé par Stripe · fichier .zip · sans abonnement ·{" "}
+        <Link to="/conditions-de-vente">conditions de vente</Link>
       </span>
     </div>
   );
@@ -318,6 +319,11 @@ function SkillPage() {
 
       {/* Utilisation */}
       <Section id="utiliser" title="Comment l'utiliser">
+        <p className="m-0 mb-5 text-[17px] leading-relaxed">
+          En résumé ci-dessous ; le{" "}
+          <Link to="/skill-seo-aeo-geo/installation">tutoriel pas à pas</Link> détaille chaque
+          étape, Claude Code compris, avec les solutions aux problèmes courants.
+        </p>
         <ol className="m-0 flex list-decimal flex-col gap-2 pl-6 text-[17px] leading-relaxed marker:font-bold marker:text-accent-ink">
           <li>Achetez le skill : vous recevez un fichier .zip.</li>
           <li>

@@ -99,6 +99,12 @@ export function SiteFooter({
             <Link to="/mentions-legales" className="text-[#d8d1c2] no-underline hover:text-paper">
               Mentions légales
             </Link>
+            <Link
+              to="/conditions-de-vente"
+              className="text-[#d8d1c2] no-underline hover:text-paper"
+            >
+              Conditions de vente
+            </Link>
             {ressources ? (
               <a
                 href={track(ressources.url, "pied")}

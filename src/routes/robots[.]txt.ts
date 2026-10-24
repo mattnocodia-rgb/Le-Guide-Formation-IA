@@ -22,6 +22,8 @@ export const Route = createFileRoute("/robots.txt")({
           // Partner-link redirects: nothing to index, and bots must not inflate click counts.
           "Disallow: /go/",
           "Disallow: /mode-test",
+          "Disallow: /skill-seo-aeo-geo/merci",
+          "Disallow: /skill-seo-aeo-geo/fichier",
           "",
           // Explicitly welcome AI crawlers: being cited by answer engines is a goal of this site.
           ...AI_BOTS.flatMap((bot) => [
@@ -29,6 +31,8 @@ export const Route = createFileRoute("/robots.txt")({
             "Allow: /",
             "Disallow: /go/",
             "Disallow: /mode-test",
+            "Disallow: /skill-seo-aeo-geo/merci",
+            "Disallow: /skill-seo-aeo-geo/fichier",
             "",
           ]),
           `Sitemap: ${absUrl("/sitemap.xml")}`,

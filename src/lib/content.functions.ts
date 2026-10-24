@@ -245,3 +245,27 @@ export const getSkillOffer = createServerFn({ method: "GET" }).handler(async () 
     buyUrl: /^https:\/\/buy\.stripe\.com\/[A-Za-z0-9_-]+$/.test(link) ? link : null,
   };
 });
+
+/** Verifies a skill purchase for the thank-you page (the file itself is served by a server route). */
+export const checkSkillPurchase = createServerFn({ method: "GET" })
+  .validator((d: unknown) => z.object({ sessionId: z.string().max(300) }).parse(d))
+  .handler(async ({ data }) => {
+    const { getParcours } = await import("./airtable.server");
+    const { checkPurchase } = await import("./stripe.server");
+    const parcours = await getParcours();
+    const result = await checkPurchase(data.sessionId, parcours["skill_lien_stripe"] ?? null);
+    return result.ok ? { ok: true as const } : { ok: false as const, reason: result.reason };
+  });
+
+/** Seller details for the terms of sale, edited in Airtable ("Mon parcours"). */
+export const getSaleTerms = createServerFn({ method: "GET" }).handler(async () => {
+  const { getParcours } = await import("./airtable.server");
+  const parcours = await getParcours();
+  const url = parcours["mediateur_url"] ?? "";
+  return {
+    address: parcours["adresse_vendeur"] ?? "Nantes, France",
+    mediator: parcours["mediateur_conso"] ?? null,
+    mediatorUrl: /^https:\/\//.test(url) ? url : null,
+    updated: "24 octobre 2026",
+  };
+});

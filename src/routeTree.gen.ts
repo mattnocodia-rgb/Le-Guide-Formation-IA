@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as AProposRouteImport } from './routes/a-propos'
+import { Route as ConditionsDeVenteRouteImport } from './routes/conditions-de-vente'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as ModeTestRouteImport } from './routes/mode-test'
@@ -20,6 +21,9 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SkillSeoAeoGeoRouteImport } from './routes/skill-seo-aeo-geo'
 import { Route as CategorieSlugRouteImport } from './routes/categorie/$slug'
 import { Route as GoIdRouteImport } from './routes/go.$id'
+import { Route as SkillSeoAeoGeoFichierRouteImport } from './routes/skill-seo-aeo-geo_.fichier'
+import { Route as SkillSeoAeoGeoInstallationRouteImport } from './routes/skill-seo-aeo-geo_.installation'
+import { Route as SkillSeoAeoGeoMerciRouteImport } from './routes/skill-seo-aeo-geo_.merci'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,6 +38,11 @@ const SlugRoute = SlugRouteImport.update({
 const AProposRoute = AProposRouteImport.update({
   id: '/a-propos',
   path: '/a-propos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConditionsDeVenteRoute = ConditionsDeVenteRouteImport.update({
+  id: '/conditions-de-vente',
+  path: '/conditions-de-vente',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
@@ -76,11 +85,28 @@ const GoIdRoute = GoIdRouteImport.update({
   path: '/go/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SkillSeoAeoGeoFichierRoute = SkillSeoAeoGeoFichierRouteImport.update({
+  id: '/skill-seo-aeo-geo_/fichier',
+  path: '/skill-seo-aeo-geo/fichier',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SkillSeoAeoGeoInstallationRoute =
+  SkillSeoAeoGeoInstallationRouteImport.update({
+    id: '/skill-seo-aeo-geo_/installation',
+    path: '/skill-seo-aeo-geo/installation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SkillSeoAeoGeoMerciRoute = SkillSeoAeoGeoMerciRouteImport.update({
+  id: '/skill-seo-aeo-geo_/merci',
+  path: '/skill-seo-aeo-geo/merci',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/a-propos': typeof AProposRoute
+  '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/mode-test': typeof ModeTestRoute
@@ -89,11 +115,15 @@ export interface FileRoutesByFullPath {
   '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
   '/categorie/$slug': typeof CategorieSlugRoute
   '/go/$id': typeof GoIdRoute
+  '/skill-seo-aeo-geo/fichier': typeof SkillSeoAeoGeoFichierRoute
+  '/skill-seo-aeo-geo/installation': typeof SkillSeoAeoGeoInstallationRoute
+  '/skill-seo-aeo-geo/merci': typeof SkillSeoAeoGeoMerciRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/a-propos': typeof AProposRoute
+  '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/mode-test': typeof ModeTestRoute
@@ -102,12 +132,16 @@ export interface FileRoutesByTo {
   '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
   '/categorie/$slug': typeof CategorieSlugRoute
   '/go/$id': typeof GoIdRoute
+  '/skill-seo-aeo-geo/fichier': typeof SkillSeoAeoGeoFichierRoute
+  '/skill-seo-aeo-geo/installation': typeof SkillSeoAeoGeoInstallationRoute
+  '/skill-seo-aeo-geo/merci': typeof SkillSeoAeoGeoMerciRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/a-propos': typeof AProposRoute
+  '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/mode-test': typeof ModeTestRoute
@@ -116,6 +150,9 @@ export interface FileRoutesById {
   '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
   '/categorie/$slug': typeof CategorieSlugRoute
   '/go/$id': typeof GoIdRoute
+  '/skill-seo-aeo-geo_/fichier': typeof SkillSeoAeoGeoFichierRoute
+  '/skill-seo-aeo-geo_/installation': typeof SkillSeoAeoGeoInstallationRoute
+  '/skill-seo-aeo-geo_/merci': typeof SkillSeoAeoGeoMerciRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -123,6 +160,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$slug'
     | '/a-propos'
+    | '/conditions-de-vente'
     | '/llms.txt'
     | '/mentions-legales'
     | '/mode-test'
@@ -131,11 +169,15 @@ export interface FileRouteTypes {
     | '/skill-seo-aeo-geo'
     | '/categorie/$slug'
     | '/go/$id'
+    | '/skill-seo-aeo-geo/fichier'
+    | '/skill-seo-aeo-geo/installation'
+    | '/skill-seo-aeo-geo/merci'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/$slug'
     | '/a-propos'
+    | '/conditions-de-vente'
     | '/llms.txt'
     | '/mentions-legales'
     | '/mode-test'
@@ -144,11 +186,15 @@ export interface FileRouteTypes {
     | '/skill-seo-aeo-geo'
     | '/categorie/$slug'
     | '/go/$id'
+    | '/skill-seo-aeo-geo/fichier'
+    | '/skill-seo-aeo-geo/installation'
+    | '/skill-seo-aeo-geo/merci'
   id:
     | '__root__'
     | '/'
     | '/$slug'
     | '/a-propos'
+    | '/conditions-de-vente'
     | '/llms.txt'
     | '/mentions-legales'
     | '/mode-test'
@@ -157,12 +203,16 @@ export interface FileRouteTypes {
     | '/skill-seo-aeo-geo'
     | '/categorie/$slug'
     | '/go/$id'
+    | '/skill-seo-aeo-geo_/fichier'
+    | '/skill-seo-aeo-geo_/installation'
+    | '/skill-seo-aeo-geo_/merci'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SlugRoute: typeof SlugRoute
   AProposRoute: typeof AProposRoute
+  ConditionsDeVenteRoute: typeof ConditionsDeVenteRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   ModeTestRoute: typeof ModeTestRoute
@@ -171,6 +221,9 @@ export interface RootRouteChildren {
   SkillSeoAeoGeoRoute: typeof SkillSeoAeoGeoRoute
   CategorieSlugRoute: typeof CategorieSlugRoute
   GoIdRoute: typeof GoIdRoute
+  SkillSeoAeoGeoFichierRoute: typeof SkillSeoAeoGeoFichierRoute
+  SkillSeoAeoGeoInstallationRoute: typeof SkillSeoAeoGeoInstallationRoute
+  SkillSeoAeoGeoMerciRoute: typeof SkillSeoAeoGeoMerciRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -194,6 +247,13 @@ declare module '@tanstack/react-router' {
       path: '/a-propos'
       fullPath: '/a-propos'
       preLoaderRoute: typeof AProposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conditions-de-vente': {
+      id: '/conditions-de-vente'
+      path: '/conditions-de-vente'
+      fullPath: '/conditions-de-vente'
+      preLoaderRoute: typeof ConditionsDeVenteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/llms.txt': {
@@ -252,6 +312,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/skill-seo-aeo-geo_/fichier': {
+      id: '/skill-seo-aeo-geo_/fichier'
+      path: '/skill-seo-aeo-geo/fichier'
+      fullPath: '/skill-seo-aeo-geo/fichier'
+      preLoaderRoute: typeof SkillSeoAeoGeoFichierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/skill-seo-aeo-geo_/installation': {
+      id: '/skill-seo-aeo-geo_/installation'
+      path: '/skill-seo-aeo-geo/installation'
+      fullPath: '/skill-seo-aeo-geo/installation'
+      preLoaderRoute: typeof SkillSeoAeoGeoInstallationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/skill-seo-aeo-geo_/merci': {
+      id: '/skill-seo-aeo-geo_/merci'
+      path: '/skill-seo-aeo-geo/merci'
+      fullPath: '/skill-seo-aeo-geo/merci'
+      preLoaderRoute: typeof SkillSeoAeoGeoMerciRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -259,6 +340,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SlugRoute: SlugRoute,
   AProposRoute: AProposRoute,
+  ConditionsDeVenteRoute: ConditionsDeVenteRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   ModeTestRoute: ModeTestRoute,
@@ -267,6 +349,9 @@ const rootRouteChildren: RootRouteChildren = {
   SkillSeoAeoGeoRoute: SkillSeoAeoGeoRoute,
   CategorieSlugRoute: CategorieSlugRoute,
   GoIdRoute: GoIdRoute,
+  SkillSeoAeoGeoFichierRoute: SkillSeoAeoGeoFichierRoute,
+  SkillSeoAeoGeoInstallationRoute: SkillSeoAeoGeoInstallationRoute,
+  SkillSeoAeoGeoMerciRoute: SkillSeoAeoGeoMerciRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
