@@ -5,6 +5,7 @@ export type PurchaseCheck =
   | { ok: false; reason: "config" | "invalid" | "unpaid" | "other-product" | "error" };
 
 type StripeObject = {
+  status?: string;
   payment_status?: string;
   payment_link?: string | null;
   url?: string;
@@ -38,7 +39,11 @@ export async function checkPurchase(
   try {
     const session = await stripeGet(`checkout/sessions/${sessionId}`, key);
     if (!session) return { ok: false, reason: "invalid" };
-    if (session.payment_status !== "paid") return { ok: false, reason: "unpaid" };
+    // A 100 % promotion code completes the session with nothing to pay: "no_payment_required".
+    const settled =
+      session.payment_status === "paid" ||
+      (session.status === "complete" && session.payment_status === "no_payment_required");
+    if (!settled) return { ok: false, reason: "unpaid" };
     const linkId = typeof session.payment_link === "string" ? session.payment_link : null;
     if (!linkId) return { ok: false, reason: "other-product" };
     const link = await stripeGet(`payment_links/${linkId}`, key);

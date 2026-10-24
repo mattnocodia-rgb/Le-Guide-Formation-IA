@@ -44,6 +44,24 @@ describe("checkPurchase", () => {
     expect(await checkPurchase(SESSION, LINK)).toEqual({ ok: true, email: "a@b.fr" });
   });
 
+  it("accepts a completed session made free by a 100 % promotion code", async () => {
+    vi.stubEnv("STRIPE_SECRET_KEY", "rk_test_x");
+    mockStripe(
+      { status: "complete", payment_status: "no_payment_required", payment_link: "plink_1" },
+      { url: LINK },
+    );
+    expect(await checkPurchase(SESSION, LINK)).toEqual({ ok: true, email: null });
+  });
+
+  it("refuses a free session that was never completed", async () => {
+    vi.stubEnv("STRIPE_SECRET_KEY", "rk_test_x");
+    mockStripe(
+      { status: "open", payment_status: "no_payment_required", payment_link: "plink_1" },
+      { url: LINK },
+    );
+    expect(await checkPurchase(SESSION, LINK)).toEqual({ ok: false, reason: "unpaid" });
+  });
+
   it("refuses an unpaid session or another product", async () => {
     vi.stubEnv("STRIPE_SECRET_KEY", "rk_test_x");
     mockStripe({ payment_status: "unpaid", payment_link: "plink_1" }, { url: LINK });
