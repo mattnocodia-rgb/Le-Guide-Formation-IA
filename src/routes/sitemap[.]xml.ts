@@ -19,6 +19,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             lastmod: articles.find((a) => a.categorySlug === c.slug)?.updatedAt ?? null,
           })),
           { loc: absUrl("/a-propos"), lastmod: null },
+          { loc: absUrl("/skill-seo-aeo-geo"), lastmod: null },
           ...articles.map((a) => ({ loc: absUrl(`/${a.slug}`), lastmod: a.updatedAt })),
         ];
         const body =

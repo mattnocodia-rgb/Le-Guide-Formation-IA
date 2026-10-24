@@ -26,7 +26,13 @@ export const Route = createFileRoute("/llms.txt")({
             );
           lines.push("");
         }
-        lines.push("## À propos", "", `- [Qui écrit ce guide](${absUrl("/a-propos")})`, "");
+        lines.push(
+          "## À propos",
+          "",
+          `- [Qui écrit ce guide](${absUrl("/a-propos")})`,
+          `- [Le skill Claude SEO / AEO / GEO utilisé pour écrire et auditer ce guide](${absUrl("/skill-seo-aeo-geo")})`,
+          "",
+        );
         return new Response(lines.join("\n"), {
           headers: {
             "content-type": "text/plain; charset=utf-8",

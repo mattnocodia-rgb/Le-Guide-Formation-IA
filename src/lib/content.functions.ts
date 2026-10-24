@@ -233,3 +233,15 @@ export const getArticle = createServerFn({ method: "GET" })
       related: [...sameCategory, ...others].slice(0, 3).map(toSummary),
     };
   });
+
+/** Sale settings of the SEO/AEO/GEO skill, edited in Airtable ("Mon parcours": skill_prix, skill_lien_stripe). */
+export const getSkillOffer = createServerFn({ method: "GET" }).handler(async () => {
+  const { getParcours } = await import("./airtable.server");
+  const parcours = await getParcours();
+  const link = parcours["skill_lien_stripe"] ?? "";
+  return {
+    price: parcours["skill_prix"] ?? null,
+    // Only Stripe-hosted checkout links are accepted, so a typo can never send buyers elsewhere.
+    buyUrl: /^https:\/\/buy\.stripe\.com\/[A-Za-z0-9_-]+$/.test(link) ? link : null,
+  };
+});

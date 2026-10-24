@@ -17,6 +17,7 @@ import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as ModeTestRouteImport } from './routes/mode-test'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SkillSeoAeoGeoRouteImport } from './routes/skill-seo-aeo-geo'
 import { Route as CategorieSlugRouteImport } from './routes/categorie/$slug'
 import { Route as GoIdRouteImport } from './routes/go.$id'
 
@@ -60,6 +61,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SkillSeoAeoGeoRoute = SkillSeoAeoGeoRouteImport.update({
+  id: '/skill-seo-aeo-geo',
+  path: '/skill-seo-aeo-geo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategorieSlugRoute = CategorieSlugRouteImport.update({
   id: '/categorie/$slug',
   path: '/categorie/$slug',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/mode-test': typeof ModeTestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
   '/categorie/$slug': typeof CategorieSlugRoute
   '/go/$id': typeof GoIdRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/mode-test': typeof ModeTestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
   '/categorie/$slug': typeof CategorieSlugRoute
   '/go/$id': typeof GoIdRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/mode-test': typeof ModeTestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
   '/categorie/$slug': typeof CategorieSlugRoute
   '/go/$id': typeof GoIdRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/mode-test'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/skill-seo-aeo-geo'
     | '/categorie/$slug'
     | '/go/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/mode-test'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/skill-seo-aeo-geo'
     | '/categorie/$slug'
     | '/go/$id'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/mode-test'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/skill-seo-aeo-geo'
     | '/categorie/$slug'
     | '/go/$id'
   fileRoutesById: FileRoutesById
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   ModeTestRoute: typeof ModeTestRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SkillSeoAeoGeoRoute: typeof SkillSeoAeoGeoRoute
   CategorieSlugRoute: typeof CategorieSlugRoute
   GoIdRoute: typeof GoIdRoute
 }
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/skill-seo-aeo-geo': {
+      id: '/skill-seo-aeo-geo'
+      path: '/skill-seo-aeo-geo'
+      fullPath: '/skill-seo-aeo-geo'
+      preLoaderRoute: typeof SkillSeoAeoGeoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/categorie/$slug': {
       id: '/categorie/$slug'
       path: '/categorie/$slug'
@@ -244,6 +264,7 @@ const rootRouteChildren: RootRouteChildren = {
   ModeTestRoute: ModeTestRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SkillSeoAeoGeoRoute: SkillSeoAeoGeoRoute,
   CategorieSlugRoute: CategorieSlugRoute,
   GoIdRoute: GoIdRoute,
 }
