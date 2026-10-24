@@ -40,6 +40,10 @@ const CONTENTS = [
     text: "Cannibalisation, chiffres contradictoires, vocabulaire périmé, articles de qualité inégale, pages mal indexées : ce qu'on ne voit qu'en comparant les pages entre elles.",
   },
   {
+    file: "Un guide PDF pas à pas",
+    text: "10 pages pour installer le skill, réaliser un premier audit, lire le rapport et l'adapter à votre métier. Avec des demandes prêtes à copier.",
+  },
+  {
     file: "Un gabarit de rédaction",
     text: "Le patron suivi par chaque article de ce guide : réponse d'abord, questions en intertitres, encadré d'expérience, FAQ, sources datées.",
   },
@@ -96,12 +100,12 @@ const COMPAT: { where: string; support: Support; how: string }[] = [
   {
     where: "Claude (web, ordinateur, mobile)",
     support: "oui",
-    how: "Toutes les offres, gratuite comprise. Activer « Création et modification de fichiers », puis importer le .zip dans Personnaliser → Skills.",
+    how: "Toutes les offres, gratuite comprise. Installation en quelques clics, détaillée dans le guide PDF.",
   },
   {
     where: "Claude Code",
     support: "oui",
-    how: "Déposer le dossier dans ~/.claude/skills/ (ou .claude/skills/ dans un projet).",
+    how: "Installation automatique ou manuelle, détaillée dans le guide PDF.",
   },
   {
     where: "Codex CLI, Gemini CLI, GitHub Copilot, Cursor…",
@@ -111,7 +115,7 @@ const COMPAT: { where: string; support: Support; how: string }[] = [
   {
     where: "ChatGPT, Mistral et autres assistants",
     support: "partiel",
-    how: "Pas de prise en charge native connue. On peut coller les instructions dans un GPT personnalisé ou un agent, mais les fichiers de référence ne se chargent pas d'eux-mêmes.",
+    how: "Pas de prise en charge native connue de ce format.",
   },
 ];
 const SUPPORT_LABEL: Record<Support, string> = {
@@ -119,13 +123,6 @@ const SUPPORT_LABEL: Record<Support, string> = {
   compatible: "Format compatible",
   partiel: "À adapter",
 };
-
-const PROMPTS = [
-  "Audite les articles de https://monsite.fr en SEO, AEO et GEO.",
-  "Cet article serait-il cité par une IA ? Dis-moi ce qui manque.",
-  "Vérifie que mes articles ne se contredisent pas sur les chiffres.",
-  "Écris un article sur [sujet] qui coche la grille dès la publication.",
-];
 
 const SECTORS = [
   {
@@ -346,37 +343,24 @@ function SkillPage() {
 
       {/* Utilisation */}
       <Section id="utiliser" title="Comment l'utiliser">
-        <p className="m-0 mb-5 text-[17px] leading-relaxed">
-          En résumé ci-dessous ; le{" "}
-          <Link to="/skill-seo-aeo-geo/installation">tutoriel pas à pas</Link> détaille chaque
-          étape, Claude Code compris, avec les solutions aux problèmes courants.
+        <p className="m-0 max-w-[720px] text-[17px] leading-relaxed">
+          <strong>Cinq minutes d'installation, aucune ligne de code.</strong> Ensuite, vous posez
+          votre question en français, comme à un collègue : Claude reconnaît la demande et applique
+          la méthode du skill de lui-même.
         </p>
-        <ol className="m-0 flex list-decimal flex-col gap-2 pl-6 text-[17px] leading-relaxed marker:font-bold marker:text-accent-ink">
-          <li>Achetez le skill : vous recevez un fichier .zip.</li>
-          <li>
-            Dans les paramètres de Claude, activez{" "}
-            <strong>« Création et modification de fichiers »</strong>.
-          </li>
-          <li>
-            Dans <strong>Personnaliser → Skills</strong>, ajoutez un skill et importez le fichier
-            .zip.
-          </li>
-          <li>Posez votre question, en français. Par exemple :</li>
-        </ol>
-        <ul className="m-0 mt-4 flex list-none flex-col gap-2 p-0">
-          {PROMPTS.map((p) => (
-            <li
-              key={p}
-              className="rounded-md border border-rule bg-paper-light px-4 py-2.5 font-mono text-[14.5px]"
-            >
-              {p}
-            </li>
-          ))}
-        </ul>
-        <p className="m-0 mt-5 text-[15.5px] leading-relaxed text-ink-soft">
-          Pour auditer un site en ligne, Claude doit pouvoir consulter le web. Sans accès au web, le
-          skill audite les textes que vous collez ou les exports que vous joignez.
-        </p>
+        <div className="sheet relative mt-8 p-6 md:p-8" style={r("0.5deg")}>
+          <span aria-hidden="true" className="tape -top-2.5 left-10" style={r("-3deg")} />
+          <p className="note m-0 text-[24px]">livré avec le skill</p>
+          <h3 className="m-0 mt-1 text-[22px] leading-tight">
+            Un guide PDF de 10 pages, pas à pas
+          </h3>
+          <ul className="m-0 mt-4 flex list-disc flex-col gap-1.5 pl-5 text-[16.5px] leading-relaxed text-ink-soft marker:text-accent">
+            <li>l'installation, écran par écran, dans Claude et dans Claude Code ;</li>
+            <li>votre premier audit et la lecture du rapport ;</li>
+            <li>cinq usages, avec des demandes prêtes à copier ;</li>
+            <li>les réglages selon votre métier, la grille complète, le dépannage.</li>
+          </ul>
+        </div>
       </Section>
 
       {/* Compatibilité */}

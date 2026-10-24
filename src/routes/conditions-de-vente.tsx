@@ -46,8 +46,9 @@ function Terms() {
             Les présentes conditions s'appliquent à la vente en ligne du{" "}
             <Link to="/skill-seo-aeo-geo">skill Claude SEO / AEO / GEO</Link> (ci-après « le skill
             ») : un fichier .zip contenant des instructions et des grilles de contrôle à installer
-            dans Claude ou un outil compatible. Le skill est un contenu numérique fourni sans
-            support matériel. Il ne comprend ni accompagnement ni prestation personnalisée.
+            dans Claude ou un outil compatible, accompagné d'un guide d'utilisation au format PDF.
+            Le skill est un contenu numérique fourni sans support matériel. Il ne comprend ni
+            accompagnement ni prestation personnalisée.
           </p>
           <p>
             Le skill fonctionne avec des services tiers (Claude, édité par Anthropic, ou d'autres

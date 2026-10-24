@@ -24,7 +24,8 @@ export const Route = createFileRoute("/skill-seo-aeo-geo_/merci")({
 function Thanks() {
   const result = Route.useLoaderData();
   const { session_id } = Route.useSearch();
-  const fileUrl = `/skill-seo-aeo-geo/fichier?session_id=${encodeURIComponent(session_id ?? "")}`;
+  const fileUrl = (f: "skill" | "guide") =>
+    `/skill-seo-aeo-geo/fichier?f=${f}&session_id=${encodeURIComponent(session_id ?? "")}`;
 
   return (
     <PageFrame>
@@ -36,22 +37,22 @@ function Thanks() {
               Merci pour votre achat !
             </h1>
             <p className="m-0 text-lg leading-relaxed text-ink-soft">
-              Votre paiement est confirmé. Téléchargez le skill, puis suivez le tutoriel
-              d'installation : cinq minutes suffisent.
+              Votre paiement est confirmé. Téléchargez les deux fichiers, puis ouvrez le guide : il
+              vous accompagne de l'installation à votre premier audit, en cinq minutes.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a href={fileUrl} className="btn-ink" download>
-                Télécharger le skill (.zip)
+              <a href={fileUrl("guide")} className="btn-ink" download>
+                1. Le guide pas à pas (PDF)
               </a>
-              <Link to="/skill-seo-aeo-geo/installation" className="btn-outline">
-                Ouvrir le tutoriel
-              </Link>
+              <a href={fileUrl("skill")} className="btn-ink" download>
+                2. Le skill (.zip)
+              </a>
             </div>
             <div className="sheet mt-10 p-5">
               <p className="m-0 text-[15.5px] leading-relaxed">
                 <strong>Gardez cette page dans vos favoris :</strong> son adresse vous permet de
-                retélécharger le fichier. Le reçu Stripe envoyé par e-mail fait foi de votre achat.
-                Un problème ? Écrivez à <a href={`mailto:${CONTACT}`}>{CONTACT}</a>.
+                retélécharger les fichiers. Le reçu Stripe envoyé par e-mail fait foi de votre
+                achat. Un problème ? Écrivez à <a href={`mailto:${CONTACT}`}>{CONTACT}</a>.
               </p>
             </div>
           </>
@@ -67,7 +68,7 @@ function Thanks() {
             </p>
             <p className="m-0 mt-4 text-lg leading-relaxed text-ink-soft">
               Si vous avez payé, écrivez à <a href={`mailto:${CONTACT}`}>{CONTACT}</a> avec votre
-              reçu Stripe : je vous envoie le fichier.
+              reçu Stripe : je vous envoie les fichiers.
             </p>
             <p className="m-0 mt-8">
               <Link to="/skill-seo-aeo-geo">← Retour à la présentation du skill</Link>
