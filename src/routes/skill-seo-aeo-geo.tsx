@@ -41,7 +41,7 @@ const CONTENTS = [
   },
   {
     file: "Un guide PDF pas à pas",
-    text: "11 pages pour installer le skill, réaliser un premier audit, écrire un premier article et l'adapter à votre métier. Avec des demandes prêtes à copier.",
+    text: "12 pages pour installer le skill, réaliser un premier audit, écrire un premier article et l'adapter à votre métier. Avec des demandes prêtes à copier.",
   },
   {
     file: "Un mode rédaction",
@@ -348,7 +348,7 @@ function SkillPage() {
           <span aria-hidden="true" className="tape -top-2.5 left-10" style={r("-3deg")} />
           <p className="note m-0 text-[24px]">livré avec le skill</p>
           <h3 className="m-0 mt-1 text-[22px] leading-tight">
-            Un guide PDF de 11 pages, pas à pas
+            Un guide PDF de 12 pages, pas à pas
           </h3>
           <ul className="m-0 mt-4 flex list-disc flex-col gap-1.5 pl-5 text-[16.5px] leading-relaxed text-ink-soft marker:text-accent">
             <li>l'installation, écran par écran, dans Claude et dans Claude Code ;</li>
