@@ -217,6 +217,7 @@ export const getArticle = createServerFn({ method: "GET" })
       metaTitle: article.metaTitle,
       metaDescription: article.metaDescription,
       masterclass: article.masterclass,
+      cubeBox: article.cubeBox,
       html: body.html,
       toc: body.toc,
       faq: parseFaq(applyParcours(article.faq, parcours), cube),

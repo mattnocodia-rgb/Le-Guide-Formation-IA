@@ -1,6 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { track } from "@/lib/track";
-import { useState } from "react";
 import type React from "react";
 
 import { ArticleCard, LinkedInIcon } from "@/components/site/Cards";
@@ -151,6 +150,13 @@ function ArticlePage() {
                 {a.excerpt}
               </p>
             ) : null}
+            <p className="m-0 text-[15px] text-ink-soft">
+              Par{" "}
+              <Link to="/a-propos" className="font-semibold">
+                Matthieu
+              </Link>
+              , responsable commercial et product builder
+            </p>
             <p className="m-0 text-sm text-muted-foreground">
               {a.updatedAt ? (
                 <strong className="font-semibold text-ink">
@@ -185,8 +191,9 @@ function ArticlePage() {
               <path d="M12 8h.01" />
             </svg>
             <span>
-              Cet article contient des liens partenaires vers l'École Cube. Si vous vous inscrivez
-              via ces liens, je perçois une commission, sans surcoût pour vous.
+              Je suis ambassadeur de l'École Cube : cet article contient des liens partenaires vers
+              l'école. Si vous vous inscrivez via ces liens, je perçois une commission, sans surcoût
+              pour vous.
             </span>
           </aside>
 
@@ -247,7 +254,7 @@ function ArticlePage() {
             </div>
           ) : null}
 
-          <AuthorBox />
+          <AuthorBox withCube={a.cubeBox} />
 
           {a.faq.length > 0 ? <Faq items={a.faq} /> : null}
 
@@ -388,7 +395,37 @@ const RAISONS = [
   },
 ];
 
-function AuthorBox() {
+function AuthorBox({ withCube }: { withCube: boolean }) {
+  if (!withCube) {
+    return (
+      <aside
+        aria-label="L'auteur"
+        className="flex flex-col gap-2.5 border-t-[3px] border-ink bg-paper-light p-6"
+      >
+        <p className="note m-0 text-[26px]">L'auteur</p>
+        <p className="m-0 text-[17px] leading-[1.65] text-[#2b2823]">
+          Je suis Matthieu, ingénieur BTP de formation, responsable commercial et product builder
+          certifié (titre RNCP Product builder no-code, niveau 6) : j'allie les deux au quotidien.
+          Je crée des sites web et j'améliore les process des entreprises. Je ne suis pas là pour
+          vous orienter ni vous conseiller : je partage de l'information et mon parcours.
+        </p>
+        <div className="flex flex-wrap gap-x-6 gap-y-1">
+          <Link to="/a-propos" className="py-1.5 text-[15px] font-semibold">
+            Mon parcours →
+          </Link>
+          <a
+            href={LINKEDIN_URL}
+            rel="noopener me"
+            target="_blank"
+            className="inline-flex items-center gap-2 py-1.5 text-[15px] font-semibold"
+          >
+            <LinkedInIcon />
+            Mon profil LinkedIn →
+          </a>
+        </div>
+      </aside>
+    );
+  }
   return (
     <aside
       aria-label="L'auteur"
@@ -429,44 +466,31 @@ function AuthorBox() {
 }
 
 function Faq({ items }: { items: { question: string; answerHtml: string }[] }) {
-  const [open, setOpen] = useState(0);
   return (
     <section aria-labelledby="faq" className="flex flex-col gap-3">
       <h2 id="faq" className="m-0 mb-2 text-[31px]">
         Questions fréquentes
       </h2>
-      {items.map((f, i) => {
-        const isOpen = open === i;
-        const panelId = `faq-panel-${i}`;
-        return (
-          <div key={f.question} className="bg-sheet shadow-[0_6px_16px_-12px_rgb(31_29_26/0.4)]">
-            <h3 className="m-0 font-sans text-base font-semibold tracking-normal">
-              <button
-                type="button"
-                aria-expanded={isOpen}
-                aria-controls={panelId}
-                onClick={() => setOpen(isOpen ? -1 : i)}
-                className="flex min-h-14 w-full cursor-pointer items-center justify-between gap-4 border-0 bg-transparent px-5 py-4 text-left text-ink"
-              >
-                <span>{f.question}</span>
-                <span
-                  aria-hidden="true"
-                  className="font-hand text-3xl leading-none text-accent-ink"
-                >
-                  {isOpen ? "−" : "+"}
-                </span>
-              </button>
-            </h3>
-            {/* Answers stay in the HTML (hidden, not removed) so crawlers read every one. */}
-            <div
-              id={panelId}
-              hidden={!isOpen}
-              className="prose-article prose-compact px-5 pb-5 text-ink-soft"
-              dangerouslySetInnerHTML={{ __html: f.answerHtml }}
-            />
-          </div>
-        );
-      })}
+      {/* Native <details>: every answer is in the HTML and readable without JavaScript. */}
+      {items.map((f, i) => (
+        <details
+          key={f.question}
+          open={i === 0}
+          className="group bg-sheet shadow-[0_6px_16px_-12px_rgb(31_29_26/0.4)]"
+        >
+          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left text-base font-semibold text-ink [&::-webkit-details-marker]:hidden">
+            <h3 className="m-0 font-sans text-base font-semibold tracking-normal">{f.question}</h3>
+            <span aria-hidden="true" className="font-hand text-3xl leading-none text-accent-ink">
+              <span className="group-open:hidden">+</span>
+              <span className="hidden group-open:inline">−</span>
+            </span>
+          </summary>
+          <div
+            className="prose-article prose-compact px-5 pb-5 text-ink-soft"
+            dangerouslySetInnerHTML={{ __html: f.answerHtml }}
+          />
+        </details>
+      ))}
     </section>
   );
 }
