@@ -83,7 +83,7 @@ const BENEFITS = [
   },
   {
     title: "En français, pour tout type de site",
-    text: "Santé, SaaS, e-commerce, formation : il s'applique à tout site qui publie des articles, et n'impose pas le gabarit aux témoignages.",
+    text: "Santé, artisanat, SaaS, e-commerce, formation : il adapte ses contrôles au secteur, et n'impose pas le gabarit aux témoignages.",
   },
   {
     title: "Acheté une fois, utilisé sans limite",
@@ -127,10 +127,37 @@ const PROMPTS = [
   "Écris un article sur [sujet] qui coche la grille dès la publication.",
 ];
 
+const SECTORS = [
+  {
+    who: "Santé et bien-être",
+    example: "une application sur l'endométriose, un cabinet de sophrologie",
+    what: "Le skill renforce l'exigence sur les sources, la qualification de l'auteur et les promesses de résultat, sur lesquelles Google et les IA sont plus sévères. Il ne remplace pas la relecture par un professionnel de santé, et le dit.",
+  },
+  {
+    who: "Artisans et activités locales",
+    example: "un charpentier, un praticien en cabinet, un commerce",
+    what: "Il vérifie la zone d'intervention, les pages par service, les réalisations datées et localisées. Il rappelle que la fiche Google de l'établissement et les avis pèsent souvent plus lourd que le blog : ces points-là, il vous les liste, sans pouvoir les auditer.",
+  },
+  {
+    who: "SaaS, formation, conseil, médias",
+    example: "un logiciel, un organisme de formation, un blog expert",
+    what: "Le terrain naturel de la grille : guides, comparatifs, articles de fond, et la cohérence entre des dizaines de pages.",
+  },
+  {
+    who: "Boutiques en ligne",
+    example: "un e-commerce, une marque",
+    what: "Les guides d'achat suivent le gabarit ; les fiches produit ont leurs propres contrôles (caractéristiques, avis, données structurées produit).",
+  },
+];
+
 const FAQ = [
   {
     q: "Quelle différence entre SEO, AEO et GEO ?",
     a: "Le SEO sert à être trouvé par les moteurs de recherche. L'AEO (Answer Engine Optimization) sert à être compris et extrait par les moteurs de réponse comme ChatGPT ou Perplexity. Le GEO (Generative Engine Optimization) sert à être choisi et cité par une IA plutôt qu'un concurrent. Les trois s'empilent : sans SEO, pas d'AEO ; sans AEO, pas de GEO.",
+  },
+  {
+    q: "Le skill fonctionne-t-il pour un artisan ou un thérapeute ?",
+    a: "Oui. Il audite le contenu de n'importe quel site. Pour une activité locale, il ajoute les contrôles propres au local et liste ce qui se joue hors du site, comme la fiche Google et les avis. Pour la santé et le bien-être, il renforce l'exigence sur les sources et les promesses de résultat.",
   },
   {
     q: "Faut-il savoir coder pour utiliser le skill ?",
@@ -353,7 +380,30 @@ function SkillPage() {
       </Section>
 
       {/* Compatibilité */}
-      <Section id="compatibilite" kicker="la vraie question" title="Fonctionne-t-il partout ?">
+      <Section
+        id="secteurs"
+        kicker="la vraie question"
+        title="Fonctionne-t-il pour tous les métiers ?"
+      >
+        <p className="m-0 max-w-[720px] text-[17px] leading-relaxed">
+          <strong>
+            Oui : il audite du contenu, et tout site qui publie du contenu peut s'en servir.
+          </strong>{" "}
+          Au début de chaque audit, il identifie le secteur et ajoute les contrôles qui comptent
+          pour lui.
+        </p>
+        <ul className="m-0 mt-6 grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2">
+          {SECTORS.map((x) => (
+            <li key={x.who} className="sheet p-5">
+              <h3 className="m-0 text-[19px] leading-snug">{x.who}</h3>
+              <p className="note m-0 mt-1 text-[19px]">ex. : {x.example}</p>
+              <p className="m-0 mt-2 text-[15.5px] leading-relaxed text-ink-soft">{x.what}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section id="compatibilite" title="Avec quels outils fonctionne-t-il ?">
         <p className="m-0 max-w-[720px] text-[17px] leading-relaxed">
           <strong>
             Oui dans tout l'univers Claude, et le format est lu par la plupart des outils de code
