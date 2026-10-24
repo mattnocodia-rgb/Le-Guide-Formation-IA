@@ -41,11 +41,11 @@ const CONTENTS = [
   },
   {
     file: "Un guide PDF pas à pas",
-    text: "10 pages pour installer le skill, réaliser un premier audit, lire le rapport et l'adapter à votre métier. Avec des demandes prêtes à copier.",
+    text: "11 pages pour installer le skill, réaliser un premier audit, écrire un premier article et l'adapter à votre métier. Avec des demandes prêtes à copier.",
   },
   {
-    file: "Un gabarit de rédaction",
-    text: "Le patron suivi par chaque article de ce guide : réponse d'abord, questions en intertitres, encadré d'expérience, FAQ, sources datées.",
+    file: "Un mode rédaction",
+    text: "Demandez un article : il arrive champ par champ, prêt à coller dans votre site (WordPress, Wix, Webflow…), écrit avec votre voix et la grille cochée dès la publication.",
   },
 ];
 
@@ -60,7 +60,7 @@ const STEPS = [
   },
   {
     title: "Vous agissez",
-    text: "Un plan d'action priorisé, et des réécritures prêtes à publier.",
+    text: "Un plan d'action priorisé, ou un article prêt à coller dans votre site, champ par champ.",
   },
 ];
 
@@ -149,6 +149,10 @@ const FAQ = [
     a: "Oui. Il audite le contenu de n'importe quel site. Pour une activité locale, il ajoute les contrôles propres au local et liste ce qui se joue hors du site, comme la fiche Google et les avis. Pour la santé et le bien-être, il renforce l'exigence sur les sources et les promesses de résultat.",
   },
   {
+    q: "Le skill peut-il écrire mes articles ?",
+    a: "Oui. Demandez « écris un article sur… » : il vous pose quelques questions la première fois (métier, ville, ton), puis livre l'article champ par champ, prêt à coller dans votre site. Il n'invente ni chiffre ni témoignage : il vous les demande.",
+  },
+  {
     q: "Faut-il savoir coder pour utiliser le skill ?",
     a: "Non. L'installation prend cinq minutes, sans code, et le guide PDF fourni la détaille pas à pas. Ensuite, on pose ses questions en français.",
   },
@@ -172,7 +176,7 @@ export const Route = createFileRoute("/skill-seo-aeo-geo")({
     const head = pageHead({
       title: `Skill Claude SEO, AEO et GEO : auditer et écrire pour Google et les IA — ${SITE_NAME}`,
       description:
-        "Le skill Claude avec lequel ce guide a été écrit et audité : 32 contrôles SEO, AEO et GEO, une méthode d'audit de site entier et un gabarit de rédaction. Ce qu'il contient, comment il marche, où il fonctionne.",
+        "Le skill Claude avec lequel ce guide a été écrit et audité : 32 contrôles SEO, AEO et GEO, un audit de site entier et un mode rédaction qui livre des articles prêts à coller. Ce qu'il contient, comment il marche, où il fonctionne.",
       path: PATH,
     });
     return {
@@ -344,11 +348,12 @@ function SkillPage() {
           <span aria-hidden="true" className="tape -top-2.5 left-10" style={r("-3deg")} />
           <p className="note m-0 text-[24px]">livré avec le skill</p>
           <h3 className="m-0 mt-1 text-[22px] leading-tight">
-            Un guide PDF de 10 pages, pas à pas
+            Un guide PDF de 11 pages, pas à pas
           </h3>
           <ul className="m-0 mt-4 flex list-disc flex-col gap-1.5 pl-5 text-[16.5px] leading-relaxed text-ink-soft marker:text-accent">
             <li>l'installation, écran par écran, dans Claude et dans Claude Code ;</li>
             <li>votre premier audit et la lecture du rapport ;</li>
+            <li>votre premier article, livré champ par champ ;</li>
             <li>cinq usages, avec des demandes prêtes à copier ;</li>
             <li>les réglages selon votre métier, la grille complète, le dépannage.</li>
           </ul>
