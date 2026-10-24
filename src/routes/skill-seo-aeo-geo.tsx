@@ -29,7 +29,7 @@ const LAYERS = [
 const CONTENTS = [
   {
     file: "La méthode d'audit",
-    text: "Six étapes : inventaire du site, lecture des articles, contrôle, comparaison entre articles, rapport priorisé, réécriture.",
+    text: "Une démarche complète, de l'inventaire du site au plan d'action, que Claude applique de lui-même.",
   },
   {
     file: "La grille de 32 contrôles",
@@ -51,24 +51,16 @@ const CONTENTS = [
 
 const STEPS = [
   {
-    title: "Vous demandez un audit, ou un article",
-    text: "« Audite le blog de monsite.fr », « vérifie cet article », « écris un article sur… ». Claude reconnaît la demande et charge le skill tout seul.",
+    title: "Vous demandez",
+    text: "Un audit de votre site, la vérification d'un article ou un nouvel article, en français.",
   },
   {
-    title: "Le skill fait l'inventaire",
-    text: "Il lit le sitemap (ou l'export que vous lui donnez), compte les pages, et vous dit combien il en a lu en entier : pas d'audit sur un échantillon caché.",
+    title: "Il analyse",
+    text: "Chaque page, puis le site dans son ensemble : c'est là qu'apparaissent les doublons et les contradictions.",
   },
   {
-    title: "Il contrôle, puis compare",
-    text: "Chaque article passe les 22 contrôles paragraphe et article. Ensuite, les 10 contrôles site : c'est là qu'apparaissent les doublons et les chiffres qui se contredisent.",
-  },
-  {
-    title: "Il livre un plan d'action",
-    text: "Les problèmes à plus fort impact d'abord. Pour chaque action : ce qu'elle corrige, et ce qu'elle ne corrige pas.",
-  },
-  {
-    title: "Il réécrit, ou vous donne le prompt",
-    text: "Il réécrit l'article au gabarit. Si votre site passe par un outil comme Lovable ou WordPress, il rédige un prompt prêt à coller, avec ce qu'il ne faut surtout pas changer.",
+    title: "Vous agissez",
+    text: "Un plan d'action priorisé, et des réécritures prêtes à publier.",
   },
 ];
 
@@ -158,11 +150,11 @@ const FAQ = [
   },
   {
     q: "Faut-il savoir coder pour utiliser le skill ?",
-    a: "Non. Sur Claude, l'installation consiste à importer un fichier .zip dans les réglages, puis à poser sa question en français.",
+    a: "Non. L'installation prend cinq minutes, sans code, et le guide PDF fourni la détaille pas à pas. Ensuite, on pose ses questions en français.",
   },
   {
     q: "Le skill fonctionne-t-il avec la version gratuite de Claude ?",
-    a: "Oui : les skills sont disponibles sur toutes les offres Claude, gratuite comprise, à condition d'activer la création de fichiers. Les limites d'usage de l'offre gratuite peuvent en revanche écourter l'audit d'un gros site.",
+    a: "Oui : les skills sont disponibles sur toutes les offres Claude, gratuite comprise. Les limites d'usage de l'offre gratuite peuvent en revanche écourter l'audit d'un gros site.",
   },
   {
     q: "Garantit-il d'être premier sur Google ou cité par ChatGPT ?",
@@ -302,7 +294,7 @@ function SkillPage() {
       </Section>
 
       {/* Fonctionnement */}
-      <Section id="fonctionnement" kicker="pas à pas" title="Comment il fonctionne">
+      <Section id="fonctionnement" kicker="en trois temps" title="Comment il fonctionne">
         <ol className="m-0 flex list-none flex-col gap-5 p-0">
           {STEPS.map((s, i) => (
             <li key={s.title} className="flex gap-4">
