@@ -40,6 +40,10 @@ const CONTENTS = [
     text: "Cannibalisation, chiffres contradictoires, vocabulaire périmé, articles de qualité inégale, pages mal indexées : ce qu'on ne voit qu'en comparant les pages entre elles.",
   },
   {
+    file: "Un guide PDF pas à pas",
+    text: "10 pages pour installer le skill, réaliser un premier audit, lire le rapport et l'adapter à votre métier. Avec des demandes prêtes à copier.",
+  },
+  {
     file: "Un gabarit de rédaction",
     text: "Le patron suivi par chaque article de ce guide : réponse d'abord, questions en intertitres, encadré d'expérience, FAQ, sources datées.",
   },
@@ -83,7 +87,7 @@ const BENEFITS = [
   },
   {
     title: "En français, pour tout type de site",
-    text: "Santé, SaaS, e-commerce, formation : il s'applique à tout site qui publie des articles, et n'impose pas le gabarit aux témoignages.",
+    text: "Santé, artisanat, SaaS, e-commerce, formation : il adapte ses contrôles au secteur, et n'impose pas le gabarit aux témoignages.",
   },
   {
     title: "Acheté une fois, utilisé sans limite",
@@ -96,12 +100,12 @@ const COMPAT: { where: string; support: Support; how: string }[] = [
   {
     where: "Claude (web, ordinateur, mobile)",
     support: "oui",
-    how: "Toutes les offres, gratuite comprise. Activer « Création et modification de fichiers », puis importer le .zip dans Personnaliser → Skills.",
+    how: "Toutes les offres, gratuite comprise. Installation en quelques clics, détaillée dans le guide PDF.",
   },
   {
     where: "Claude Code",
     support: "oui",
-    how: "Déposer le dossier dans ~/.claude/skills/ (ou .claude/skills/ dans un projet).",
+    how: "Installation automatique ou manuelle, détaillée dans le guide PDF.",
   },
   {
     where: "Codex CLI, Gemini CLI, GitHub Copilot, Cursor…",
@@ -111,7 +115,7 @@ const COMPAT: { where: string; support: Support; how: string }[] = [
   {
     where: "ChatGPT, Mistral et autres assistants",
     support: "partiel",
-    how: "Pas de prise en charge native connue. On peut coller les instructions dans un GPT personnalisé ou un agent, mais les fichiers de référence ne se chargent pas d'eux-mêmes.",
+    how: "Pas de prise en charge native connue de ce format.",
   },
 ];
 const SUPPORT_LABEL: Record<Support, string> = {
@@ -120,17 +124,37 @@ const SUPPORT_LABEL: Record<Support, string> = {
   partiel: "À adapter",
 };
 
-const PROMPTS = [
-  "Audite les articles de https://monsite.fr en SEO, AEO et GEO.",
-  "Cet article serait-il cité par une IA ? Dis-moi ce qui manque.",
-  "Vérifie que mes articles ne se contredisent pas sur les chiffres.",
-  "Écris un article sur [sujet] qui coche la grille dès la publication.",
+const SECTORS = [
+  {
+    who: "Santé et bien-être",
+    example: "une application sur l'endométriose, un cabinet de sophrologie",
+    what: "Le skill renforce l'exigence sur les sources, la qualification de l'auteur et les promesses de résultat, sur lesquelles Google et les IA sont plus sévères. Il ne remplace pas la relecture par un professionnel de santé, et le dit.",
+  },
+  {
+    who: "Artisans et activités locales",
+    example: "un charpentier, un praticien en cabinet, un commerce",
+    what: "Il vérifie la zone d'intervention, les pages par service, les réalisations datées et localisées. Il rappelle que la fiche Google de l'établissement et les avis pèsent souvent plus lourd que le blog : ces points-là, il vous les liste, sans pouvoir les auditer.",
+  },
+  {
+    who: "SaaS, formation, conseil, médias",
+    example: "un logiciel, un organisme de formation, un blog expert",
+    what: "Le terrain naturel de la grille : guides, comparatifs, articles de fond, et la cohérence entre des dizaines de pages.",
+  },
+  {
+    who: "Boutiques en ligne",
+    example: "un e-commerce, une marque",
+    what: "Les guides d'achat suivent le gabarit ; les fiches produit ont leurs propres contrôles (caractéristiques, avis, données structurées produit).",
+  },
 ];
 
 const FAQ = [
   {
     q: "Quelle différence entre SEO, AEO et GEO ?",
     a: "Le SEO sert à être trouvé par les moteurs de recherche. L'AEO (Answer Engine Optimization) sert à être compris et extrait par les moteurs de réponse comme ChatGPT ou Perplexity. Le GEO (Generative Engine Optimization) sert à être choisi et cité par une IA plutôt qu'un concurrent. Les trois s'empilent : sans SEO, pas d'AEO ; sans AEO, pas de GEO.",
+  },
+  {
+    q: "Le skill fonctionne-t-il pour un artisan ou un thérapeute ?",
+    a: "Oui. Il audite le contenu de n'importe quel site. Pour une activité locale, il ajoute les contrôles propres au local et liste ce qui se joue hors du site, comme la fiche Google et les avis. Pour la santé et le bien-être, il renforce l'exigence sur les sources et les promesses de résultat.",
   },
   {
     q: "Faut-il savoir coder pour utiliser le skill ?",
@@ -319,41 +343,51 @@ function SkillPage() {
 
       {/* Utilisation */}
       <Section id="utiliser" title="Comment l'utiliser">
-        <p className="m-0 mb-5 text-[17px] leading-relaxed">
-          En résumé ci-dessous ; le{" "}
-          <Link to="/skill-seo-aeo-geo/installation">tutoriel pas à pas</Link> détaille chaque
-          étape, Claude Code compris, avec les solutions aux problèmes courants.
+        <p className="m-0 max-w-[720px] text-[17px] leading-relaxed">
+          <strong>Cinq minutes d'installation, aucune ligne de code.</strong> Ensuite, vous posez
+          votre question en français, comme à un collègue : Claude reconnaît la demande et applique
+          la méthode du skill de lui-même.
         </p>
-        <ol className="m-0 flex list-decimal flex-col gap-2 pl-6 text-[17px] leading-relaxed marker:font-bold marker:text-accent-ink">
-          <li>Achetez le skill : vous recevez un fichier .zip.</li>
-          <li>
-            Dans les paramètres de Claude, activez{" "}
-            <strong>« Création et modification de fichiers »</strong>.
-          </li>
-          <li>
-            Dans <strong>Personnaliser → Skills</strong>, ajoutez un skill et importez le fichier
-            .zip.
-          </li>
-          <li>Posez votre question, en français. Par exemple :</li>
-        </ol>
-        <ul className="m-0 mt-4 flex list-none flex-col gap-2 p-0">
-          {PROMPTS.map((p) => (
-            <li
-              key={p}
-              className="rounded-md border border-rule bg-paper-light px-4 py-2.5 font-mono text-[14.5px]"
-            >
-              {p}
-            </li>
-          ))}
-        </ul>
-        <p className="m-0 mt-5 text-[15.5px] leading-relaxed text-ink-soft">
-          Pour auditer un site en ligne, Claude doit pouvoir consulter le web. Sans accès au web, le
-          skill audite les textes que vous collez ou les exports que vous joignez.
-        </p>
+        <div className="sheet relative mt-8 p-6 md:p-8" style={r("0.5deg")}>
+          <span aria-hidden="true" className="tape -top-2.5 left-10" style={r("-3deg")} />
+          <p className="note m-0 text-[24px]">livré avec le skill</p>
+          <h3 className="m-0 mt-1 text-[22px] leading-tight">
+            Un guide PDF de 10 pages, pas à pas
+          </h3>
+          <ul className="m-0 mt-4 flex list-disc flex-col gap-1.5 pl-5 text-[16.5px] leading-relaxed text-ink-soft marker:text-accent">
+            <li>l'installation, écran par écran, dans Claude et dans Claude Code ;</li>
+            <li>votre premier audit et la lecture du rapport ;</li>
+            <li>cinq usages, avec des demandes prêtes à copier ;</li>
+            <li>les réglages selon votre métier, la grille complète, le dépannage.</li>
+          </ul>
+        </div>
       </Section>
 
       {/* Compatibilité */}
-      <Section id="compatibilite" kicker="la vraie question" title="Fonctionne-t-il partout ?">
+      <Section
+        id="secteurs"
+        kicker="la vraie question"
+        title="Fonctionne-t-il pour tous les métiers ?"
+      >
+        <p className="m-0 max-w-[720px] text-[17px] leading-relaxed">
+          <strong>
+            Oui : il audite du contenu, et tout site qui publie du contenu peut s'en servir.
+          </strong>{" "}
+          Au début de chaque audit, il identifie le secteur et ajoute les contrôles qui comptent
+          pour lui.
+        </p>
+        <ul className="m-0 mt-6 grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2">
+          {SECTORS.map((x) => (
+            <li key={x.who} className="sheet p-5">
+              <h3 className="m-0 text-[19px] leading-snug">{x.who}</h3>
+              <p className="note m-0 mt-1 text-[19px]">ex. : {x.example}</p>
+              <p className="m-0 mt-2 text-[15.5px] leading-relaxed text-ink-soft">{x.what}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section id="compatibilite" title="Avec quels outils fonctionne-t-il ?">
         <p className="m-0 max-w-[720px] text-[17px] leading-relaxed">
           <strong>
             Oui dans tout l'univers Claude, et le format est lu par la plupart des outils de code

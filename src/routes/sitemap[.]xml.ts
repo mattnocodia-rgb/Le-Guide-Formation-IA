@@ -20,7 +20,6 @@ export const Route = createFileRoute("/sitemap.xml")({
           })),
           { loc: absUrl("/a-propos"), lastmod: null },
           { loc: absUrl("/skill-seo-aeo-geo"), lastmod: null },
-          { loc: absUrl("/skill-seo-aeo-geo/installation"), lastmod: null },
           ...articles.map((a) => ({ loc: absUrl(`/${a.slug}`), lastmod: a.updatedAt })),
         ];
         const body =
