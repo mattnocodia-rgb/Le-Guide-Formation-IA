@@ -182,9 +182,8 @@ function About() {
           </p>
           <p>
             L'École Cube m'a ouvert les portes d'un monde que je n'aurais jamais imaginé explorer.
-            Je suis aujourd'hui certifié <strong>Product Builder No-Code &amp; IA</strong> (titre
-            RNCP niveau 6) : je transforme des besoins métiers en sites web, outils internes et
-            automatisations.
+            Je suis aujourd'hui certifié <strong>Product builder no-code</strong> (titre RNCP niveau
+            6) : je transforme des besoins métiers en sites web, outils internes et automatisations.
           </p>
           <p>
             Ma valeur ajoutée, c'est un profil hybride. Commercial, je sais comprendre les enjeux
@@ -259,7 +258,7 @@ function About() {
             />
             <p className="note m-0 text-[22px]">formation</p>
             <h3 className="m-0 mt-1 text-[21px] leading-snug md:text-[23px]">
-              Ingénieur BTP, puis certifié Product Builder No-Code &amp; IA
+              Ingénieur BTP, puis certifié Product builder no-code
             </h3>
             <p className="m-0 mt-2 text-[17px] text-ink-soft">
               École Cube, titre RNCP niveau 6. Certifié Make Advanced.

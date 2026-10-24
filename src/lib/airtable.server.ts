@@ -91,6 +91,8 @@ export type ArticleRecord = {
   faq: string;
   sources: string;
   dansMonCas: string;
+  /** Show the « Ce que l'École Cube m'a apporté » box (Airtable checkbox « Encadré Cube »). */
+  cubeBox: boolean;
   masterclass: string;
   principalId: string | null;
   secondaryId: string | null;
@@ -132,6 +134,7 @@ export async function getPublishedArticles(): Promise<ArticleRecord[]> {
         faq: str(f["FAQ"]),
         sources: str(f["Sources"]),
         dansMonCas: str(f["Dans mon cas"]),
+        cubeBox: f["Encadré Cube"] === true,
         masterclass: str(f["Masterclass source"]),
         principalId: firstId(f["Lien principal"]),
         secondaryId: firstId(f["Lien secondaire"]),

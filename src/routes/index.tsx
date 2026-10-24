@@ -117,10 +117,10 @@ function Home() {
           </div>
           <div className="flex flex-[2_1_480px] flex-col gap-4 text-lg leading-[1.7] text-[#3a362f] md:text-[19px]">
             <p className="m-0">
-              Ingénieur BTP de formation et commercial expérimenté, je suis certifié Product Builder
-              No-Code &amp; IA par l'École Cube (titre RNCP niveau 6). L'école m'a ouvert les portes
-              d'un monde que je n'aurais jamais imaginé explorer, et m'a appris une méthode qui a
-              fait de moi un expert en automatisation.
+              Ingénieur BTP de formation et commercial expérimenté, je suis certifié Product builder
+              no-code par l'École Cube (titre RNCP niveau 6). L'école m'a ouvert les portes d'un
+              monde que je n'aurais jamais imaginé explorer, et m'a appris une méthode qui a fait de
+              moi un expert en automatisation.
             </p>
             <p className="m-0">
               Aujourd'hui, je transforme des besoins métiers en sites web, outils internes et
