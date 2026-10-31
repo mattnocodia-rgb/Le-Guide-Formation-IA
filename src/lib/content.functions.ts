@@ -189,13 +189,14 @@ export const getCategoryData = createServerFn({ method: "GET" })
 export const getArticle = createServerFn({ method: "GET" })
   .validator((d: unknown) => z.object({ slug: z.string().min(1).max(200) }).parse(d))
   .handler(async ({ data }) => {
-    const { getPublishedArticles, getParcours, resolveArticleLinks } =
+    const { getPublishedArticles, getParcours, resolveArticleLinks, getArticleVideos } =
       await import("./airtable.server");
     const { renderMarkdown, parseFaq, applyParcours } = await import("./markdown.server");
-    const [{ links, ressources, rdv }, all, parcours] = await Promise.all([
+    const [{ links, ressources, rdv }, all, parcours, allVideos] = await Promise.all([
       sharedLinks(),
       getPublishedArticles(),
       getParcours(),
+      getArticleVideos(),
     ]);
     const article = all.find((a) => a.slug === data.slug);
     if (!article) return null;
@@ -231,6 +232,14 @@ export const getArticle = createServerFn({ method: "GET" })
       ressources,
       rdv,
       authorName: parcours["auteur_nom"] ?? null,
+      videos: allVideos
+        .filter((v) => v.articleIds.includes(article.id))
+        .map(({ youtubeId, title, description, publishedAt }) => ({
+          youtubeId,
+          title,
+          description,
+          publishedAt,
+        })),
       related: [...sameCategory, ...others].slice(0, 3).map(toSummary),
     };
   });
