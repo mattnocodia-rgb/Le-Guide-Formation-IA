@@ -1,10 +1,12 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { track } from "@/lib/track";
 import type React from "react";
+import { useState } from "react";
 
 import { ArticleCard, LinkedInIcon } from "@/components/site/Cards";
 import { PageFrame } from "@/components/site/SiteChrome";
 import { getArticle } from "@/lib/content.functions";
+import { youtubeEmbed, youtubeThumb, youtubeWatch } from "@/lib/video";
 import {
   LINKEDIN_URL,
   ORGANIZATION_LD,
@@ -70,6 +72,19 @@ export const Route = createFileRoute("/$slug")({
         ],
       },
     ];
+    for (const v of a.videos) {
+      ld.push({
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        name: v.title,
+        description: v.description,
+        thumbnailUrl: youtubeThumb(v.youtubeId),
+        uploadDate: v.publishedAt ?? a.publishedAt ?? a.updatedAt ?? undefined,
+        embedUrl: youtubeEmbed(v.youtubeId),
+        url: youtubeWatch(v.youtubeId),
+        inLanguage: "fr-FR",
+      });
+    }
     if (a.faq.length > 0) {
       ld.push({
         "@context": "https://schema.org",
@@ -196,6 +211,8 @@ function ArticlePage() {
               pour vous.
             </span>
           </aside>
+
+          {a.videos.length > 0 ? <Shorts videos={a.videos} /> : null}
 
           <div className="prose-article" dangerouslySetInnerHTML={{ __html: a.html }} />
 
@@ -492,5 +509,72 @@ function Faq({ items }: { items: { question: string; answerHtml: string }[] }) {
         </details>
       ))}
     </section>
+  );
+}
+
+type ShortItem = { youtubeId: string; title: string };
+
+/** The article's Shorts, in its own section right after the intro. */
+function Shorts({ videos }: { videos: ShortItem[] }) {
+  return (
+    <section aria-label="En vidéo" className="flex flex-col gap-3">
+      <p className="note m-0 self-start text-[26px]" style={r("-1.5deg")}>
+        {videos.length > 1 ? "L'essentiel en vidéos" : "L'essentiel en vidéo"}
+      </p>
+      <div className="grid max-w-[520px] grid-cols-2 gap-4">
+        {videos.map((v) => (
+          <ShortPlayer key={v.youtubeId} video={v} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Click-to-load YouTube player: only a static thumbnail until the visitor clicks, so no
+ * YouTube script or cookie is loaded before that (privacy-enhanced youtube-nocookie.com).
+ */
+function ShortPlayer({ video }: { video: ShortItem }) {
+  const [playing, setPlaying] = useState(false);
+  return (
+    <div className="relative aspect-[9/16] w-full max-w-[240px] overflow-hidden rounded-md bg-ink shadow-[var(--shadow-card)]">
+      {playing ? (
+        <iframe
+          src={`${youtubeEmbed(video.youtubeId)}?autoplay=1&rel=0&playsinline=1`}
+          title={video.title}
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowFullScreen
+          className="absolute inset-0 h-full w-full border-0"
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={() => setPlaying(true)}
+          aria-label={`Lire la vidéo : ${video.title}`}
+          className="group absolute inset-0 h-full w-full cursor-pointer border-0 p-0"
+        >
+          <img
+            src={youtubeThumb(video.youtubeId)}
+            alt=""
+            loading="lazy"
+            onError={(e) => {
+              e.currentTarget.style.visibility = "hidden";
+            }}
+            className="h-full w-full object-cover"
+          />
+          <span
+            aria-hidden="true"
+            className="absolute top-1/2 left-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-paper shadow-lg transition-transform group-hover:scale-110"
+          >
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </span>
+          <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-3 pt-10 pb-3 text-left text-sm leading-snug font-semibold text-white">
+            {video.title}
+          </span>
+        </button>
+      )}
+    </div>
   );
 }

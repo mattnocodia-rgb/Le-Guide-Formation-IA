@@ -2,6 +2,7 @@
 // Airtable is the single source of truth: articles, partner links, the logbook
 // ("Carnet de bord") and the author's personal facts ("Mon parcours").
 import { categoryByName } from "./site";
+import { youtubeId } from "./video";
 
 const BASE_ID = "app6gtf0nc4rI82yH";
 const TABLES = {
@@ -11,6 +12,7 @@ const TABLES = {
   parcours: "tblVFyBP0XotwEUWZ",
   clics: "tbliZYx7zZoIm5kvR",
   fichiers: "tblZa7YMlY3bQyvOY",
+  videos: "tblii9w14d3eb570c",
 } as const;
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
@@ -142,6 +144,45 @@ export async function getPublishedArticles(): Promise<ArticleRecord[]> {
       };
     })
     .sort((a, b) => (b.updatedAt ?? "").localeCompare(a.updatedAt ?? ""));
+}
+
+/* ------------------------------------------------------------------ Vidéos */
+
+export type ArticleVideo = {
+  youtubeId: string;
+  title: string;
+  description: string;
+  publishedAt: string | null;
+  articleIds: string[];
+  order: number;
+};
+
+/**
+ * Shorts shown on article pages: rows of the « Vidéos » table with « Afficher sur l'article »
+ * ticked and a valid YouTube link. A video may be linked to several articles.
+ */
+export async function getArticleVideos(): Promise<ArticleVideo[]> {
+  const records = await fetchAll(TABLES.videos, {
+    filterByFormula: "AND({Afficher sur l'article}, {Lien YouTube}!='')",
+  });
+  const out: ArticleVideo[] = [];
+  for (const r of records) {
+    const f = r.fields;
+    if (f["Afficher sur l'article"] !== true) continue;
+    const id = youtubeId(str(f["Lien YouTube"]));
+    if (!id) continue;
+    out.push({
+      youtubeId: id,
+      title: str(f["Titre de publication"]) || str(f["Accroche"]),
+      description: str(f["Description de publication"]) || str(f["Accroche"]),
+      publishedAt: str(f["Publiée le"]) || null,
+      articleIds: Array.isArray(f["Article"])
+        ? (f["Article"] as unknown[]).filter((x): x is string => typeof x === "string")
+        : [],
+      order: typeof f["Ordre"] === "number" ? (f["Ordre"] as number) : 999,
+    });
+  }
+  return out.sort((a, b) => a.order - b.order);
 }
 
 /* -------------------------------------------------------------- Liens Cube */
