@@ -1,12 +1,12 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { track } from "@/lib/track";
 import type React from "react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 import { ArticleCard, LinkedInIcon } from "@/components/site/Cards";
 import { PageFrame } from "@/components/site/SiteChrome";
 import { getArticle } from "@/lib/content.functions";
-import { youtubeEmbed, youtubeThumb, youtubeWatch } from "@/lib/video";
+import { splitForVideos, youtubeEmbed, youtubeThumb, youtubeWatch } from "@/lib/video";
 import {
   LINKEDIN_URL,
   ORGANIZATION_LD,
@@ -212,9 +212,7 @@ function ArticlePage() {
             </span>
           </aside>
 
-          {a.videos.length > 0 ? <Shorts videos={a.videos} /> : null}
-
-          <div className="prose-article" dangerouslySetInnerHTML={{ __html: a.html }} />
+          <ArticleBody html={a.html} videos={a.videos} />
 
           {a.dansMonCasHtml ? (
             <aside
@@ -514,12 +512,58 @@ function Faq({ items }: { items: { question: string; answerHtml: string }[] }) {
 
 type ShortItem = { youtubeId: string; title: string };
 
-/** The article's Shorts, in its own section right after the intro. */
+/**
+ * Article text with its Shorts beside it. Desktop: each video floats on the right of its
+ * part of the text (the intro for the first one), and the text wraps around it. Mobile:
+ * the video comes right after that part (flex order), so the written answer stays first.
+ */
+function ArticleBody({ html, videos }: { html: string; videos: ShortItem[] }) {
+  if (videos.length === 0) {
+    return <div className="prose-article" dangerouslySetInnerHTML={{ __html: html }} />;
+  }
+  const { parts, placed } = splitForVideos(html, videos.length);
+  const extra = videos.slice(placed);
+  return (
+    <>
+      <div className="flex flex-col md:flow-root">
+        {parts.map((part, i) => {
+          const video = part.video === null ? null : videos[part.video];
+          return (
+            <Fragment key={i}>
+              {video ? (
+                <aside
+                  aria-label="En vidéo"
+                  style={{ order: 2 * i + 1 }}
+                  className={`mx-auto mt-8 w-[62%] max-w-[240px] md:float-right md:mr-0 md:mb-5 md:ml-8 md:w-[210px] ${
+                    i > 0 ? "md:mt-[3.8rem]" : "md:mt-1"
+                  }`}
+                >
+                  <p className="note m-0 mb-2 text-[24px]" style={r("-1.5deg")}>
+                    {i === 0 ? "L'essentiel en vidéo" : "En vidéo"}
+                  </p>
+                  <ShortPlayer video={video} />
+                </aside>
+              ) : null}
+              <div
+                className="prose-article"
+                style={{ order: 2 * i, ...(i > 0 ? { marginTop: "3.8rem" } : {}) }}
+                dangerouslySetInnerHTML={{ __html: part.html }}
+              />
+            </Fragment>
+          );
+        })}
+      </div>
+      {extra.length > 0 ? <Shorts videos={extra} /> : null}
+    </>
+  );
+}
+
+/** Shorts that found no place beside the text, shown together after the article body. */
 function Shorts({ videos }: { videos: ShortItem[] }) {
   return (
     <section aria-label="En vidéo" className="flex flex-col gap-3">
       <p className="note m-0 self-start text-[26px]" style={r("-1.5deg")}>
-        {videos.length > 1 ? "L'essentiel en vidéos" : "L'essentiel en vidéo"}
+        Aussi en vidéo
       </p>
       <div className="grid max-w-[520px] grid-cols-2 gap-4">
         {videos.map((v) => (
@@ -537,7 +581,7 @@ function Shorts({ videos }: { videos: ShortItem[] }) {
 function ShortPlayer({ video }: { video: ShortItem }) {
   const [playing, setPlaying] = useState(false);
   return (
-    <div className="relative aspect-[9/16] w-full max-w-[240px] overflow-hidden rounded-md bg-ink shadow-[var(--shadow-card)]">
+    <div className="relative aspect-[9/16] w-full overflow-hidden rounded-md bg-ink shadow-[var(--shadow-card)]">
       {playing ? (
         <iframe
           src={`${youtubeEmbed(video.youtubeId)}?autoplay=1&rel=0&playsinline=1`}
