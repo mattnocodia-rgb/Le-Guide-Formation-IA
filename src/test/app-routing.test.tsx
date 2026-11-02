@@ -16,6 +16,8 @@ describe("App routing", () => {
     ["/categorie/financement", "/categorie/$slug"],
     ["/a-propos", "/a-propos"],
     ["/mentions-legales", "/mentions-legales"],
+    ["/boutique", "/boutique"],
+    ["/skill-seo-aeo-geo", "/skill-seo-aeo-geo"],
   ])("matches %s", (path, routeId) => {
     expect(leaf(path)).toBe(routeId);
     expect(leaf(path)).not.toBe(rootRouteId);

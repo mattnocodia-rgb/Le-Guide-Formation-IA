@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as AProposRouteImport } from './routes/a-propos'
+import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as ConditionsDeVenteRouteImport } from './routes/conditions-de-vente'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
@@ -38,6 +39,11 @@ const SlugRoute = SlugRouteImport.update({
 const AProposRoute = AProposRouteImport.update({
   id: '/a-propos',
   path: '/a-propos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BoutiqueRoute = BoutiqueRouteImport.update({
+  id: '/boutique',
+  path: '/boutique',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConditionsDeVenteRoute = ConditionsDeVenteRouteImport.update({
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/a-propos': typeof AProposRoute
+  '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/a-propos': typeof AProposRoute
+  '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/a-propos': typeof AProposRoute
+  '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$slug'
     | '/a-propos'
+    | '/boutique'
     | '/conditions-de-vente'
     | '/llms.txt'
     | '/mentions-legales'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$slug'
     | '/a-propos'
+    | '/boutique'
     | '/conditions-de-vente'
     | '/llms.txt'
     | '/mentions-legales'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$slug'
     | '/a-propos'
+    | '/boutique'
     | '/conditions-de-vente'
     | '/llms.txt'
     | '/mentions-legales'
@@ -212,6 +224,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SlugRoute: typeof SlugRoute
   AProposRoute: typeof AProposRoute
+  BoutiqueRoute: typeof BoutiqueRoute
   ConditionsDeVenteRoute: typeof ConditionsDeVenteRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
@@ -247,6 +260,13 @@ declare module '@tanstack/react-router' {
       path: '/a-propos'
       fullPath: '/a-propos'
       preLoaderRoute: typeof AProposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/boutique': {
+      id: '/boutique'
+      path: '/boutique'
+      fullPath: '/boutique'
+      preLoaderRoute: typeof BoutiqueRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conditions-de-vente': {
@@ -340,6 +360,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SlugRoute: SlugRoute,
   AProposRoute: AProposRoute,
+  BoutiqueRoute: BoutiqueRoute,
   ConditionsDeVenteRoute: ConditionsDeVenteRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
