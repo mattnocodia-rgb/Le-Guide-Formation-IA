@@ -41,6 +41,16 @@ export function SiteHeader({
               </Link>
             );
           })}
+          <Link
+            to="/boutique"
+            activeProps={{
+              className:
+                "py-2.5 font-semibold text-ink underline decoration-accent decoration-[3px] underline-offset-8",
+            }}
+            inactiveProps={{ className: "py-2.5 text-ink-soft no-underline hover:text-ink" }}
+          >
+            Boutique
+          </Link>
           {ressources ? (
             <a
               href={track(ressources.url, "entete")}
@@ -92,6 +102,9 @@ export function SiteFooter({
           <nav aria-label="Pied de page" className="flex flex-col gap-2">
             <Link to="/a-propos" className="text-[#d8d1c2] no-underline hover:text-paper">
               À propos
+            </Link>
+            <Link to="/boutique" className="text-[#d8d1c2] no-underline hover:text-paper">
+              Boutique
             </Link>
             <Link to="/skill-seo-aeo-geo" className="text-[#d8d1c2] no-underline hover:text-paper">
               Le skill SEO, AEO et GEO

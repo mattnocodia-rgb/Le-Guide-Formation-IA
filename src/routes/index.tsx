@@ -258,6 +258,33 @@ function Home() {
         </section>
       ) : null}
 
+      {/* Boutique */}
+      <section aria-labelledby="outils" className="container-wide pt-20">
+        <div
+          className="sheet tilt flex flex-wrap items-center justify-between gap-6 p-7 shadow-[var(--shadow-card)] md:p-9"
+          style={r("-0.4deg")}
+        >
+          <div className="flex max-w-[620px] flex-col gap-2">
+            <p className="note m-0 -rotate-1 self-start text-[24px]">les outils derrière ce site</p>
+            <h2 id="outils" className="m-0 text-[clamp(28px,3vw,36px)] leading-[1.1]">
+              Ce que j'utilise, prêt à installer dans Claude
+            </h2>
+            <p className="m-0 text-[17px] leading-relaxed text-ink-soft">
+              Le skill qui a écrit et audité ce guide, et bientôt des tutos pas à pas. Sans
+              abonnement, sans code.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-5">
+            <Link to="/boutique" className="btn-ink">
+              Voir la boutique
+            </Link>
+            <Link to="/skill-seo-aeo-geo" className="py-3 font-semibold">
+              Le skill SEO, AEO et GEO →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Catégories */}
       <section
         id="sujets"
