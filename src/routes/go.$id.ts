@@ -19,6 +19,18 @@ function originPage(request: Request) {
   }
 }
 
+/**
+ * A real click on the site always carries the placement (?e=...) and, in practice, a
+ * Referer from this site. A request with neither comes from outside the pages: a crawler,
+ * a link checker or an audit tool calling /go/ addresses directly. Not counted.
+ */
+function comesFromSite(request: Request) {
+  const e = new URL(request.url).searchParams.get("e") ?? "";
+  if (e in PLACES) return true;
+  const page = originPage(request);
+  return page.startsWith("/");
+}
+
 function isPrefetch(request: Request) {
   const purpose = request.headers.get("sec-purpose") ?? request.headers.get("purpose") ?? "";
   return /prefetch|prerender/i.test(purpose);
@@ -42,7 +54,7 @@ export const Route = createFileRoute("/go/$id")({
         if (!target) return Response.redirect(new URL("/", request.url).toString(), 302);
 
         const ua = request.headers.get("user-agent") ?? "";
-        if (!BOT_UA.test(ua) && !isPrefetch(request)) {
+        if (!BOT_UA.test(ua) && !isPrefetch(request) && comesFromSite(request)) {
           const e = new URL(request.url).searchParams.get("e") ?? "";
           const place = e in PLACES ? PLACES[e as Place] : "Autre";
           // Bounded wait so a slow Airtable never delays the visitor much.
