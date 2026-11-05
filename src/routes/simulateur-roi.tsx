@@ -20,7 +20,7 @@ import {
   type FrequencyKey,
   type RoiInput,
 } from "@/lib/roi";
-import { SITE_NAME, SITE_URL, jsonLdScript, pageHead } from "@/lib/site";
+import { LINKEDIN_URL, SITE_NAME, SITE_URL, jsonLdScript, pageHead } from "@/lib/site";
 
 const TITLE = `Simulateur ROI de l'automatisation — ${SITE_NAME}`;
 const DESCRIPTION =
@@ -238,7 +238,71 @@ function SimulateurRoi() {
             </Link>
             .
           </p>
+
+          <h2>Comment calculer le coût réel d'une tâche manuelle ?</h2>
+          <p>
+            Le coût réel d'une tâche manuelle se calcule ainsi : nombre d'exécutions par an × durée
+            d'une exécution × coût horaire. Une tâche de 15 minutes faite 20 fois par semaine
+            représente 260 heures par an, soit plus de 9 000 € à 35 € de l'heure.
+          </p>
+          <p>
+            Ce montant ne compte que le temps passé. Il n'inclut pas les erreurs de saisie, les
+            oublis de relance ni le temps qui n'est pas consacré aux clients.
+          </p>
+
+          <h2>Quelles tâches répétitives automatiser en priorité ?</h2>
+          <p>
+            Les meilleures candidates sont fréquentes, basées sur des règles claires et sans
+            jugement humain à chaque fois.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Tâche</th>
+                <th>Pourquoi l'automatiser</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Relances de devis et de factures</td>
+                <td>Répétitives, datées, faciles à oublier</td>
+              </tr>
+              <tr>
+                <td>Saisie dans le CRM ou un tableur</td>
+                <td>Copier-coller sans valeur ajoutée, source d'erreurs</td>
+              </tr>
+              <tr>
+                <td>Création de documents (devis, contrats)</td>
+                <td>Même modèle, seules les données changent</td>
+              </tr>
+              <tr>
+                <td>Tri des formulaires et e-mails entrants</td>
+                <td>Volume régulier, règles de tri simples</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>Automatiser seul ou se faire accompagner ?</h2>
+          <p>
+            Une automatisation simple entre deux outils se monte souvent seul avec Make ou n8n.
+            Dès qu'il y a plusieurs étapes, des conditions ou de l'IA, un accompagnement fait gagner
+            du temps et évite les scénarios fragiles.
+          </p>
         </div>
+
+        <aside className="postit relative mt-10 rotate-1 rounded-sm p-6 md:p-7">
+          <span className="tape -top-3 left-8" aria-hidden="true" />
+          <p className="note m-0 text-[24px]">besoin d'un coup de main ?</p>
+          <p className="m-0 mt-2 text-[17px] leading-relaxed text-ink">
+            Je réalise aussi des prestations d'automatisation : j'identifie avec vous les tâches à
+            automatiser, puis je mets en place les scénarios. Écrivez-moi à{" "}
+            <a href="mailto:contact@optimatt.fr">contact@optimatt.fr</a> ou sur{" "}
+            <a href={LINKEDIN_URL} target="_blank" rel="noopener">
+              LinkedIn
+            </a>
+            .
+          </p>
+        </aside>
       </section>
     </PageFrame>
   );
