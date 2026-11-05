@@ -176,26 +176,24 @@ function SimulateurRoi() {
           </form>
 
           <div className="flex flex-col gap-6" aria-live="polite">
-            <dl className="m-0 grid grid-cols-2 gap-4">
-              {[
-                ["Coût par an (manuellement)", eur(r.humanAnnualCost)],
-                ["Rentabilité de l'automatisation", roiLabel],
-                ["Temps économisé par an", `${Math.round(r.hoursPerYear)} h`],
-                ["Gain sur 5 ans", eur(r.fiveYearSavings)],
-              ].map(([k, v]) => (
-                <div key={k} className="rounded-lg border border-rule p-4">
-                  <dt className="text-[14px] text-ink-soft">{k}</dt>
-                  <dd className="m-0 mt-1 font-serif text-[26px] font-bold text-accent-ink">{v}</dd>
-                </div>
-              ))}
-            </dl>
-            <p className="sheet m-0 p-5 text-[17px] leading-relaxed">
-              Cette tâche vous fait gagner <strong>{Math.round(r.hoursPerYear)} heures</strong> par an
-              et coûterait environ <strong>{eur(r.buildCost + input.toolCostMonthly * 12)}</strong> la
-              1ère année puis <strong>{eur(Math.max(0, input.toolCostMonthly) * 12)}</strong> les années
-              suivantes, au lieu de <strong>{eur(r.humanAnnualCost)}</strong> en restant sur un process
-              manuel.
-            </p>
+            <div className="postit relative -rotate-1 rounded-sm p-6 md:p-7">
+              <span className="tape -top-3 left-8" aria-hidden="true" />
+              <p className="m-0 text-[18px] leading-relaxed text-ink">
+                Cette tâche vous fait gagner{" "}
+                <strong className="text-accent-ink">{Math.round(r.hoursPerYear)} heures</strong> par an
+                et coûterait environ{" "}
+                <strong className="text-accent-ink">{eur(r.buildCost + input.toolCostMonthly * 12)}</strong>{" "}
+                la 1ère année puis{" "}
+                <strong className="text-accent-ink">{eur(Math.max(0, input.toolCostMonthly) * 12)}</strong>{" "}
+                les années suivantes, au lieu de{" "}
+                <strong className="text-accent-ink">{eur(r.humanAnnualCost)}</strong> en restant sur un
+                process manuel, soit{" "}
+                <strong className="text-accent-ink">{eur(r.fiveYearSavings)}</strong> de gagnés sur 5 ans !
+              </p>
+              <p className="m-0 mt-4 font-serif text-[22px] font-bold text-ink">
+                La rentabilité est de <span className="text-accent-ink">{roiLabel}</span>.
+              </p>
+            </div>
             <div className="rounded-lg border border-rule p-4">
               <h2 className="m-0 mb-3 text-[18px]">Coût cumulé sur 12 mois</h2>
               <div className="h-[280px] w-full">
