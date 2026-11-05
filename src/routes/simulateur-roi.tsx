@@ -104,7 +104,7 @@ function SimulateurRoi() {
       <section className="container-wide max-w-[1080px] pt-12 md:pt-16">
         <p className="note m-0 -rotate-2 text-[28px]">outil gratuit</p>
         <h1 className="mt-3 mb-5 text-[clamp(34px,5vw,54px)] leading-[1.05]">
-          Simulateur ROI : votre automatisation est-elle rentable ?
+          Combien vous coûte cette tâche manuelle par an ?
         </h1>
         <p className="m-0 max-w-[68ch] text-[18px] leading-relaxed text-ink-soft">
           Renseignez une tâche répétitive : le simulateur estime ce qu'elle vous coûte par an et le
@@ -178,9 +178,9 @@ function SimulateurRoi() {
           <div className="flex flex-col gap-6" aria-live="polite">
             <dl className="m-0 grid grid-cols-2 gap-4">
               {[
-                ["Temps passé par an", `${Math.round(r.hoursPerYear)} h`],
-                ["Coût manuel par an", eur(r.humanAnnualCost)],
-                ["Rentable en", roiLabel],
+                ["Coût par an (manuellement)", eur(r.humanAnnualCost)],
+                ["Rentabilité de l'automatisation", roiLabel],
+                ["Temps économisé par an", `${Math.round(r.hoursPerYear)} h`],
                 ["Gain sur 5 ans", eur(r.fiveYearSavings)],
               ].map(([k, v]) => (
                 <div key={k} className="rounded-lg border border-rule p-4">
@@ -189,6 +189,13 @@ function SimulateurRoi() {
                 </div>
               ))}
             </dl>
+            <p className="sheet m-0 p-5 text-[17px] leading-relaxed">
+              Cette tâche vous fait gagner <strong>{Math.round(r.hoursPerYear)} heures</strong> par an
+              et coûterait environ <strong>{eur(r.buildCost + input.toolCostMonthly * 12)}</strong> la
+              1ère année puis <strong>{eur(Math.max(0, input.toolCostMonthly) * 12)}</strong> les années
+              suivantes, au lieu de <strong>{eur(r.humanAnnualCost)}</strong> en restant sur un process
+              manuel.
+            </p>
             <div className="rounded-lg border border-rule p-4">
               <h2 className="m-0 mb-3 text-[18px]">Coût cumulé sur 12 mois</h2>
               <div className="h-[280px] w-full">

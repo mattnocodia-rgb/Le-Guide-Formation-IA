@@ -14,7 +14,7 @@ export type Product = {
   includes: string[];
   status: ProductStatus;
   /** Internal sales page, for available products. Add each new sales page route to this union. */
-  path?: "/skill-seo-aeo-geo";
+  path?: "/skill-seo-aeo-geo" | "/simulateur-roi";
   /** Price shown when it is not loaded from Airtable. */
   price?: string;
 };
@@ -34,6 +34,17 @@ export const PRODUCTS: Product[] = [
     ],
     status: "disponible",
     path: "/skill-seo-aeo-geo",
+  },
+  {
+    id: "simulateur-roi",
+    kicker: "outil gratuit",
+    title: "Simulateur ROI de l'automatisation",
+    promise:
+      "Estimez en une minute ce qu'une tâche manuelle vous coûte par an et quand son automatisation devient rentable.",
+    includes: ["Coût manuel annuel", "Délai de rentabilité", "Gain sur 5 ans"],
+    status: "disponible",
+    path: "/simulateur-roi",
+    price: "Gratuit",
   },
   {
     id: "tuto-clients-proximite",
