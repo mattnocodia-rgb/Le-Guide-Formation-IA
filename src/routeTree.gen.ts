@@ -18,6 +18,7 @@ import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as ModeTestRouteImport } from './routes/mode-test'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SimulateurRoiRouteImport } from './routes/simulateur-roi'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SkillSeoAeoGeoRouteImport } from './routes/skill-seo-aeo-geo'
 import { Route as CategorieSlugRouteImport } from './routes/categorie/$slug'
@@ -71,6 +72,11 @@ const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SimulateurRoiRoute = SimulateurRoiRouteImport.update({
+  id: '/simulateur-roi',
+  path: '/simulateur-roi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/mode-test': typeof ModeTestRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/simulateur-roi': typeof SimulateurRoiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
   '/categorie/$slug': typeof CategorieSlugRoute
@@ -136,6 +143,7 @@ export interface FileRoutesByTo {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/mode-test': typeof ModeTestRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/simulateur-roi': typeof SimulateurRoiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
   '/categorie/$slug': typeof CategorieSlugRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/mode-test': typeof ModeTestRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/simulateur-roi': typeof SimulateurRoiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
   '/categorie/$slug': typeof CategorieSlugRoute
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/mode-test'
     | '/robots.txt'
+    | '/simulateur-roi'
     | '/sitemap.xml'
     | '/skill-seo-aeo-geo'
     | '/categorie/$slug'
@@ -193,6 +203,7 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/mode-test'
     | '/robots.txt'
+    | '/simulateur-roi'
     | '/sitemap.xml'
     | '/skill-seo-aeo-geo'
     | '/categorie/$slug'
@@ -211,6 +222,7 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/mode-test'
     | '/robots.txt'
+    | '/simulateur-roi'
     | '/sitemap.xml'
     | '/skill-seo-aeo-geo'
     | '/categorie/$slug'
@@ -230,6 +242,7 @@ export interface RootRouteChildren {
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   ModeTestRoute: typeof ModeTestRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SimulateurRoiRoute: typeof SimulateurRoiRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SkillSeoAeoGeoRoute: typeof SkillSeoAeoGeoRoute
   CategorieSlugRoute: typeof CategorieSlugRoute
@@ -304,6 +317,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/simulateur-roi': {
+      id: '/simulateur-roi'
+      path: '/simulateur-roi'
+      fullPath: '/simulateur-roi'
+      preLoaderRoute: typeof SimulateurRoiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -366,6 +386,7 @@ const rootRouteChildren: RootRouteChildren = {
   MentionsLegalesRoute: MentionsLegalesRoute,
   ModeTestRoute: ModeTestRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
+  SimulateurRoiRoute: SimulateurRoiRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SkillSeoAeoGeoRoute: SkillSeoAeoGeoRoute,
   CategorieSlugRoute: CategorieSlugRoute,
