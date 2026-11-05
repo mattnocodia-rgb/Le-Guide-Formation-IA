@@ -38,7 +38,7 @@ export const PRODUCTS: Product[] = [
   {
     id: "simulateur-roi",
     kicker: "outil gratuit",
-    title: "Simulateur ROI de l'automatisation",
+    title: "Combien vous coûte cette tâche ?",
     promise:
       "Estimez en une minute ce qu'une tâche manuelle vous coûte par an et quand son automatisation devient rentable.",
     includes: ["Coût manuel annuel", "Délai de rentabilité", "Gain sur 5 ans"],
