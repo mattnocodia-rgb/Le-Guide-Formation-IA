@@ -30,6 +30,7 @@ export const Route = createFileRoute("/llms.txt")({
           "## À propos",
           "",
           `- [Qui écrit ce guide](${absUrl("/a-propos")})`,
+          `- [Simulateur ROI de l'automatisation](${absUrl("/simulateur-roi")})`,
           `- [Le skill Claude SEO / AEO / GEO utilisé pour écrire et auditer ce guide](${absUrl("/skill-seo-aeo-geo")})`,
           "",
         );

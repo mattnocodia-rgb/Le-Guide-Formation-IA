@@ -106,6 +106,9 @@ export function SiteFooter({
             <Link to="/boutique" className="text-[#d8d1c2] no-underline hover:text-paper">
               Boutique
             </Link>
+            <Link to="/simulateur-roi" className="text-[#d8d1c2] no-underline hover:text-paper">
+              Simulateur ROI
+            </Link>
             <Link to="/skill-seo-aeo-geo" className="text-[#d8d1c2] no-underline hover:text-paper">
               Le skill SEO, AEO et GEO
             </Link>
