@@ -103,6 +103,9 @@ export function SiteFooter({
             <Link to="/a-propos" className="text-[#d8d1c2] no-underline hover:text-paper">
               À propos
             </Link>
+            <Link to="/realisations" className="text-[#d8d1c2] no-underline hover:text-paper">
+              Ce que j'ai construit
+            </Link>
             <Link to="/boutique" className="text-[#d8d1c2] no-underline hover:text-paper">
               Boutique
             </Link>

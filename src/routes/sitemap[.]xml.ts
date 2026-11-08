@@ -22,6 +22,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { loc: absUrl("/skill-seo-aeo-geo"), lastmod: null },
           { loc: absUrl("/boutique"), lastmod: null },
           { loc: absUrl("/simulateur-roi"), lastmod: null },
+          { loc: absUrl("/realisations"), lastmod: null },
           ...articles.map((a) => ({ loc: absUrl(`/${a.slug}`), lastmod: a.updatedAt })),
         ];
         const body =

@@ -175,6 +175,19 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
   };
 });
 
+export const getRealisationsData = createServerFn({ method: "GET" }).handler(async () => {
+  const { getRealisations, isLinkValid } = await import("./airtable.server");
+  const [{ links, rdv }, items] = await Promise.all([sharedLinks(), getRealisations()]);
+  const general = links.find(
+    (x) => x.type === "programme" && x.theme === "general" && isLinkValid(x),
+  );
+  return {
+    items,
+    rdv,
+    formations: general ? { url: goPath(general.id), label: general.label } : null,
+  };
+});
+
 export const getCategoryData = createServerFn({ method: "GET" })
   .validator((d: unknown) => z.object({ slug: z.string().min(1).max(100) }).parse(d))
   .handler(async ({ data }) => {
