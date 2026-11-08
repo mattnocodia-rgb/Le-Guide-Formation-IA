@@ -129,6 +129,13 @@ function Home() {
               parcours.{" "}
               <Link to="/a-propos" className="font-semibold text-ink underline underline-offset-4">
                 Mon parcours en détail
+              </Link>{" "}
+              ·{" "}
+              <Link
+                to="/realisations"
+                className="font-semibold text-ink underline underline-offset-4"
+              >
+                Ce que j'ai construit
               </Link>
             </p>
             <p className="m-0 text-sm text-muted-foreground">

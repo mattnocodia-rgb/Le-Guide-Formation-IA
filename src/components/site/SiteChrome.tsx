@@ -51,6 +51,16 @@ export function SiteHeader({
           >
             Boutique
           </Link>
+          <Link
+            to="/realisations"
+            activeProps={{
+              className:
+                "py-2.5 font-semibold text-ink underline decoration-accent decoration-[3px] underline-offset-8",
+            }}
+            inactiveProps={{ className: "py-2.5 text-ink-soft no-underline hover:text-ink" }}
+          >
+            Réalisations
+          </Link>
           {ressources ? (
             <a
               href={track(ressources.url, "entete")}
