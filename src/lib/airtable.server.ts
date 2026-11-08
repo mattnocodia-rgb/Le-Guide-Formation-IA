@@ -13,6 +13,7 @@ const TABLES = {
   clics: "tbliZYx7zZoIm5kvR",
   fichiers: "tblZa7YMlY3bQyvOY",
   videos: "tblii9w14d3eb570c",
+  realisations: "tblesdxsbM12lUTdK",
 } as const;
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
@@ -271,6 +272,47 @@ export async function getParcours(): Promise<Record<string, string>> {
     if (key && value) out[key] = value;
   }
   return out;
+}
+
+/* ------------------------------------------------------------- Réalisations */
+
+export type Realisation = {
+  id: string;
+  projet: string;
+  probleme: string;
+  outils: string[];
+  construit: string;
+  resultat: string;
+  formation: string;
+  lien: string | null;
+  payant: { url: string; label: string } | null;
+};
+
+/** Case studies for /realisations. Only rows ticked "Visible" with a project name are shown. */
+export async function getRealisations(): Promise<Realisation[]> {
+  const records = await fetchAll(TABLES.realisations, { filterByFormula: "{Visible}" });
+  return records
+    .filter((r) => r.fields["Visible"] === true && str(r.fields["Projet"]))
+    .sort((a, b) => Number(a.fields["Ordre"] ?? 999) - Number(b.fields["Ordre"] ?? 999))
+    .map((r) => ({
+      id: r.id,
+      projet: str(r.fields["Projet"]),
+      probleme: str(r.fields["Problème"]),
+      outils: str(r.fields["Outils"])
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean),
+      construit: str(r.fields["Ce que j'ai construit"]),
+      resultat: str(r.fields["Résultat"]),
+      formation: str(r.fields["Ce que la formation m'a apporté"]),
+      lien: str(r.fields["Lien"]) || null,
+      payant: str(r.fields["Version payante (lien)"])
+        ? {
+            url: str(r.fields["Version payante (lien)"]),
+            label: str(r.fields["Version payante (bouton)"]) || "Le refaire chez vous",
+          }
+        : null,
+    }));
 }
 
 /* -------------------------------------------------------------------- Clics */

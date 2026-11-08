@@ -366,7 +366,8 @@ function About() {
         </div>
         <p className="m-0 mt-6 max-w-[780px] text-[17px] leading-relaxed text-ink-soft">
           C'est tout l'intérêt d'un profil hybride : ces automatisations, je les applique aussi à
-          mon métier de commercial.
+          mon métier de commercial.{" "}
+          <Link to="/realisations">Voir ce que j'ai construit, projet par projet</Link>.
         </p>
       </section>
 

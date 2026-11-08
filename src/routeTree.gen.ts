@@ -17,6 +17,7 @@ import { Route as ConditionsDeVenteRouteImport } from './routes/conditions-de-ve
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as ModeTestRouteImport } from './routes/mode-test'
+import { Route as RealisationsRouteImport } from './routes/realisations'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SimulateurRoiRouteImport } from './routes/simulateur-roi'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -65,6 +66,11 @@ const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
 const ModeTestRoute = ModeTestRouteImport.update({
   id: '/mode-test',
   path: '/mode-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RealisationsRoute = RealisationsRouteImport.update({
+  id: '/realisations',
+  path: '/realisations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -123,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/mode-test': typeof ModeTestRoute
+  '/realisations': typeof RealisationsRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/simulateur-roi': typeof SimulateurRoiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -142,6 +149,7 @@ export interface FileRoutesByTo {
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/mode-test': typeof ModeTestRoute
+  '/realisations': typeof RealisationsRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/simulateur-roi': typeof SimulateurRoiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -162,6 +170,7 @@ export interface FileRoutesById {
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/mode-test': typeof ModeTestRoute
+  '/realisations': typeof RealisationsRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/simulateur-roi': typeof SimulateurRoiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -183,6 +192,7 @@ export interface FileRouteTypes {
     | '/llms.txt'
     | '/mentions-legales'
     | '/mode-test'
+    | '/realisations'
     | '/robots.txt'
     | '/simulateur-roi'
     | '/sitemap.xml'
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
     | '/llms.txt'
     | '/mentions-legales'
     | '/mode-test'
+    | '/realisations'
     | '/robots.txt'
     | '/simulateur-roi'
     | '/sitemap.xml'
@@ -221,6 +232,7 @@ export interface FileRouteTypes {
     | '/llms.txt'
     | '/mentions-legales'
     | '/mode-test'
+    | '/realisations'
     | '/robots.txt'
     | '/simulateur-roi'
     | '/sitemap.xml'
@@ -241,6 +253,7 @@ export interface RootRouteChildren {
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   ModeTestRoute: typeof ModeTestRoute
+  RealisationsRoute: typeof RealisationsRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SimulateurRoiRoute: typeof SimulateurRoiRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -308,6 +321,13 @@ declare module '@tanstack/react-router' {
       path: '/mode-test'
       fullPath: '/mode-test'
       preLoaderRoute: typeof ModeTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/realisations': {
+      id: '/realisations'
+      path: '/realisations'
+      fullPath: '/realisations'
+      preLoaderRoute: typeof RealisationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -385,6 +405,7 @@ const rootRouteChildren: RootRouteChildren = {
   LlmsDottxtRoute: LlmsDottxtRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   ModeTestRoute: ModeTestRoute,
+  RealisationsRoute: RealisationsRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SimulateurRoiRoute: SimulateurRoiRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
