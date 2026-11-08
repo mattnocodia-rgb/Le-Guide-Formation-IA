@@ -285,6 +285,7 @@ export type Realisation = {
   resultat: string;
   formation: string;
   lien: string | null;
+  payant: { url: string; label: string } | null;
 };
 
 /** Case studies for /realisations. Only rows ticked "Visible" with a project name are shown. */
@@ -305,6 +306,12 @@ export async function getRealisations(): Promise<Realisation[]> {
       resultat: str(r.fields["Résultat"]),
       formation: str(r.fields["Ce que la formation m'a apporté"]),
       lien: str(r.fields["Lien"]) || null,
+      payant: str(r.fields["Version payante (lien)"])
+        ? {
+            url: str(r.fields["Version payante (lien)"]),
+            label: str(r.fields["Version payante (bouton)"]) || "Le refaire chez vous",
+          }
+        : null,
     }));
 }
 

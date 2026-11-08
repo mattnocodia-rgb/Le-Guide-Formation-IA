@@ -73,6 +73,19 @@ function Realisations() {
                 <Bloc label="Ce que j'ai construit" text={r.construit} />
                 <Bloc label="Le résultat" text={r.resultat} />
                 <Bloc label="Ce que la formation m'a apporté" text={r.formation} />
+                {r.payant && (
+                  <p className="m-0 mt-5">
+                    {r.payant.url.startsWith("/") ? (
+                      <a href={r.payant.url} className="btn-ink text-[15px]">
+                        {r.payant.label}
+                      </a>
+                    ) : (
+                      <a href={r.payant.url} rel="noopener" className="btn-ink text-[15px]">
+                        {r.payant.label}
+                      </a>
+                    )}
+                  </p>
+                )}
                 {r.lien && (
                   <a
                     href={r.lien}
