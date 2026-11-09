@@ -99,6 +99,8 @@ export type ArticleRecord = {
   masterclass: string;
   principalId: string | null;
   secondaryId: string | null;
+  /** Articles chosen by hand for the « À lire aussi » box (Airtable field « À lire aussi »), in order. */
+  relatedIds: string[];
   readingMinutes: number;
 };
 
@@ -141,6 +143,7 @@ export async function getPublishedArticles(): Promise<ArticleRecord[]> {
         masterclass: str(f["Masterclass source"]),
         principalId: firstId(f["Lien principal"]),
         secondaryId: firstId(f["Lien secondaire"]),
+        relatedIds: linkIds(f["À lire aussi"]),
         readingMinutes: readingMinutes(content),
       };
     })

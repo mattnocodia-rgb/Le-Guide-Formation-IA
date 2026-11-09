@@ -272,10 +272,15 @@ export const getArticle = createServerFn({ method: "GET" })
     };
     const body = renderMarkdown(applyParcours(article.content, parcours), cube);
     const dansMonCas = applyParcours(article.dansMonCas, parcours);
-    const sameCategory = all.filter(
-      (a) => a.slug !== article.slug && a.category === article.category,
-    );
-    const others = all.filter((a) => a.slug !== article.slug && a.category !== article.category);
+    // Hand-picked « À lire aussi » first (only published ones are in `all`), then the most recent
+    // of the same category, then the rest, so the box always shows 3 articles.
+    const byId = new Map(all.map((a) => [a.id, a]));
+    const chosen = article.relatedIds
+      .map((id) => byId.get(id))
+      .filter((a): a is NonNullable<typeof a> => !!a && a.slug !== article.slug);
+    const taken = new Set([article.slug, ...chosen.map((a) => a.slug)]);
+    const sameCategory = all.filter((a) => !taken.has(a.slug) && a.category === article.category);
+    const others = all.filter((a) => !taken.has(a.slug) && a.category !== article.category);
 
     return {
       ...toSummary(article),
@@ -304,7 +309,7 @@ export const getArticle = createServerFn({ method: "GET" })
           description,
           publishedAt,
         })),
-      related: [...sameCategory, ...others].slice(0, 3).map(toSummary),
+      related: [...chosen, ...sameCategory, ...others].slice(0, 3).map(toSummary),
     };
   });
 
