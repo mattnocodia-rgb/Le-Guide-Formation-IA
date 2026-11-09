@@ -32,6 +32,9 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+/** Pillar page on CPF funding, linked from the hero so it gets the home page's internal link. */
+const CPF_GUIDE_SLUG = "formation-ia-cpf-2026";
+
 const r = (deg: string) => ({ "--r": deg }) as React.CSSProperties;
 
 function Home() {
@@ -69,8 +72,12 @@ function Home() {
             de voie.
           </h1>
           <p className="settle delay-2 m-0 max-w-[560px] text-xl leading-relaxed text-ink-soft">
-            Métiers, outils, financement CPF : les guides que j'aurais aimé lire avant de me former.
-            Chaque chiffre est sourcé et daté.
+            Métiers, outils,{" "}
+            <Link to="/$slug" params={{ slug: CPF_GUIDE_SLUG }} className="font-semibold">
+              financement CPF
+            </Link>{" "}
+            : les guides que j'aurais aimé lire avant de me former. Chaque chiffre est sourcé et
+            daté.
           </p>
           <div className="settle delay-3 flex flex-wrap items-center gap-5">
             {startGuide ? (
