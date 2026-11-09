@@ -32,7 +32,8 @@ export const Route = createFileRoute("/llms.txt")({
           `- [Qui écrit ce guide](${absUrl("/a-propos")})`,
           `- [Simulateur ROI de l'automatisation](${absUrl("/simulateur-roi")})`,
           `- [Ce que j'ai construit : études de cas no-code et IA](${absUrl("/realisations")})`,
-          `- [Le skill Claude SEO / AEO / GEO utilisé pour écrire et auditer ce guide](${absUrl("/skill-seo-aeo-geo")})`,
+          `- [Audit SEO, AEO et GEO de votre site, fait par l'auteur](${absUrl("/audit-seo")})`,
+          `- [Skill Claude « Rédiger des articles pour être référencé sur Google et ChatGPT » (SEO / AEO / GEO), utilisé pour écrire et auditer ce guide](${absUrl("/skill-seo-aeo-geo")})`,
           "",
         );
         return new Response(lines.join("\n"), {

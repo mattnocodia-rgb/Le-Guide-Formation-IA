@@ -2,36 +2,36 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 
 import { PageFrame } from "@/components/site/SiteChrome";
-import { PRODUCTS, type Product } from "@/lib/boutique";
-import { getSkillOffer } from "@/lib/content.functions";
+import { PRODUCTS, type Product, contactHref } from "@/lib/boutique";
+import { getShopOffers } from "@/lib/content.functions";
 import { SITE_NAME, pageHead, tiltFor } from "@/lib/site";
 
 const PATH = "/boutique";
 const r = (deg: string) => ({ "--r": deg }) as CSSProperties;
 
 export const Route = createFileRoute("/boutique")({
-  // The skill price lives in Airtable ("Mon parcours"), like on its sales page.
-  loader: () => getSkillOffer(),
+  // Skill and audit prices live in Airtable ("Mon parcours"), like on their sales pages.
+  loader: () => getShopOffers(),
   head: () =>
     pageHead({
-      title: `Boutique : skills et tutos Claude — ${SITE_NAME}`,
+      title: `Boutique : audit, skills Claude et accompagnement — ${SITE_NAME}`,
       description:
-        "Les outils que j'utilise pour ce site, prêts à installer dans Claude : skills, tutos pas à pas et accompagnement. Sans abonnement, sans code.",
+        "Un audit de votre site pour Google et ChatGPT, les skills Claude que j'utilise pour ce guide, et un accompagnement pour automatiser ou créer votre site.",
       path: PATH,
     }),
   component: BoutiquePage,
 });
 
 function BoutiquePage() {
-  const { price } = Route.useLoaderData();
+  const offers = Route.useLoaderData();
   return (
     <PageFrame>
       <section className="container-wide max-w-[880px] pt-12 md:pt-16">
         <p className="note m-0 -rotate-2 text-[28px]">les outils derrière ce guide</p>
         <h1 className="mt-3 mb-6 text-[clamp(36px,5vw,58px)] leading-[1.05]">Boutique</h1>
         <p className="m-0 max-w-[680px] text-xl leading-relaxed text-ink-soft">
-          Ce que j'utilise moi-même, prêt à installer dans Claude. Sans abonnement, sans code, et
-          avec le coût réel annoncé.
+          Faites vérifier votre site, faites-le vous-même avec les outils que j'utilise pour ce
+          guide, ou confiez-moi une automatisation ou votre site web.
         </p>
       </section>
 
@@ -41,7 +41,13 @@ function BoutiquePage() {
             <li key={p.id}>
               <ProductCard
                 product={p}
-                price={p.id === "skill-seo-aeo-geo" ? (price ?? p.price) : p.price}
+                price={
+                  p.id === "skill-seo-aeo-geo"
+                    ? (offers.skill.price ?? p.price)
+                    : p.id === "audit-seo"
+                      ? (offers.audit.price ?? p.price)
+                      : p.price
+                }
                 tilt={tiltFor(i + 1)}
               />
             </li>
@@ -65,10 +71,12 @@ function ProductCard({
   price: string | null | undefined;
   tilt: string;
 }) {
-  const path = product.status === "disponible" ? product.path : undefined;
+  const available = product.status === "disponible";
+  const path = available ? product.path : undefined;
+  const contact = available && !path && product.contactSubject ? product.contactSubject : null;
   return (
     <article
-      className={`tilt flex h-full flex-col gap-3 p-6 text-ink shadow-[var(--shadow-card)] ${path ? "sheet" : "postit opacity-90"}`}
+      className={`tilt flex h-full flex-col gap-3 p-6 text-ink shadow-[var(--shadow-card)] ${available ? "sheet" : "postit opacity-90"}`}
       style={r(tilt)}
     >
       <span className="font-hand text-[22px] font-semibold opacity-85">{product.kicker}</span>
@@ -84,10 +92,27 @@ function ProductCard({
           <Link to={path} className="btn-ink text-[15px]">
             Découvrir{price ? ` — ${price}` : ""}
           </Link>
+        ) : contact ? (
+          <a href={contactHref(contact)} className="btn-ink text-[15px]">
+            Me contacter
+          </a>
         ) : (
-          <span className="text-[15px] font-bold text-accent-ink">Bientôt disponible</span>
+          <span className="text-[15px] font-bold text-accent-ink">
+            Bientôt disponible{price ? ` · ${price}` : ""}
+          </span>
         )}
       </div>
+      {product.links?.length ? (
+        <ul className="m-0 flex list-none flex-col gap-1 p-0 text-[14.5px]">
+          {product.links.map((l) => (
+            <li key={l.label}>
+              <Link to={l.to} {...(l.hash ? { hash: l.hash } : {})} className="font-semibold">
+                {l.label} →
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </article>
   );
 }
