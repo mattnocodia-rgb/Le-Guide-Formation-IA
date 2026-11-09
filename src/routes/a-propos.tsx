@@ -113,29 +113,20 @@ const MODULES: Module[] = [
   },
 ];
 
-type Usage = { title: string; points: string[] };
+type Usage = { title: string; text: string };
 
 const AUJOURDHUI: Usage[] = [
   {
     title: "J'automatise avec n8n",
-    points: [
-      "publication sur les réseaux sociaux",
-      "prospection à partir de Google Maps",
-      "un moteur d'analyse nutritionnelle",
-      "mises à jour groupées de bases de données",
-    ],
+    text: "Mes publications partent seules sur les réseaux sociaux et mes listes de prospects se construisent à partir de Google Maps. n8n fait aussi tourner le moteur d'analyse nutritionnelle d'Endo-sérénité et met à jour mes bases de données par lots entiers, sans copier-coller.",
   },
   {
-    title: "Je crée avec Claude",
-    points: ["des sites web, dont ce guide", "des tableaux de bord de suivi avec PostHog"],
+    title: "Je construis avec Claude",
+    text: "Je conçois des sites web, à commencer par ce guide, et des tableaux de bord branchés sur PostHog pour suivre ce qui se passe réellement sur mes projets.",
   },
   {
     title: "Je vends autrement",
-    points: [
-      "leads créés et notés automatiquement",
-      "relances automatiques",
-      "un CRM qui se remplit seul : rendez-vous, leads, contacts",
-    ],
+    text: "Chaque nouveau lead est créé et noté automatiquement, les relances partent à la bonne date, et mon CRM se remplit seul : rendez-vous, contacts, opportunités. Mon temps va aux échanges qui comptent.",
   },
 ];
 
@@ -356,11 +347,7 @@ function About() {
           {AUJOURDHUI.map((u) => (
             <div key={u.title} className="lined p-6 pl-14 shadow-[var(--shadow-card)]">
               <h3 className="m-0 text-[21px] leading-tight">{u.title}</h3>
-              <ul className="m-0 mt-3 flex list-none flex-col gap-1 p-0 text-[16.5px] leading-[34px]">
-                {u.points.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
+              <p className="m-0 mt-3 text-[16.5px] leading-[34px]">{u.text}</p>
             </div>
           ))}
         </div>
