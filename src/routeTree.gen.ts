@@ -25,6 +25,7 @@ import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SimulateurRoiRouteImport } from './routes/simulateur-roi'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SkillSeoAeoGeoRouteImport } from './routes/skill-seo-aeo-geo'
+import { Route as TutoShortsRouteImport } from './routes/tuto-shorts'
 import { Route as CategorieSlugRouteImport } from './routes/categorie/$slug'
 import { Route as GoIdRouteImport } from './routes/go.$id'
 import { Route as SkillSeoAeoGeoFichierRouteImport } from './routes/skill-seo-aeo-geo_.fichier'
@@ -111,6 +112,11 @@ const SkillSeoAeoGeoRoute = SkillSeoAeoGeoRouteImport.update({
   path: '/skill-seo-aeo-geo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TutoShortsRoute = TutoShortsRouteImport.update({
+  id: '/tuto-shorts',
+  path: '/tuto-shorts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategorieSlugRoute = CategorieSlugRouteImport.update({
   id: '/categorie/$slug',
   path: '/categorie/$slug',
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/simulateur-roi': typeof SimulateurRoiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
+  '/tuto-shorts': typeof TutoShortsRoute
   '/categorie/$slug': typeof CategorieSlugRoute
   '/go/$id': typeof GoIdRoute
   '/skill-seo-aeo-geo/fichier': typeof SkillSeoAeoGeoFichierRoute
@@ -178,6 +185,7 @@ export interface FileRoutesByTo {
   '/simulateur-roi': typeof SimulateurRoiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
+  '/tuto-shorts': typeof TutoShortsRoute
   '/categorie/$slug': typeof CategorieSlugRoute
   '/go/$id': typeof GoIdRoute
   '/skill-seo-aeo-geo/fichier': typeof SkillSeoAeoGeoFichierRoute
@@ -202,6 +210,7 @@ export interface FileRoutesById {
   '/simulateur-roi': typeof SimulateurRoiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skill-seo-aeo-geo': typeof SkillSeoAeoGeoRoute
+  '/tuto-shorts': typeof TutoShortsRoute
   '/categorie/$slug': typeof CategorieSlugRoute
   '/go/$id': typeof GoIdRoute
   '/skill-seo-aeo-geo_/fichier': typeof SkillSeoAeoGeoFichierRoute
@@ -227,6 +236,7 @@ export interface FileRouteTypes {
     | '/simulateur-roi'
     | '/sitemap.xml'
     | '/skill-seo-aeo-geo'
+    | '/tuto-shorts'
     | '/categorie/$slug'
     | '/go/$id'
     | '/skill-seo-aeo-geo/fichier'
@@ -250,6 +260,7 @@ export interface FileRouteTypes {
     | '/simulateur-roi'
     | '/sitemap.xml'
     | '/skill-seo-aeo-geo'
+    | '/tuto-shorts'
     | '/categorie/$slug'
     | '/go/$id'
     | '/skill-seo-aeo-geo/fichier'
@@ -273,6 +284,7 @@ export interface FileRouteTypes {
     | '/simulateur-roi'
     | '/sitemap.xml'
     | '/skill-seo-aeo-geo'
+    | '/tuto-shorts'
     | '/categorie/$slug'
     | '/go/$id'
     | '/skill-seo-aeo-geo_/fichier'
@@ -297,6 +309,7 @@ export interface RootRouteChildren {
   SimulateurRoiRoute: typeof SimulateurRoiRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SkillSeoAeoGeoRoute: typeof SkillSeoAeoGeoRoute
+  TutoShortsRoute: typeof TutoShortsRoute
   CategorieSlugRoute: typeof CategorieSlugRoute
   GoIdRoute: typeof GoIdRoute
   SkillSeoAeoGeoFichierRoute: typeof SkillSeoAeoGeoFichierRoute
@@ -418,6 +431,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SkillSeoAeoGeoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tuto-shorts': {
+      id: '/tuto-shorts'
+      path: '/tuto-shorts'
+      fullPath: '/tuto-shorts'
+      preLoaderRoute: typeof TutoShortsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/categorie/$slug': {
       id: '/categorie/$slug'
       path: '/categorie/$slug'
@@ -473,6 +493,7 @@ const rootRouteChildren: RootRouteChildren = {
   SimulateurRoiRoute: SimulateurRoiRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SkillSeoAeoGeoRoute: SkillSeoAeoGeoRoute,
+  TutoShortsRoute: TutoShortsRoute,
   CategorieSlugRoute: CategorieSlugRoute,
   GoIdRoute: GoIdRoute,
   SkillSeoAeoGeoFichierRoute: SkillSeoAeoGeoFichierRoute,
