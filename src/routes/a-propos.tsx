@@ -8,8 +8,6 @@ import { LINKEDIN_URL, SITE_NAME, SITE_URL, authorLd, jsonLdScript, pageHead } f
 
 const BOOTCAMP_SLUG = "bootcamp-product-builder-retour-experience";
 const ENDO_URL = "https://endo-serenite.fr/";
-const REVIEW_URL = "https://fr.trustpilot.com/reviews/68d7a405379163b7d131d7c9";
-
 const r = (deg: string) => ({ "--r": deg }) as CSSProperties;
 
 type Step = { when: string; role: string; points: string[] };
@@ -126,7 +124,7 @@ const AUJOURDHUI: Usage[] = [
   },
   {
     title: "Je vends autrement",
-    text: "Chaque nouveau lead est créé et noté automatiquement, les relances partent à la bonne date, et mon CRM se remplit seul : rendez-vous, contacts, opportunités. Mon temps va aux échanges qui comptent.",
+    text: "Dans mon métier de responsable commercial, chaque nouveau lead est créé et noté automatiquement, les relances partent à la bonne date, et mon CRM se remplit seul : rendez-vous, contacts, opportunités. Mon temps va aux échanges qui comptent.",
   },
 ];
 
@@ -299,14 +297,12 @@ function About() {
                 « Le bagage technique est une chose, mais le bagage autour, sur la sécurité et le
                 product management, était très juste également. »
               </p>
-              <a
-                href={REVIEW_URL}
-                rel="noopener"
-                target="_blank"
+              <Link
+                to="/realisations"
                 className="text-sm font-semibold text-ink underline underline-offset-4"
               >
-                Mon avis complet sur Trustpilot
-              </a>
+                Ce que j'ai construit depuis
+              </Link>
             </li>
           </ol>
           {communaute ? (
