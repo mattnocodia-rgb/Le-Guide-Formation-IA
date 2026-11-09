@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { CATEGORIES, absUrl } from "@/lib/site";
-
 const xmlEscape = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -9,28 +7,14 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const { getPublishedArticles } = await import("@/lib/airtable.server");
-        const articles = await getPublishedArticles();
-        const latest = articles[0]?.updatedAt ?? null;
-        const urls: { loc: string; lastmod: string | null }[] = [
-          { loc: absUrl("/"), lastmod: latest },
-          ...CATEGORIES.map((c) => ({
-            loc: absUrl(`/categorie/${c.slug}`),
-            lastmod: articles.find((a) => a.categorySlug === c.slug)?.updatedAt ?? null,
-          })),
-          { loc: absUrl("/a-propos"), lastmod: null },
-          { loc: absUrl("/skill-seo-aeo-geo"), lastmod: null },
-          { loc: absUrl("/boutique"), lastmod: null },
-          { loc: absUrl("/simulateur-roi"), lastmod: null },
-          { loc: absUrl("/realisations"), lastmod: null },
-          ...articles.map((a) => ({ loc: absUrl(`/${a.slug}`), lastmod: a.updatedAt })),
-        ];
+        const { getSitemapUrls } = await import("@/lib/sitemap.server");
+        const urls = await getSitemapUrls();
         const body =
           `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
           urls
             .map(
               (u) =>
-                `  <url><loc>${xmlEscape(u.loc)}</loc>${u.lastmod ? `<lastmod>${u.lastmod.slice(0, 10)}</lastmod>` : ""}</url>`,
+                `  <url><loc>${xmlEscape(u.loc)}</loc>${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ""}</url>`,
             )
             .join("\n") +
           `\n</urlset>\n`;

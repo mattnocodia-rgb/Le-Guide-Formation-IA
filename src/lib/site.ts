@@ -8,6 +8,23 @@ export const SITE_DESCRIPTION =
 export const START_GUIDE_SLUG = "devenir-product-builder";
 
 export const LINKEDIN_URL = "https://www.linkedin.com/in/matthieuaudineau/";
+/**
+ * IndexNow key (public by design): served as /<key>.txt so Bing and the other engines can check it.
+ */
+export const INDEXNOW_KEY = "8419d695fed04a5b559c6e45d1de56d0";
+
+/**
+ * Last real content change of the pages that are not articles, for the sitemap <lastmod>.
+ * Update the date when a page's content changes (not for style or code-only edits).
+ */
+export const STATIC_PAGES_UPDATED: Record<string, string> = {
+  "/a-propos": "2026-11-09",
+  "/skill-seo-aeo-geo": "2026-10-24",
+  "/boutique": "2026-11-02",
+  "/simulateur-roi": "2026-11-05",
+  "/realisations": "2026-11-09",
+};
+
 export const YOUTUBE_URL = "https://www.youtube.com/@LeGuideFormationIA";
 
 export const CATEGORIES = [
