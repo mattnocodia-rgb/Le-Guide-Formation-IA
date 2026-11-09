@@ -11,6 +11,7 @@ export const PLACES = {
   pied: "Pied de page",
   apropos: "À propos",
   categorie: "Catégorie",
+  realisations: "Réalisations",
 } as const;
 
 export type Place = keyof typeof PLACES;

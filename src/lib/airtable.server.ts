@@ -291,6 +291,8 @@ export type Realisation = {
   formation: string;
   lien: string | null;
   payant: { url: string; label: string } | null;
+  /** Cube link record (table Liens) of the course that made the project possible. */
+  formationId: string | null;
 };
 
 /** Drops "[À compléter…]" placeholders so unfinished notes never reach the public page. */
@@ -304,6 +306,11 @@ function clean(text: string) {
 /** Screenshot file name (public/img/realisations/), or null. Rejects anything but a plain name. */
 function imageName(value: string) {
   return /^[a-z0-9-]+\.(jpe?g|png|webp|svg)$/i.test(value) ? value : null;
+}
+
+function firstLinkId(value: unknown) {
+  const id = Array.isArray(value) ? value[0] : null;
+  return typeof id === "string" && /^rec[A-Za-z0-9]{14}$/.test(id) ? id : null;
 }
 
 /** Case studies for /realisations. Only rows ticked "Visible" with a project name are shown. */
@@ -328,6 +335,7 @@ export async function getRealisations(): Promise<Realisation[]> {
       resultat: clean(str(r.fields["Résultat"])),
       formation: clean(str(r.fields["Ce que la formation m'a apporté"])),
       lien: str(r.fields["Lien"]) || null,
+      formationId: firstLinkId(r.fields["Formation Cube"]),
       payant: str(r.fields["Version payante (lien)"])
         ? {
             url: str(r.fields["Version payante (lien)"]),
