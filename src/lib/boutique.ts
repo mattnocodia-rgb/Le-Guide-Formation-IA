@@ -5,6 +5,9 @@ import { type ContactNeedId, SKILL_NAME } from "@/lib/site";
 
 export type ProductStatus = "disponible" | "bientot";
 
+/** « service » = done with or for the client (audit, accompaniment); « diy » = skill + tutorial bought directly. */
+export type ProductKind = "service" | "diy";
+
 /** Internal pages a card can link to. Add each new sales page route to this union. */
 export type ShopPath =
   "/skill-seo-aeo-geo" | "/audit-seo" | "/tuto-shorts" | "/simulateur-roi" | "/realisations";
@@ -19,6 +22,7 @@ export type Product = {
   /** What the buyer gets, kept short. */
   includes: string[];
   status: ProductStatus;
+  kind: ProductKind;
   /** Internal sales page, for available products. */
   path?: ShopPath;
   /** For services without a sales page: the button opens the contact form with this need. */
@@ -32,6 +36,7 @@ export type Product = {
 export const PRODUCTS: Product[] = [
   {
     id: "audit-seo",
+    kind: "service",
     kicker: "fait pour vous",
     title:
       "Audit de votre site web pour être mieux référencé par Google et les intelligences artificielles",
@@ -48,6 +53,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "skill-seo-aeo-geo",
+    kind: "diy",
     kicker: "à faire vous-même, dans Claude",
     title: SKILL_NAME,
     promise:
@@ -63,6 +69,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "tuto-shorts",
+    kind: "diy",
     kicker: "skill Claude + tuto",
     title: "Un short vidéo par article, en 2 minutes",
     promise:
@@ -78,6 +85,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "accompagnement-automatisation",
+    kind: "service",
     kicker: "accompagnement",
     title: "Automatiser une tâche de votre activité",
     promise:
@@ -96,6 +104,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "accompagnement-site",
+    kind: "service",
     kicker: "accompagnement",
     title: "Créer votre site web",
     promise:
