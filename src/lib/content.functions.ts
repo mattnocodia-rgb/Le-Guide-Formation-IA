@@ -5,8 +5,9 @@ import type { CubeLink, Realisation } from "./airtable.server";
 import { goPath } from "./track";
 
 /** A case study as shown on /realisations, with the Cube course behind it resolved. */
-export type RealisationCard = Omit<Realisation, "formationId"> & {
-  cube: { url: string; label: string } | null;
+export type RealisationCard = Omit<Realisation, "formationIds"> & {
+  /** Course buttons, then an upcoming masterclass if one is linked and not past. */
+  cube: { url: string; label: string; cta: string }[];
 };
 
 export type ArticleSummary = {
@@ -203,9 +204,21 @@ export const getRealisationsData = createServerFn({ method: "GET" }).handler(asy
     (x) => x.type === "programme" && x.theme === "general" && isLinkValid(x),
   );
   const byId = new Map(links.map((l) => [l.id, l]));
-  const items: RealisationCard[] = realisations.map(({ formationId, ...r }) => {
-    const l = formationId ? byId.get(formationId) : undefined;
-    return { ...r, cube: isLinkValid(l) ? { url: goPath(l.id), label: l.label } : null };
+  const { formatDateFr } = await import("./site");
+  const items: RealisationCard[] = realisations.map(({ formationIds, ...r }) => {
+    const valid = formationIds.map((id) => byId.get(id)).filter((l) => isLinkValid(l));
+    const cube = [
+      ...valid.filter((l) => l.type !== "evenement").slice(0, 1),
+      ...valid.filter((l) => l.type === "evenement").slice(0, 1),
+    ].map((l) => ({
+      url: goPath(l.id),
+      label: l.label,
+      cta:
+        l.type === "evenement"
+          ? `La masterclass du ${formatDateFr(l.expires).replace(/\s\d{4}$/, "")}`
+          : "La formation qui correspond",
+    }));
+    return { ...r, cube };
   });
   return {
     items,

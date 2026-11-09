@@ -74,7 +74,7 @@ function Carte({ r }: { r: RealisationCard }) {
         <Bloc label="Ce que j'ai construit" text={r.construit} />
         <Bloc label="Le résultat" text={r.resultat} />
         <Bloc label="Ce que la formation m'a apporté" text={r.formation} />
-        {(r.payant || r.lien || r.cube) && (
+        {(r.payant || r.lien || r.cube.length > 0) && (
           <p className="m-0 mt-auto flex flex-wrap gap-3 pt-5">
             {r.payant && (
               <a
@@ -90,16 +90,17 @@ function Carte({ r }: { r: RealisationCard }) {
                 Voir le projet
               </a>
             )}
-            {r.cube && (
+            {r.cube.map((c) => (
               <a
-                href={track(r.cube.url, "realisations")}
+                key={c.url}
+                href={track(c.url, "realisations")}
                 rel="sponsored noopener"
-                title={`École Cube : ${r.cube.label}`}
+                title={`École Cube : ${c.label}`}
                 className="btn-outline text-[15px]"
               >
-                La formation qui correspond
+                {c.cta}
               </a>
-            )}
+            ))}
           </p>
         )}
       </div>
