@@ -3,13 +3,12 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { PageFrame } from "@/components/site/SiteChrome";
 import { contactHref } from "@/lib/boutique";
-import { getShopOffers } from "@/lib/content.functions";
+import { getAuditOffer } from "@/lib/content.functions";
 import {
   AUTHOR_REF,
   ORGANIZATION_ID,
   SITE_NAME,
   SITE_URL,
-  SKILL_NAME,
   jsonLdScript,
   pageHead,
   siteEntitiesLd,
@@ -88,8 +87,8 @@ const FAQ = [
     a: "À tout site qui veut être trouvé : artisan, indépendant, cabinet, PME, organisme de formation, site de contenu. Il n'y a pas besoin de connaissances techniques : le rapport est écrit pour être compris, et la visio sert à l'expliquer.",
   },
   {
-    q: "Quelle différence avec le skill Claude vendu dans la boutique ?",
-    a: `Le skill « ${SKILL_NAME} » sert surtout à écrire vous-même, dans Claude, des articles de blog qui seront trouvés et cités. L'audit, c'est moi qui le fais sur l'ensemble de votre site : technique, vitesse, données structurées, lisibilité par les IA, avec un rapport et une visio pour vous l'expliquer.`,
+    q: "Puis-je faire l'audit moi-même ?",
+    a: "Oui, si vous êtes à l'aise avec Claude Code, le terminal et Python : l'audit s'appuie sur Claude SEO, un outil libre et gratuit disponible sur GitHub. L'audit payant, c'est le service : je le mène, je trie les résultats selon ce qui compte pour votre site, et je vous les explique en visio.",
   },
   {
     q: "Les corrections sont-elles comprises ?",
@@ -102,8 +101,7 @@ const FAQ = [
 ];
 
 export const Route = createFileRoute("/audit-seo")({
-  // Audit and skill offers: the page also sells the do-it-yourself option (skill + PDF tutorial).
-  loader: () => getShopOffers(),
+  loader: () => getAuditOffer(),
   head: () => {
     const head = pageHead({
       title: "Audit SEO de votre site pour Google et ChatGPT",
@@ -145,7 +143,7 @@ export const Route = createFileRoute("/audit-seo")({
 });
 
 function OrderBox({ className = "" }: { className?: string }) {
-  const { price, buyUrl } = Route.useLoaderData().audit;
+  const { price, buyUrl } = Route.useLoaderData();
   return (
     <div className={`flex flex-wrap items-center gap-x-5 gap-y-3 ${className}`}>
       {buyUrl ? (
@@ -166,43 +164,42 @@ function OrderBox({ className = "" }: { className?: string }) {
   );
 }
 
-/** « Do it yourself » box: buy the skill and its step-by-step PDF tutorial directly. */
+/** The free, open-source tool behind the audit, for those who can run it themselves. */
+const AUDIT_TOOL_URL = "https://github.com/AgriciDaniel/claude-seo";
+
+/** « Do it yourself » box: the audit tool is free; the paid offer is the service. */
 function DiyBox() {
-  const { price, buyUrl } = Route.useLoaderData().skill;
   return (
     <aside
       aria-labelledby="seul"
       className="postit tilt relative mt-12 max-w-[760px] p-6 md:p-8"
       style={r("-0.6deg")}
     >
-      <p className="note m-0 text-[24px]">vous préférez le faire vous-même ?</p>
+      <p className="note m-0 text-[24px]">vous êtes à l'aise avec Claude et le code ?</p>
       <h2 id="seul" className="m-0 mt-1 text-[clamp(22px,2.4vw,28px)] leading-tight">
-        Faites l'audit seul, avec le skill et son tuto pas à pas
+        Faites l'audit vous-même, gratuitement
       </h2>
       <p className="m-0 mt-3 text-[16.5px] leading-relaxed">
-        Si vous utilisez déjà Claude et que vous avez quelques bases, vous pouvez lancer l'audit
-        vous-même. Vous recevez le skill d'audit et de rédaction que j'ai construit, avec un
-        tutoriel PDF qui détaille chaque étape, écran par écran : l'installation dans Claude, votre
-        premier audit, puis la lecture du rapport et la rédaction de vos articles.
+        Mon audit s'appuie sur Claude SEO, un outil libre et gratuit publié sur GitHub. Si vous
+        connaissez Claude Code, le terminal et un peu de Python, vous pouvez l'installer et lancer
+        l'audit de votre site vous-même.
       </p>
       <ul className="m-0 mt-3 flex list-disc flex-col gap-1 pl-5 text-[15.5px] leading-relaxed marker:text-accent">
-        <li>Le skill, à installer en quelques minutes, sans code</li>
-        <li>Le tutoriel pas à pas de 12 pages, avec des demandes prêtes à copier</li>
-        <li>Acheté une fois, sans abonnement</li>
+        <li>Prérequis : Claude Code, Python 3.10 ou plus, quelques commandes dans un terminal</li>
+        <li>Documentation en anglais, sur GitHub</li>
+        <li>Pas de tutoriel ni d'assistance de ma part pour cette version</li>
       </ul>
-      <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
-        {buyUrl ? (
-          <a href={buyUrl} rel="noopener" target="_blank" className="btn-ink">
-            Acheter le skill et le tuto{price ? ` — ${price}` : ""}
-          </a>
-        ) : null}
-        <Link to="/skill-seo-aeo-geo" className="py-2 font-semibold">
-          Voir le détail du skill →
-        </Link>
-      </div>
+      <a
+        href={AUDIT_TOOL_URL}
+        rel="noopener"
+        target="_blank"
+        className="mt-5 inline-block py-2 font-semibold"
+      >
+        Voir Claude SEO sur GitHub ↗
+      </a>
       <p className="m-0 mt-3 text-[13.5px] text-ink-soft">
-        Ce que l'audit fait pour vous en plus : la vitesse, le code, les données structurées, et une
-        visio pour vous expliquer quoi faire en premier.
+        Vous voulez des résultats sans y passer vos soirées ? C'est l'objet de l'audit : je le mène,
+        je trie ce qui compte vraiment pour votre site, et je vous l'explique en visio.
       </p>
     </aside>
   );
