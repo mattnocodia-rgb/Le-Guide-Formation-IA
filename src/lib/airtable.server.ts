@@ -196,6 +196,8 @@ export type CubeLink = {
   url: string;
   active: boolean;
   expires: string | null;
+  /** Short text for the home cards (event, replay); empty = default wording. */
+  accroche: string;
 };
 
 export async function getCubeLinks(): Promise<CubeLink[]> {
@@ -208,6 +210,7 @@ export async function getCubeLinks(): Promise<CubeLink[]> {
     url: str(r.fields["URL"]),
     active: r.fields["Actif"] === true,
     expires: str(r.fields["Expire le"]) || null,
+    accroche: str(r.fields["Accroche"]),
   }));
 }
 
@@ -227,7 +230,7 @@ export function isLinkValid(link: CubeLink | undefined, today = todayParis()): l
   return link.expires.slice(0, 10) >= today;
 }
 
-/** First valid link of a given type (e.g. "ressources", "rdv", "evenement", "communaute"). */
+/** First valid link of a given type (e.g. "ressources", "replay", "rdv", "evenement", "communaute"). */
 export function linkOfType(links: CubeLink[], type: string, today = todayParis()) {
   return links.find((l) => l.type === type && isLinkValid(l, today)) ?? null;
 }

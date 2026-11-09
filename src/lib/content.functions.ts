@@ -71,6 +71,10 @@ function eventTitle(label: string) {
   return label.replace(/^(é|e)v(è|e)nement\s*:\s*/i, "").trim() || "Le prochain évènement";
 }
 
+function replayTitle(label: string) {
+  return label.replace(/^replay\s*:\s*/i, "").trim() || "La dernière masterclass";
+}
+
 /** Button wording for a partner link, depending on what it points to. */
 function ctaFor(link: CubeLink) {
   switch (link.type) {
@@ -82,6 +86,8 @@ function ctaFor(link: CubeLink) {
       return "Rejoindre la communauté";
     case "evenement":
       return `S'inscrire : ${eventTitle(link.label)}`;
+    case "replay":
+      return `Voir le replay : ${replayTitle(link.label)}`;
     case "programme":
       return `Voir le programme : ${link.label}`;
     default:
@@ -122,8 +128,18 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
   ]);
 
   const reco: RecoCard[] = [];
+  const replay = linkOfType(links, "replay");
   const ressources = linkOfType(links, "ressources");
-  if (ressources)
+  if (replay)
+    reco.push({
+      ...toPartner(replay)!,
+      tag: "gratuit · dernier replay",
+      title: replayTitle(replay.label),
+      description:
+        replay.accroche || "La dernière masterclass de l'école, en accès libre en replay.",
+      cta: "Voir le replay",
+    });
+  else if (ressources)
     reco.push({
       ...toPartner(ressources)!,
       tag: "gratuit · en replay",
@@ -137,7 +153,7 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
       ...toPartner(evenement)!,
       tag: evenement.expires ? `en direct · ${formatDateFr(evenement.expires)}` : "en direct",
       title: eventTitle(evenement.label),
-      description: "Le prochain évènement en ligne de l'école.",
+      description: evenement.accroche || "Le prochain évènement en ligne de l'école.",
       cta: "S'inscrire",
     });
   const rdv = linkOfType(links, "rdv");

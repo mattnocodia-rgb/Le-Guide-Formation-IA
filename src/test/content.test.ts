@@ -11,6 +11,7 @@ const link = (over: Partial<CubeLink>): CubeLink => ({
   url: "https://example.com/l/1",
   active: true,
   expires: null,
+  accroche: "",
   ...over,
 });
 
