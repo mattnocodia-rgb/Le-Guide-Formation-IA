@@ -6,7 +6,7 @@ import { LinkedInIcon } from "@/components/site/Cards";
 import { PageFrame } from "@/components/site/SiteChrome";
 import {
   AUTHOR_NAME,
-  AUTHOR_PHOTO_PATH,
+  AUTHOR_PHOTO_224,
   LINKEDIN_URL,
   PERSON_ID,
   SITE_NAME,
@@ -179,7 +179,7 @@ function About() {
         </h1>
         <figure className="m-0 mb-8 flex items-center gap-4">
           <img
-            src={AUTHOR_PHOTO_PATH}
+            src={AUTHOR_PHOTO_224}
             alt={`${AUTHOR_NAME}, product builder no-code à Nantes`}
             width={112}
             height={112}

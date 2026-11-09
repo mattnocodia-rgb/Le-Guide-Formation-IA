@@ -130,6 +130,9 @@ export const BRAND_NAME = "Optimatt";
 export const AUTHOR_NAME = "Matthieu Audineau";
 /** Square author photo served from /public, used by the byline, /a-propos and structured data. */
 export const AUTHOR_PHOTO_PATH = "/photo-auteur.jpg";
+/** Small WebP copies for display (the 800 px JPEG stays for structured data). */
+export const AUTHOR_PHOTO_80 = "/photo-auteur-80.webp";
+export const AUTHOR_PHOTO_224 = "/photo-auteur-224.webp";
 
 /** Stable identifiers that tie the structured-data entities together across every page. */
 export const WEBSITE_ID = `${SITE_URL}/#website`;
