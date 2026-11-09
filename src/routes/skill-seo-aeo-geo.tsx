@@ -337,8 +337,10 @@ function SkillPage() {
             ))}
             <li className="postit tilt flex flex-col justify-center p-6" style={r("1.2deg")}>
               <p className="m-0 font-serif text-[19px] leading-snug">
-                Exemple réel : sur ce site, le sitemap ne listait que 6 pages sur 22. Aucun article
-                n'était en faute, c'était le site. C'est devenu le contrôle S1 de la grille.
+                Exemple réel : avant d'écrire un guide sur les formations n8n pour ce site, le skill
+                a repéré qu'un article existant expliquait déjà comment apprendre n8n gratuitement.
+                Le nouveau guide a pris un autre angle, choisir sa formation, au lieu de lui faire
+                concurrence sur Google.
               </p>
             </li>
           </ul>
