@@ -1,9 +1,9 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { PageFrame } from "@/components/site/SiteChrome";
-import type { Realisation } from "@/lib/airtable.server";
-import { getRealisationsData } from "@/lib/content.functions";
+import { type RealisationCard, getRealisationsData } from "@/lib/content.functions";
 import { LINKEDIN_URL, SITE_NAME, pageHead } from "@/lib/site";
+import { track } from "@/lib/track";
 
 const TITLE = `Ce que j'ai construit : études de cas no-code et IA — ${SITE_NAME}`;
 const DESCRIPTION =
@@ -43,7 +43,7 @@ const GROUPES = [
   },
 ] as const;
 
-function Carte({ r }: { r: Realisation }) {
+function Carte({ r }: { r: RealisationCard }) {
   return (
     <article className="sheet relative isolate flex flex-col overflow-hidden">
       {r.image && (
@@ -74,7 +74,7 @@ function Carte({ r }: { r: Realisation }) {
         <Bloc label="Ce que j'ai construit" text={r.construit} />
         <Bloc label="Le résultat" text={r.resultat} />
         <Bloc label="Ce que la formation m'a apporté" text={r.formation} />
-        {(r.payant || r.lien) && (
+        {(r.payant || r.lien || r.cube) && (
           <p className="m-0 mt-auto flex flex-wrap gap-3 pt-5">
             {r.payant && (
               <a
@@ -85,10 +85,21 @@ function Carte({ r }: { r: Realisation }) {
                 {r.payant.label}
               </a>
             )}
-            {r.lien && (
+            {r.lien ? (
               <a href={r.lien} target="_blank" rel="noopener" className="btn-outline text-[15px]">
                 Voir le projet
               </a>
+            ) : (
+              r.cube && (
+                <a
+                  href={track(r.cube.url, "realisations")}
+                  rel="sponsored noopener"
+                  title={`École Cube : ${r.cube.label}`}
+                  className="btn-outline text-[15px]"
+                >
+                  La formation qui m'a appris à le faire
+                </a>
+              )
             )}
           </p>
         )}
@@ -184,7 +195,7 @@ function Realisations() {
             </p>
             {formations && (
               <a
-                href={formations.url}
+                href={track(formations.url, "realisations")}
                 rel="sponsored noopener"
                 className="btn-ink mt-4 text-[15px]"
               >
@@ -192,7 +203,11 @@ function Realisations() {
               </a>
             )}
             {rdv && (
-              <a href={rdv.url} rel="sponsored noopener" className="btn-outline mt-3 text-[15px]">
+              <a
+                href={track(rdv.url, "realisations")}
+                rel="sponsored noopener"
+                className="btn-outline mt-3 text-[15px]"
+              >
                 {rdv.label}
               </a>
             )}

@@ -1,8 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import type { CubeLink } from "./airtable.server";
+import type { CubeLink, Realisation } from "./airtable.server";
 import { goPath } from "./track";
+
+/** A case study as shown on /realisations, with the Cube course behind it resolved. */
+export type RealisationCard = Omit<Realisation, "formationId"> & {
+  cube: { url: string; label: string } | null;
+};
 
 export type ArticleSummary = {
   title: string;
@@ -177,10 +182,15 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
 
 export const getRealisationsData = createServerFn({ method: "GET" }).handler(async () => {
   const { getRealisations, isLinkValid } = await import("./airtable.server");
-  const [{ links, rdv }, items] = await Promise.all([sharedLinks(), getRealisations()]);
+  const [{ links, rdv }, realisations] = await Promise.all([sharedLinks(), getRealisations()]);
   const general = links.find(
     (x) => x.type === "programme" && x.theme === "general" && isLinkValid(x),
   );
+  const byId = new Map(links.map((l) => [l.id, l]));
+  const items: RealisationCard[] = realisations.map(({ formationId, ...r }) => {
+    const l = formationId ? byId.get(formationId) : undefined;
+    return { ...r, cube: isLinkValid(l) ? { url: goPath(l.id), label: l.label } : null };
+  });
   return {
     items,
     rdv,
