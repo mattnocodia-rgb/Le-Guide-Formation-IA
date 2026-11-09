@@ -8,6 +8,7 @@ export const SITE_DESCRIPTION =
 export const START_GUIDE_SLUG = "devenir-product-builder";
 
 export const LINKEDIN_URL = "https://www.linkedin.com/in/matthieuaudineau/";
+export const YOUTUBE_URL = "https://www.youtube.com/@LeGuideFormationIA";
 
 export const CATEGORIES = [
   {
@@ -124,6 +125,7 @@ export const ORGANIZATION_LD = {
     height: 180,
   },
   founder: { "@id": PERSON_ID },
+  sameAs: [YOUTUBE_URL],
 };
 
 export const WEBSITE_LD = {
