@@ -5,7 +5,7 @@ import { type RealisationCard, getRealisationsData } from "@/lib/content.functio
 import { LINKEDIN_URL, SITE_NAME, pageHead } from "@/lib/site";
 import { track } from "@/lib/track";
 
-const TITLE = `Ce que j'ai construit : études de cas no-code et IA — ${SITE_NAME}`;
+const TITLE = `Études de cas no-code et IA — ${SITE_NAME}`;
 const DESCRIPTION =
   "Sites, automatisations n8n et Make, outils internes : les projets que je construis avec le no-code et l'IA, avec pour chacun le problème, les outils et le résultat.";
 

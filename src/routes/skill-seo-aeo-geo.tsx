@@ -181,9 +181,9 @@ export const Route = createFileRoute("/skill-seo-aeo-geo")({
   loader: () => getSkillOffer(),
   head: () => {
     const head = pageHead({
-      title: `Skill Claude SEO, AEO et GEO : auditer et écrire pour Google et les IA — ${SITE_NAME}`,
+      title: `Skill Claude SEO, AEO et GEO — ${SITE_NAME}`,
       description:
-        "Le skill Claude avec lequel ce guide a été écrit et audité : 32 contrôles SEO, AEO et GEO, un audit de site entier et un mode rédaction qui livre des articles prêts à coller. Ce qu'il contient, comment il marche, où il fonctionne.",
+        "Le skill Claude qui a écrit et audité ce guide : 32 contrôles SEO, AEO et GEO, audit de site entier et articles prêts à publier, sans code.",
       path: PATH,
     });
     return {

@@ -34,6 +34,8 @@ export const CATEGORIES = [
     slug: "metier-reconversion",
     color: "#E2583E",
     description: "Product builder, freelance, passer du CDI à l'IA.",
+    metaDescription:
+      "Devenir product builder, se lancer en freelance, quitter un CDI pour l'IA : les guides d'un reconverti certifié, chiffres sourcés et datés.",
   },
   {
     name: "Outils & vibe coding",
@@ -41,6 +43,8 @@ export const CATEGORIES = [
     slug: "outils-vibe-coding",
     color: "#1E3A5F",
     description: "Lovable, n8n, Make, Claude Code : quels outils apprendre, et dans quel ordre.",
+    metaDescription:
+      "Lovable, n8n, Make, Claude Code : quels outils no-code et IA apprendre en premier, à quoi ils servent et dans quel ordre s'y former.",
   },
   {
     name: "IA en entreprise",
@@ -48,6 +52,8 @@ export const CATEGORIES = [
     slug: "ia-en-entreprise",
     color: "#2E7D5B",
     description: "Audit IA, AI Act, vendre des agents IA aux entreprises.",
+    metaDescription:
+      "Audit IA, AI Act 2026, agents IA : comment les entreprises adoptent l'IA, et comment leur vendre des automatisations quand on est product builder.",
   },
   {
     name: "Growth & marketing",
@@ -55,6 +61,8 @@ export const CATEGORIES = [
     slug: "growth-marketing",
     color: "#D99A1C",
     description: "Contenu LinkedIn, positionnement, acquisition.",
+    metaDescription:
+      "Contenu LinkedIn, positionnement, prospection avec l'IA : les bases de l'acquisition pour un freelance ou une startup qui se lance.",
   },
   {
     name: "Financement",
@@ -62,6 +70,8 @@ export const CATEGORIES = [
     slug: "financement",
     color: "#8A5A9E",
     description: "CPF, France Travail, OPCO : ce qui a changé en 2026.",
+    metaDescription:
+      "CPF, France Travail, OPCO : ce qui a changé en 2026 pour financer une formation IA ou no-code, avec les montants et les démarches.",
   },
 ] as const;
 
