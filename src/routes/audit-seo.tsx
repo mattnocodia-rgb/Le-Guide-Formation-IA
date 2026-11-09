@@ -106,7 +106,7 @@ export const Route = createFileRoute("/audit-seo")({
     const head = pageHead({
       title: "Audit SEO de votre site pour Google et ChatGPT",
       description:
-        "Je vérifie votre site pour Google et les IA comme ChatGPT : rapport noté sur 100, problèmes classés par gravité, plan d'action, et 45 minutes de visio.",
+        "Gagnez des positions sur Google et dans les réponses des IA : audit de votre site, rapport noté sur 100, plan d'action priorisé et 45 minutes de visio.",
       path: PATH,
     });
     return {
@@ -238,10 +238,13 @@ function AuditPage() {
           artificielles
         </h1>
         <p className="m-0 max-w-[680px] text-xl leading-relaxed text-ink-soft">
-          Vos clients vous cherchent sur Google, et de plus en plus en posant la question à ChatGPT.
-          Cet audit SEO, AEO et GEO vous dit si votre site peut y apparaître, ce qui bloque, et quoi
-          corriger en premier. Vous recevez un rapport écrit, puis on le passe en revue ensemble en
-          visio.
+          <strong className="text-ink">
+            Gagnez des positions sur Google et dans les réponses des IA.
+          </strong>{" "}
+          Votre site existe, mais il ne remonte pas assez sur Google, et ChatGPT ne le cite pas
+          encore. Cet audit SEO, AEO et GEO repère ce qui vous fait perdre des places et vous donne
+          un plan clair pour en gagner, en commençant par les corrections qui rapportent le plus.
+          Vous recevez un rapport écrit, puis on le passe en revue ensemble en visio.
         </p>
         <OrderBox className="mt-8" />
         <DiyBox />

@@ -38,7 +38,7 @@ export const PRODUCTS: Product[] = [
     title:
       "Audit de votre site web pour être mieux référencé par Google et les intelligences artificielles",
     promise:
-      "Un rapport complet avec un plan d'action priorisé, puis 45 minutes en visio pour vous expliquer quoi corriger en premier.",
+      "Gagnez des positions sur Google et dans les IA : je repère ce qui vous fait perdre des places, et je vous donne un plan d'action priorisé, expliqué en visio.",
     includes: [
       "Une note sur 100 et 7 domaines contrôlés",
       "Problèmes classés par gravité",
