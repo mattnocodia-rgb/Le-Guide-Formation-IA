@@ -211,6 +211,30 @@ function Home() {
                   className={`tilt flex min-h-[200px] flex-col gap-3 p-6 no-underline shadow-[var(--shadow-card)] ${tone}`}
                   style={r(tiltFor(i + 1))}
                 >
+                  {c.type === "replay" || c.type === "evenement" ? (
+                    <span className="flex items-center gap-3">
+                      {c.date ? (
+                        <span
+                          aria-hidden="true"
+                          className="flex h-[58px] w-[58px] shrink-0 flex-col items-center justify-center rounded-sm border-2 border-ink bg-paper-light leading-none"
+                        >
+                          <span className="font-serif text-[24px] font-extrabold">
+                            {c.date.day}
+                          </span>
+                          <span className="mt-0.5 text-[11px] font-bold uppercase tracking-wide">
+                            {c.date.month}
+                          </span>
+                        </span>
+                      ) : null}
+                      <span
+                        className={`rounded-full px-3 py-1 text-[12px] font-bold uppercase tracking-wide ${
+                          c.type === "replay" ? "bg-paper text-ink" : "bg-accent-ink text-paper"
+                        }`}
+                      >
+                        {c.type === "replay" ? "▶ En replay" : "● Prochain direct"}
+                      </span>
+                    </span>
+                  ) : null}
                   <span className="font-hand text-[22px] font-semibold opacity-85">{c.tag}</span>
                   <span className="font-serif text-[23px] leading-[1.15] font-extrabold">
                     {c.title}

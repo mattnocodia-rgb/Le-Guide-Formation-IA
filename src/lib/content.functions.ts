@@ -53,7 +53,18 @@ export type RecoCard = PartnerLink & {
   title: string;
   description: string;
   cta: string;
+  /** Event date, shown as a calendar tile (day + short month). */
+  date?: { day: string; month: string } | undefined;
 };
+
+function calendarTile(iso: string | null) {
+  if (!iso) return undefined;
+  const d = new Date(`${iso.slice(0, 10)}T12:00:00Z`);
+  if (Number.isNaN(d.getTime())) return undefined;
+  const fmt = (o: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat("fr-FR", { ...o, timeZone: "Europe/Paris" }).format(d);
+  return { day: fmt({ day: "numeric" }), month: fmt({ month: "short" }) };
+}
 
 function toSummary(a: ArticleSummary): ArticleSummary {
   return {
@@ -134,7 +145,7 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
   if (replay)
     reco.push({
       ...toPartner(replay)!,
-      tag: "gratuit · dernier replay",
+      tag: "déjà disponible · gratuit",
       title: replayTitle(replay.label),
       description:
         replay.accroche || "La dernière masterclass de l'école, en accès libre en replay.",
@@ -152,8 +163,9 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
   if (evenement)
     reco.push({
       ...toPartner(evenement)!,
-      tag: evenement.expires ? `en direct · ${formatDateFr(evenement.expires)}` : "en direct",
+      tag: evenement.expires ? `à venir · ${formatDateFr(evenement.expires)}` : "à venir",
       title: eventTitle(evenement.label),
+      date: calendarTile(evenement.expires),
       description: evenement.accroche || "Le prochain évènement en ligne de l'école.",
       cta: "S'inscrire",
     });
