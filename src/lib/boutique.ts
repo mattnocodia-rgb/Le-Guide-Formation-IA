@@ -1,7 +1,7 @@
 // Client-safe product catalogue for the /boutique page.
 // Add a product here to list it in the shop; set `status: "bientot"` while it is being built.
 
-import { CONTACT_EMAIL, SKILL_NAME } from "@/lib/site";
+import { type ContactNeedId, SKILL_NAME } from "@/lib/site";
 
 export type ProductStatus = "disponible" | "bientot";
 
@@ -20,24 +20,22 @@ export type Product = {
   status: ProductStatus;
   /** Internal sales page, for available products. */
   path?: ShopPath;
-  /** For services without a sales page: the button opens an e-mail to me. */
-  contactSubject?: string;
+  /** For services without a sales page: the button opens the contact form with this need. */
+  contactNeed?: ContactNeedId;
   /** Extra links under the card (case studies, free tool…). */
   links?: { label: string; to: ShopPath; hash?: string }[];
   /** Price shown when it is not loaded from Airtable. */
   price?: string;
 };
 
-export const contactHref = (subject: string) =>
-  `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`;
-
 export const PRODUCTS: Product[] = [
   {
     id: "audit-seo",
     kicker: "fait pour vous",
-    title: "Je vérifie votre site pour Google et ChatGPT",
+    title:
+      "Audit de votre site web pour être mieux référencé par Google et les intelligences artificielles",
     promise:
-      "Un rapport complet avec un plan d'action priorisé, puis 45 minutes en visio pour vous expliquer quoi corriger en premier.",
+      "Gagnez des positions sur Google et dans les IA : je repère ce qui vous fait perdre des places, et je vous donne un plan d'action priorisé, expliqué en visio.",
     includes: [
       "Une note sur 100 et 7 domaines contrôlés",
       "Problèmes classés par gravité",
@@ -88,7 +86,7 @@ export const PRODUCTS: Product[] = [
       "Sur devis, après un premier échange",
     ],
     status: "disponible",
-    contactSubject: "Accompagnement : automatiser une tâche",
+    contactNeed: "automatisation",
     links: [
       { label: "Ce que j'ai automatisé en entreprise", to: "/realisations", hash: "en-entreprise" },
       { label: "Combien vous coûte cette tâche ? (gratuit)", to: "/simulateur-roi" },
@@ -106,7 +104,7 @@ export const PRODUCTS: Product[] = [
       "Sur devis, après un premier échange",
     ],
     status: "disponible",
-    contactSubject: "Accompagnement : créer mon site web",
+    contactNeed: "site",
     links: [
       {
         label: "Le site que vous lisez, construit ainsi",

@@ -374,3 +374,33 @@ export const getSaleTerms = createServerFn({ method: "GET" }).handler(async () =
     updated: "24 octobre 2026",
   };
 });
+
+/** Contact form: validates the request, drops bots (honeypot), saves it in Airtable. */
+export const sendContact = createServerFn({ method: "POST" })
+  .validator((d: unknown) =>
+    z
+      .object({
+        nom: z.string().trim().min(1).max(80),
+        prenom: z.string().trim().min(1).max(80),
+        email: z.string().trim().email().max(200),
+        telephone: z
+          .string()
+          .trim()
+          .regex(/^[+0-9 ().-]{6,25}$/),
+        besoin: z.enum(["audit", "redaction", "automatisation", "site", "autre"]),
+        message: z.string().trim().max(3000),
+        rgpd: z.literal(true),
+        page: z.string().max(200),
+        // Hidden field: humans leave it empty.
+        website: z.string().max(200),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data }) => {
+    if (data.website) return { ok: true as const };
+    const { recordContact } = await import("./airtable.server");
+    const { CONTACT_NEEDS } = await import("./site");
+    const besoin = CONTACT_NEEDS.find((n) => n.id === data.besoin)?.label ?? "Autre";
+    const ok = await recordContact({ ...data, besoin });
+    return ok ? { ok: true as const } : { ok: false as const };
+  });

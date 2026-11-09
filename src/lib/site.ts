@@ -21,6 +21,16 @@ export const START_GUIDE_SLUG = "devenir-product-builder";
 
 export const CONTACT_EMAIL = "contact@optimatt.fr";
 
+/** Choices of the contact form (« Besoin »). `label` must match the Airtable single-select option. */
+export const CONTACT_NEEDS = [
+  { id: "audit", label: "Audit SEO de mon site" },
+  { id: "redaction", label: "Rédaction d'articles" },
+  { id: "automatisation", label: "Automatisation" },
+  { id: "site", label: "Création de site web" },
+  { id: "autre", label: "Autre" },
+] as const;
+export type ContactNeedId = (typeof CONTACT_NEEDS)[number]["id"];
+
 /** Public name of the SEO / AEO / GEO skill, worded for non-specialists: it mainly writes blog articles. */
 export const SKILL_NAME = "Rédiger des articles pour être référencé sur Google et ChatGPT";
 
@@ -38,6 +48,7 @@ export const STATIC_PAGES_UPDATED: Record<string, string> = {
   "/a-propos": "2026-11-09",
   "/skill-seo-aeo-geo": "2026-11-09",
   "/audit-seo": "2026-11-09",
+  "/contact": "2026-11-09",
   "/boutique": "2026-11-09",
   "/simulateur-roi": "2026-11-05",
   "/realisations": "2026-11-09",

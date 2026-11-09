@@ -59,9 +59,18 @@ function Legal() {
           </p>
           <h2 id="cookies">Cookies et données personnelles</h2>
           <p>
-            Ce site n'utilise aucun cookie de suivi ni outil de mesure d'audience tiers, et ne
-            collecte aucune donnée personnelle via un formulaire. Les polices de caractères sont
-            chargées depuis Google Fonts.
+            Ce site n'utilise aucun cookie de suivi ni outil de mesure d'audience tiers. Les polices
+            de caractères sont hébergées sur le site lui-même.
+          </p>
+          <p>
+            Le <a href="/contact">formulaire de contact</a> recueille vos nom, prénom, adresse
+            e-mail, téléphone et message, avec votre accord, dans le seul but de répondre à votre
+            demande. Ces données sont enregistrées dans un outil de gestion (Airtable, service
+            américain) et transmises par e-mail à l'éditeur ; elles ne sont ni revendues ni
+            utilisées pour de la prospection sans votre accord, et sont supprimées au plus tard
+            trois ans après le dernier échange. Vous pouvez y accéder, les faire corriger ou
+            supprimer en écrivant à <a href="mailto:contact@optimatt.fr">contact@optimatt.fr</a>, et
+            saisir la CNIL en cas de désaccord.
           </p>
           <p>
             Les clics sur les liens partenaires sont comptés de façon anonyme, pour savoir quels

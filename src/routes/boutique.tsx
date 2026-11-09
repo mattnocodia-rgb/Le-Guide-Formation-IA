@@ -2,7 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 
 import { PageFrame } from "@/components/site/SiteChrome";
-import { PRODUCTS, type Product, contactHref } from "@/lib/boutique";
+import { PRODUCTS, type Product } from "@/lib/boutique";
 import { getShopOffers } from "@/lib/content.functions";
 import { SITE_NAME, pageHead, tiltFor } from "@/lib/site";
 
@@ -73,7 +73,7 @@ function ProductCard({
 }) {
   const available = product.status === "disponible";
   const path = available ? product.path : undefined;
-  const contact = available && !path && product.contactSubject ? product.contactSubject : null;
+  const contact = available && !path && product.contactNeed ? product.contactNeed : null;
   return (
     <article
       className={`tilt flex h-full flex-col gap-3 p-6 text-ink shadow-[var(--shadow-card)] ${available ? "sheet" : "postit opacity-90"}`}
@@ -93,9 +93,9 @@ function ProductCard({
             Découvrir{price ? ` — ${price}` : ""}
           </Link>
         ) : contact ? (
-          <a href={contactHref(contact)} className="btn-ink text-[15px]">
+          <Link to="/contact" search={{ besoin: contact }} className="btn-ink text-[15px]">
             Me contacter
-          </a>
+          </Link>
         ) : (
           <span className="text-[15px] font-bold text-accent-ink">
             Bientôt disponible{price ? ` · ${price}` : ""}

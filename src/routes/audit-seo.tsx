@@ -2,7 +2,6 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import type { CSSProperties, ReactNode } from "react";
 
 import { PageFrame } from "@/components/site/SiteChrome";
-import { contactHref } from "@/lib/boutique";
 import { getAuditOffer } from "@/lib/content.functions";
 import {
   AUTHOR_REF,
@@ -106,7 +105,7 @@ export const Route = createFileRoute("/audit-seo")({
     const head = pageHead({
       title: "Audit SEO de votre site pour Google et ChatGPT",
       description:
-        "Je vérifie votre site pour Google et les IA comme ChatGPT : rapport noté sur 100, problèmes classés par gravité, plan d'action, et 45 minutes de visio.",
+        "Gagnez des positions sur Google et dans les réponses des IA : audit de votre site, rapport noté sur 100, plan d'action priorisé et 45 minutes de visio.",
       path: PATH,
     });
     return {
@@ -151,14 +150,17 @@ function OrderBox({ className = "" }: { className?: string }) {
           Commander l'audit{price ? ` — ${price}` : ""}
         </a>
       ) : (
-        <a href={contactHref("Demande d'audit de mon site")} className="btn-ink">
+        <Link to="/contact" search={{ besoin: "audit" }} className="btn-ink">
           Demander un audit{price ? ` — ${price}` : ""}
-        </a>
+        </Link>
       )}
       <span className="text-[15px] text-ink-soft">
         Rapport PDF + 45 min de visio
         {buyUrl ? " · paiement sécurisé par Stripe" : ""} ·{" "}
-        <Link to="/conditions-de-vente">conditions de vente</Link>
+        <Link to="/conditions-de-vente">conditions de vente</Link> · une question ?{" "}
+        <Link to="/contact" search={{ besoin: "audit" }}>
+          me contacter
+        </Link>
       </span>
     </div>
   );
@@ -234,13 +236,17 @@ function AuditPage() {
       <section className="container-wide max-w-[880px] pt-12 md:pt-16">
         <p className="note m-0 -rotate-2 text-[28px]">audit fait pour vous</p>
         <h1 className="mt-3 mb-6 text-[clamp(36px,5vw,58px)] leading-[1.05]">
-          Je vérifie votre site pour Google et ChatGPT
+          Audit de votre site web pour être mieux référencé par Google et les intelligences
+          artificielles
         </h1>
         <p className="m-0 max-w-[680px] text-xl leading-relaxed text-ink-soft">
-          Vos clients vous cherchent sur Google, et de plus en plus en posant la question à ChatGPT.
-          Cet audit SEO, AEO et GEO vous dit si votre site peut y apparaître, ce qui bloque, et quoi
-          corriger en premier. Vous recevez un rapport écrit, puis on le passe en revue ensemble en
-          visio.
+          <strong className="text-ink">
+            Gagnez des positions sur Google et dans les réponses des IA.
+          </strong>{" "}
+          Votre site existe, mais il ne remonte pas assez sur Google, et ChatGPT ne le cite pas
+          encore. Cet audit SEO, AEO et GEO repère ce qui vous fait perdre des places et vous donne
+          un plan clair pour en gagner, en commençant par les corrections qui rapportent le plus.
+          Vous recevez un rapport écrit, puis on le passe en revue ensemble en visio.
         </p>
         <OrderBox className="mt-8" />
         <DiyBox />
