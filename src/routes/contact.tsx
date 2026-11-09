@@ -171,7 +171,7 @@ function ContactPage() {
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="prenom" className={label}>
-                  Prénom
+                  Prénom<span className="text-accent-ink" aria-hidden="true"> *</span>
                 </label>
                 <input
                   id="prenom"
@@ -185,7 +185,7 @@ function ContactPage() {
               </div>
               <div>
                 <label htmlFor="nom" className={label}>
-                  Nom
+                  Nom<span className="text-accent-ink" aria-hidden="true"> *</span>
                 </label>
                 <input
                   id="nom"
@@ -199,7 +199,7 @@ function ContactPage() {
               </div>
               <div>
                 <label htmlFor="email" className={label}>
-                  E-mail
+                  E-mail<span className="text-accent-ink" aria-hidden="true"> *</span>
                 </label>
                 <input
                   id="email"
@@ -214,7 +214,7 @@ function ContactPage() {
               </div>
               <div>
                 <label htmlFor="telephone" className={label}>
-                  Téléphone
+                  Téléphone<span className="text-accent-ink" aria-hidden="true"> *</span>
                 </label>
                 <input
                   id="telephone"
@@ -232,7 +232,7 @@ function ContactPage() {
 
             <div>
               <label htmlFor="besoin" className={label}>
-                Votre besoin
+                Votre besoin<span className="text-accent-ink" aria-hidden="true"> *</span>
               </label>
               <select
                 id="besoin"
@@ -273,6 +273,7 @@ function ContactPage() {
               <input id="website" name="website" tabIndex={-1} autoComplete="off" />
             </div>
 
+            <p className="text-[13px] text-ink-soft"><span className="text-accent-ink">*</span> Champs obligatoires</p>
             <label className="flex items-start gap-3 text-[14.5px] leading-snug text-ink-soft">
               <input type="checkbox" name="rgpd" required className="mt-1 h-4 w-4 shrink-0" />
               <span>
