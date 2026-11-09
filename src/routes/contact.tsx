@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import { PageFrame } from "@/components/site/SiteChrome";
 import { sendContact } from "@/lib/content.functions";
+import { type ContactErrors, validateContact } from "@/lib/contact-validation";
 import { CONTACT_EMAIL, CONTACT_NEEDS, type ContactNeedId, pageHead } from "@/lib/site";
 
 const PATH = "/contact";
@@ -34,11 +35,36 @@ type State = "idle" | "sending" | "sent" | "error";
 function ContactPage() {
   const { besoin } = Route.useSearch();
   const [state, setState] = useState<State>("idle");
+  const [errors, setErrors] = useState<ContactErrors>({});
+
+  const err = (k: keyof ContactErrors) =>
+    errors[k] ? (
+      <p id={`${k}-error`} role="alert" className="m-0 mt-1 text-[14px] font-semibold text-accent-ink">
+        {errors[k]}
+      </p>
+    ) : null;
+  const invalid = (k: keyof ContactErrors) =>
+    errors[k]
+      ? { "aria-invalid": true, "aria-describedby": `${k}-error`, className: `${field} border-accent` }
+      : { className: field };
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const get = (k: string) => String(f.get(k) ?? "");
+    const found = validateContact({
+      prenom: get("prenom"),
+      nom: get("nom"),
+      email: get("email"),
+      telephone: get("telephone"),
+      besoin: get("besoin"),
+      rgpd: f.get("rgpd") === "on",
+    });
+    setErrors(found);
+    if (Object.keys(found).length > 0) {
+      setState("idle");
+      return;
+    }
     setState("sending");
     try {
       const res = await sendContact({
@@ -85,7 +111,7 @@ function ContactPage() {
             </p>
           </div>
         ) : (
-          <form onSubmit={onSubmit} className="sheet mt-10 flex flex-col gap-5 p-6 md:p-8">
+          <form noValidate onSubmit={onSubmit} className="sheet mt-10 flex flex-col gap-5 p-6 md:p-8">
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="prenom" className={label}>
@@ -97,8 +123,9 @@ function ContactPage() {
                   required
                   maxLength={80}
                   autoComplete="given-name"
-                  className={field}
+                  {...invalid("prenom")}
                 />
+                {err("prenom")}
               </div>
               <div>
                 <label htmlFor="nom" className={label}>
@@ -110,8 +137,9 @@ function ContactPage() {
                   required
                   maxLength={80}
                   autoComplete="family-name"
-                  className={field}
+                  {...invalid("nom")}
                 />
+                {err("nom")}
               </div>
               <div>
                 <label htmlFor="email" className={label}>
@@ -124,8 +152,9 @@ function ContactPage() {
                   required
                   maxLength={200}
                   autoComplete="email"
-                  className={field}
+                  {...invalid("email")}
                 />
+                {err("email")}
               </div>
               <div>
                 <label htmlFor="telephone" className={label}>
@@ -136,10 +165,12 @@ function ContactPage() {
                   name="telephone"
                   type="tel"
                   required
-                  pattern="[+0-9 ().\-]{6,25}"
+                  maxLength={25}
+                  placeholder="06 12 34 56 78"
                   autoComplete="tel"
-                  className={field}
+                  {...invalid("telephone")}
                 />
+                {err("telephone")}
               </div>
             </div>
 
@@ -152,7 +183,7 @@ function ContactPage() {
                 name="besoin"
                 required
                 defaultValue={besoin ?? ""}
-                className={field}
+                {...invalid("besoin")}
               >
                 <option value="" disabled>
                   Choisissez…
@@ -163,6 +194,7 @@ function ContactPage() {
                   </option>
                 ))}
               </select>
+              {err("besoin")}
             </div>
 
             <div>
@@ -197,6 +229,7 @@ function ContactPage() {
                 .
               </span>
             </label>
+            {err("rgpd")}
 
             <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
               <button type="submit" disabled={state === "sending"} className="btn-ink">
