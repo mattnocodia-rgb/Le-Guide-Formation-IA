@@ -41,26 +41,19 @@ const GROUPES = [
     note: "pour moi et mes projets",
     intro: "Les outils qui font tourner ce guide, Endo-sérénité et ma propre activité.",
   },
-  {
-    id: "en-formation",
-    contexte: "Projet de formation",
-    title: "Pendant la formation",
-    note: "les exercices du bootcamp",
-    intro:
-      "Des applications et des automatisations construites pendant la formation de product builder, sur des cas réalistes.",
-  },
 ] as const;
 
 function Carte({ r }: { r: Realisation }) {
   return (
-    <article className="sheet flex flex-col overflow-hidden">
+    <article className="sheet relative isolate flex flex-col overflow-hidden">
       {r.image && (
         <img
           src={`/img/realisations/${r.image}`}
-          alt={`Capture d'écran : ${r.projet}`}
+          alt=""
+          aria-hidden="true"
           loading="lazy"
           decoding="async"
-          className="block max-h-[340px] w-full border-b border-rule bg-paper-light object-cover object-top"
+          className="pointer-events-none absolute -right-6 -bottom-6 -z-10 h-[78%] w-[58%] object-contain object-right-bottom opacity-[0.13] select-none"
         />
       )}
       <div className="flex flex-1 flex-col p-6 md:p-7">
@@ -125,8 +118,7 @@ function Realisations() {
               l'IA.
             </strong>{" "}
             Pour chaque projet, le même plan : le problème de départ, ce que j'ai construit et le
-            résultat. Les projets sont classés selon leur contexte : en entreprise, pour moi, ou
-            pendant la formation.
+            résultat. D'abord ce que j'ai mis en place en entreprise, puis mes propres projets.
           </p>
         </div>
       </section>
