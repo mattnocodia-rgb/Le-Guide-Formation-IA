@@ -8,6 +8,24 @@ export const SITE_DESCRIPTION =
 export const START_GUIDE_SLUG = "devenir-product-builder";
 
 export const LINKEDIN_URL = "https://www.linkedin.com/in/matthieuaudineau/";
+/**
+ * IndexNow key (public by design): served as /<key>.txt so Bing and the other engines can check it.
+ */
+export const INDEXNOW_KEY = "8419d695fed04a5b559c6e45d1de56d0";
+
+/**
+ * Last real content change of the pages that are not articles, for the sitemap <lastmod>.
+ * Update the date when a page's content changes (not for style or code-only edits).
+ */
+export const STATIC_PAGES_UPDATED: Record<string, string> = {
+  "/a-propos": "2026-11-09",
+  "/skill-seo-aeo-geo": "2026-10-24",
+  "/boutique": "2026-11-02",
+  "/simulateur-roi": "2026-11-05",
+  "/realisations": "2026-11-09",
+};
+
+export const YOUTUBE_URL = "https://www.youtube.com/@LeGuideFormationIA";
 
 export const CATEGORIES = [
   {
@@ -97,20 +115,65 @@ export function tiltFor(index: number) {
   return tilts[index % tilts.length] ?? "0deg";
 }
 
+/** Brand name of the domain (optimatt.fr), kept as an alternate name of the site. */
+export const BRAND_NAME = "Optimatt";
+export const AUTHOR_NAME = "Matthieu Audineau";
+/** Square author photo served from /public, used by the byline, /a-propos and structured data. */
+export const AUTHOR_PHOTO_PATH = "/photo-auteur.jpg";
+
+/** Stable identifiers that tie the structured-data entities together across every page. */
+export const WEBSITE_ID = `${SITE_URL}/#website`;
+export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+export const PERSON_ID = `${SITE_URL}/a-propos#auteur`;
+
+/** Profiles that identify the author elsewhere. */
+export const AUTHOR_SAME_AS = [LINKEDIN_URL];
+
 export const ORGANIZATION_LD = {
   "@type": "Organization",
+  "@id": ORGANIZATION_ID,
   name: SITE_NAME,
+  alternateName: BRAND_NAME,
   url: SITE_URL,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/apple-touch-icon.png`,
+    width: 180,
+    height: 180,
+  },
+  founder: { "@id": PERSON_ID },
+  sameAs: [YOUTUBE_URL],
 };
 
-/** Author as structured data. No name is published on purpose: the LinkedIn profile identifies the author. */
-export function authorLd(name?: string | null) {
+export const WEBSITE_LD = {
+  "@type": "WebSite",
+  "@id": WEBSITE_ID,
+  name: SITE_NAME,
+  alternateName: BRAND_NAME,
+  url: SITE_URL,
+  inLanguage: "fr-FR",
+  description: SITE_DESCRIPTION,
+  publisher: { "@id": ORGANIZATION_ID },
+};
+
+/** Author as structured data, with a stable @id so every page points to the same person. */
+export function authorLd() {
   return {
     "@type": "Person",
-    ...(name ? { name } : {}),
-    url: LINKEDIN_URL,
-    sameAs: [LINKEDIN_URL],
+    "@id": PERSON_ID,
+    name: AUTHOR_NAME,
+    givenName: "Matthieu",
+    familyName: "Audineau",
+    url: `${SITE_URL}/a-propos`,
+    image: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}${AUTHOR_PHOTO_PATH}`,
+      width: 800,
+      height: 800,
+    },
+    sameAs: AUTHOR_SAME_AS,
     jobTitle: "Product Builder No-Code & IA",
+    homeLocation: { "@type": "Place", name: "Nantes" },
     knowsAbout: [
       "No-code",
       "Automatisation",
@@ -128,6 +191,19 @@ export function authorLd(name?: string | null) {
       recognizedBy: { "@type": "Organization", name: "École Cube" },
     },
   };
+}
+
+/** Short author reference for Article/FAQ nodes: keeps the name inline, points to the full node by @id. */
+export const AUTHOR_REF = {
+  "@type": "Person",
+  "@id": PERSON_ID,
+  name: AUTHOR_NAME,
+  url: `${SITE_URL}/a-propos`,
+};
+
+/** The shared entities (site, organization, author) to append to a page's @graph. */
+export function siteEntitiesLd() {
+  return [WEBSITE_LD, ORGANIZATION_LD, authorLd()];
 }
 
 export function pageHead(opts: {

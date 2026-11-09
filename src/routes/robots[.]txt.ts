@@ -22,6 +22,7 @@ export const Route = createFileRoute("/robots.txt")({
           // Partner-link redirects: nothing to index, and bots must not inflate click counts.
           "Disallow: /go/",
           "Disallow: /mode-test",
+          "Disallow: /indexnow",
           "Disallow: /skill-seo-aeo-geo/merci",
           "Disallow: /skill-seo-aeo-geo/fichier",
           "",
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/robots.txt")({
             "Allow: /",
             "Disallow: /go/",
             "Disallow: /mode-test",
+            "Disallow: /indexnow",
             "Disallow: /skill-seo-aeo-geo/merci",
             "Disallow: /skill-seo-aeo-geo/fichier",
             "",
