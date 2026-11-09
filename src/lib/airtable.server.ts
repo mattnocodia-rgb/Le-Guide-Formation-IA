@@ -303,7 +303,7 @@ function clean(text: string) {
 
 /** Screenshot file name (public/img/realisations/), or null. Rejects anything but a plain name. */
 function imageName(value: string) {
-  return /^[a-z0-9-]+\.(jpe?g|png|webp)$/i.test(value) ? value : null;
+  return /^[a-z0-9-]+\.(jpe?g|png|webp|svg)$/i.test(value) ? value : null;
 }
 
 /** Case studies for /realisations. Only rows ticked "Visible" with a project name are shown. */
