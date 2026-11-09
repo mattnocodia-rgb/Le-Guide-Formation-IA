@@ -35,7 +35,7 @@ export const Route = createFileRoute("/categorie/$slug")({
     return {
       ...pageHead({
         title: `${category.name} : les guides — ${SITE_NAME}`,
-        description: category.description,
+        description: category.metaDescription,
         path,
         image: ogImageFor(category.slug),
       }),
