@@ -222,9 +222,8 @@ function ArticlePage() {
               <path d="M12 8h.01" />
             </svg>
             <span>
-              Je suis ambassadeur de l'École Cube : cet article contient des liens partenaires vers
-              l'école. Si vous vous inscrivez via ces liens, je perçois une commission, sans surcoût
-              pour vous.
+              Liens partenaires vers l'École Cube : si vous vous inscrivez par ces liens, je touche
+              une commission, sans surcoût pour vous.
             </span>
           </aside>
 
