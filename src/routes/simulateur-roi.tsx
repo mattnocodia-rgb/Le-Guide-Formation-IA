@@ -179,7 +179,7 @@ function SimulateurRoi() {
             <div className="postit relative -rotate-1 rounded-sm p-6 md:p-7">
               <span className="tape -top-3 left-8" aria-hidden="true" />
               <p className="m-0 text-[18px] leading-relaxed text-ink">
-                Cette tâche vous fait gagner{" "}
+                Cette automatisation vous fait gagner{" "}
                 <strong className="text-accent-ink">{Math.round(r.hoursPerYear)} heures</strong> par an
                 et coûterait environ{" "}
                 <strong className="text-accent-ink">{eur(r.buildCost + input.toolCostMonthly * 12)}</strong>{" "}
