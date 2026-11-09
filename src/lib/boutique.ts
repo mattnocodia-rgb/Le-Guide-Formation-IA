@@ -71,7 +71,7 @@ export const PRODUCTS: Product[] = [
     id: "tuto-shorts",
     kind: "diy",
     kicker: "skill Claude + tuto",
-    title: "Un short vidéo par article, en 2 minutes",
+    title: "Créer des shorts automatiquement pour les réseaux sociaux",
     promise:
       "Donnez le sujet de votre article : Claude écrit le script, la voix off et l'animation d'une vidéo verticale, sans tournage ni montage.",
     includes: [

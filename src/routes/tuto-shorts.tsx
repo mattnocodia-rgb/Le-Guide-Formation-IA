@@ -78,7 +78,7 @@ export const Route = createFileRoute("/tuto-shorts")({
   loader: () => getShortsOffer(),
   head: () => {
     const head = pageHead({
-      title: "Créer un short vidéo à partir d'un article, en 2 minutes",
+      title: "Créer des shorts automatiquement pour les réseaux sociaux",
       description:
         "Un skill Claude et un tuto pas à pas pour transformer un article en short vertical : script, voix off et animation, sans tournage ni montage.",
       path: PATH,
@@ -206,7 +206,7 @@ function ShortsPage() {
         <div className="min-w-0 flex-[999_1_420px]">
           <p className="note m-0 -rotate-2 text-[28px]">skill Claude + tuto pas à pas</p>
           <h1 className="mt-3 mb-6 text-[clamp(36px,5vw,56px)] leading-[1.05]">
-            Un short vidéo par article, en 2 minutes
+            Créer des shorts automatiquement pour les réseaux sociaux
           </h1>
           <p className="m-0 text-xl leading-relaxed text-ink-soft">
             Vous écrivez des articles, mais personne ne les voit sur les réseaux ? Donnez le sujet
