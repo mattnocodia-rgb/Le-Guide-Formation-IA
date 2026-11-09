@@ -3,7 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { PageFrame } from "@/components/site/SiteChrome";
 import { contactHref } from "@/lib/boutique";
-import { getAuditOffer } from "@/lib/content.functions";
+import { getShopOffers } from "@/lib/content.functions";
 import {
   AUTHOR_REF,
   ORGANIZATION_ID,
@@ -102,7 +102,8 @@ const FAQ = [
 ];
 
 export const Route = createFileRoute("/audit-seo")({
-  loader: () => getAuditOffer(),
+  // Audit and skill offers: the page also sells the do-it-yourself option (skill + PDF tutorial).
+  loader: () => getShopOffers(),
   head: () => {
     const head = pageHead({
       title: "Audit SEO de votre site pour Google et ChatGPT",
@@ -144,7 +145,7 @@ export const Route = createFileRoute("/audit-seo")({
 });
 
 function OrderBox({ className = "" }: { className?: string }) {
-  const { price, buyUrl } = Route.useLoaderData();
+  const { price, buyUrl } = Route.useLoaderData().audit;
   return (
     <div className={`flex flex-wrap items-center gap-x-5 gap-y-3 ${className}`}>
       {buyUrl ? (
@@ -162,6 +163,48 @@ function OrderBox({ className = "" }: { className?: string }) {
         <Link to="/conditions-de-vente">conditions de vente</Link>
       </span>
     </div>
+  );
+}
+
+/** « Do it yourself » box: buy the skill and its step-by-step PDF tutorial directly. */
+function DiyBox() {
+  const { price, buyUrl } = Route.useLoaderData().skill;
+  return (
+    <aside
+      aria-labelledby="seul"
+      className="postit tilt relative mt-12 max-w-[760px] p-6 md:p-8"
+      style={r("-0.6deg")}
+    >
+      <p className="note m-0 text-[24px]">vous préférez le faire vous-même ?</p>
+      <h2 id="seul" className="m-0 mt-1 text-[clamp(22px,2.4vw,28px)] leading-tight">
+        Faites l'audit seul, avec le skill et son tuto pas à pas
+      </h2>
+      <p className="m-0 mt-3 text-[16.5px] leading-relaxed">
+        Si vous utilisez déjà Claude et que vous avez quelques bases, vous pouvez lancer l'audit
+        vous-même. Vous recevez le skill d'audit et de rédaction que j'ai construit, avec un
+        tutoriel PDF qui détaille chaque étape, écran par écran : l'installation dans Claude, votre
+        premier audit, puis la lecture du rapport et la rédaction de vos articles.
+      </p>
+      <ul className="m-0 mt-3 flex list-disc flex-col gap-1 pl-5 text-[15.5px] leading-relaxed marker:text-accent">
+        <li>Le skill, à installer en quelques minutes, sans code</li>
+        <li>Le tutoriel pas à pas de 12 pages, avec des demandes prêtes à copier</li>
+        <li>Acheté une fois, sans abonnement</li>
+      </ul>
+      <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+        {buyUrl ? (
+          <a href={buyUrl} rel="noopener" target="_blank" className="btn-ink">
+            Acheter le skill et le tuto{price ? ` — ${price}` : ""}
+          </a>
+        ) : null}
+        <Link to="/skill-seo-aeo-geo" className="py-2 font-semibold">
+          Voir le détail du skill →
+        </Link>
+      </div>
+      <p className="m-0 mt-3 text-[13.5px] text-ink-soft">
+        Ce que l'audit fait pour vous en plus : la vitesse, le code, les données structurées, et une
+        visio pour vous expliquer quoi faire en premier.
+      </p>
+    </aside>
   );
 }
 
@@ -203,6 +246,7 @@ function AuditPage() {
           visio.
         </p>
         <OrderBox className="mt-8" />
+        <DiyBox />
       </section>
 
       {/* Ce qui est vérifié */}
@@ -295,11 +339,6 @@ function AuditPage() {
           Artisan, indépendant, cabinet, PME, organisme de formation, site de contenu : le rapport
           adapte ses contrôles à votre activité. Pour une activité locale, il liste aussi ce qui se
           joue hors du site, comme votre fiche Google et vos avis.
-        </p>
-        <p className="m-0 mt-4 max-w-[720px] text-[17px] leading-relaxed">
-          Vous voulez surtout écrire vos articles vous-même ? Le skill Claude{" "}
-          <Link to="/skill-seo-aeo-geo">« {SKILL_NAME} »</Link> les rédige pour Google et ChatGPT,
-          et vérifie ceux déjà en ligne.
         </p>
       </Section>
 
