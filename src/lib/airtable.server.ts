@@ -14,6 +14,7 @@ const TABLES = {
   fichiers: "tblZa7YMlY3bQyvOY",
   videos: "tblii9w14d3eb570c",
   realisations: "tblesdxsbM12lUTdK",
+  contacts: "tblAo5uhzip02dvQB",
 } as const;
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
@@ -390,6 +391,55 @@ export async function recordClick(click: {
     if (!res.ok) console.error(`Airtable clics [${res.status}]: ${await res.text()}`);
   } catch (e) {
     console.error("Airtable click write failed", e);
+  }
+}
+
+/* ------------------------------------------------------ Demandes de contact */
+
+/**
+ * Saves a contact-form request (table « Demandes de contact »). An Airtable automation then
+ * e-mails it to contact@optimatt.fr. Returns false when the request could not be saved.
+ */
+export async function recordContact(c: {
+  nom: string;
+  prenom: string;
+  email: string;
+  telephone: string;
+  besoin: string;
+  message: string;
+  page: string;
+}): Promise<boolean> {
+  const token = readToken("AIRTABLE_WRITE_TOKEN") ?? readToken();
+  if (!token) return false;
+  try {
+    const res = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABLES.contacts}`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        typecast: true,
+        records: [
+          {
+            fields: {
+              Nom: c.nom,
+              Prénom: c.prenom,
+              "E-mail": c.email,
+              Téléphone: c.telephone,
+              Besoin: c.besoin,
+              Message: c.message,
+              "Consentement RGPD": true,
+              "Reçue le": new Date().toISOString(),
+              "Page d'origine": c.page.slice(0, 200),
+              Statut: "Nouvelle",
+            },
+          },
+        ],
+      }),
+    });
+    if (!res.ok) console.error(`Airtable contacts [${res.status}]: ${await res.text()}`);
+    return res.ok;
+  } catch (e) {
+    console.error("Airtable contact write failed", e);
+    return false;
   }
 }
 

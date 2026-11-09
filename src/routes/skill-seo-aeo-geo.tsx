@@ -435,11 +435,34 @@ function SkillPage() {
           <li>Il ne mesure pas votre trafic et n'accède pas à Search Console.</li>
           <li>Il ne publie rien sur votre site sans que vous le fassiez.</li>
         </ul>
-        <p className="m-0 mt-4 max-w-[720px] text-[17px] leading-relaxed">
-          Vous préférez que quelqu'un le fasse pour vous ? Je propose aussi un{" "}
-          <Link to="/audit-seo">audit de votre site, avec rapport et visio</Link>.
-        </p>
       </Section>
+
+      {/* Accompagnement */}
+      <section className="container-wide max-w-[880px] pt-16">
+        <aside
+          aria-labelledby="accompagnement"
+          className="postit tilt p-6 md:p-8"
+          style={r("-0.6deg")}
+        >
+          <p className="note m-0 text-[24px]">pas très à l'aise avec l'IA ?</p>
+          <h2 id="accompagnement" className="m-0 mt-1 text-[clamp(22px,2.4vw,28px)] leading-tight">
+            Je peux aussi vous accompagner
+          </h2>
+          <p className="m-0 mt-3 text-[16.5px] leading-relaxed">
+            Vous n'êtes pas très à l'aise avec l'intelligence artificielle et ChatGPT ? Je peux vous
+            accompagner pour optimiser votre site web et vos process. Cela peut commencer par un
+            audit SEO de votre site, ou tout simplement par un premier échange.
+          </p>
+          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <Link to="/audit-seo" className="btn-ink">
+              Voir l'audit SEO
+            </Link>
+            <Link to="/contact" search={{ besoin: "redaction" }} className="py-2 font-semibold">
+              Me contacter →
+            </Link>
+          </div>
+        </aside>
+      </section>
 
       {/* FAQ */}
       <Section id="faq" title="Questions fréquentes">

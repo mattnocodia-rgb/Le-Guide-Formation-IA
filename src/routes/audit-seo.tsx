@@ -2,7 +2,6 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import type { CSSProperties, ReactNode } from "react";
 
 import { PageFrame } from "@/components/site/SiteChrome";
-import { contactHref } from "@/lib/boutique";
 import { getAuditOffer } from "@/lib/content.functions";
 import {
   AUTHOR_REF,
@@ -151,14 +150,17 @@ function OrderBox({ className = "" }: { className?: string }) {
           Commander l'audit{price ? ` — ${price}` : ""}
         </a>
       ) : (
-        <a href={contactHref("Demande d'audit de mon site")} className="btn-ink">
+        <Link to="/contact" search={{ besoin: "audit" }} className="btn-ink">
           Demander un audit{price ? ` — ${price}` : ""}
-        </a>
+        </Link>
       )}
       <span className="text-[15px] text-ink-soft">
         Rapport PDF + 45 min de visio
         {buyUrl ? " · paiement sécurisé par Stripe" : ""} ·{" "}
-        <Link to="/conditions-de-vente">conditions de vente</Link>
+        <Link to="/conditions-de-vente">conditions de vente</Link> · une question ?{" "}
+        <Link to="/contact" search={{ besoin: "audit" }}>
+          me contacter
+        </Link>
       </span>
     </div>
   );

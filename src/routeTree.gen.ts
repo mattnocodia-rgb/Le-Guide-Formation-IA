@@ -15,6 +15,7 @@ import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as AuditSeoRouteImport } from './routes/audit-seo'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as ConditionsDeVenteRouteImport } from './routes/conditions-de-vente'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexnowRouteImport } from './routes/indexnow'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
@@ -58,6 +59,11 @@ const BoutiqueRoute = BoutiqueRouteImport.update({
 const ConditionsDeVenteRoute = ConditionsDeVenteRouteImport.update({
   id: '/conditions-de-vente',
   path: '/conditions-de-vente',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexnowRoute = IndexnowRouteImport.update({
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/audit-seo': typeof AuditSeoRoute
   '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
+  '/contact': typeof ContactRoute
   '/indexnow': typeof IndexnowRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/audit-seo': typeof AuditSeoRoute
   '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
+  '/contact': typeof ContactRoute
   '/indexnow': typeof IndexnowRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -184,6 +192,7 @@ export interface FileRoutesById {
   '/audit-seo': typeof AuditSeoRoute
   '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
+  '/contact': typeof ContactRoute
   '/indexnow': typeof IndexnowRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -208,6 +217,7 @@ export interface FileRouteTypes {
     | '/audit-seo'
     | '/boutique'
     | '/conditions-de-vente'
+    | '/contact'
     | '/indexnow'
     | '/llms.txt'
     | '/mentions-legales'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/audit-seo'
     | '/boutique'
     | '/conditions-de-vente'
+    | '/contact'
     | '/indexnow'
     | '/llms.txt'
     | '/mentions-legales'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/audit-seo'
     | '/boutique'
     | '/conditions-de-vente'
+    | '/contact'
     | '/indexnow'
     | '/llms.txt'
     | '/mentions-legales'
@@ -275,6 +287,7 @@ export interface RootRouteChildren {
   AuditSeoRoute: typeof AuditSeoRoute
   BoutiqueRoute: typeof BoutiqueRoute
   ConditionsDeVenteRoute: typeof ConditionsDeVenteRoute
+  ContactRoute: typeof ContactRoute
   IndexnowRoute: typeof IndexnowRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
@@ -333,6 +346,13 @@ declare module '@tanstack/react-router' {
       path: '/conditions-de-vente'
       fullPath: '/conditions-de-vente'
       preLoaderRoute: typeof ConditionsDeVenteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/indexnow': {
@@ -443,6 +463,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuditSeoRoute: AuditSeoRoute,
   BoutiqueRoute: BoutiqueRoute,
   ConditionsDeVenteRoute: ConditionsDeVenteRoute,
+  ContactRoute: ContactRoute,
   IndexnowRoute: IndexnowRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
