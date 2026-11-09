@@ -2,7 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { INDEXNOW_KEY, SITE_URL, absUrl } from "@/lib/site";
 
-const ENDPOINT = "https://api.indexnow.org/indexnow";
+/**
+ * Shared IndexNow endpoint first, then Bing's own endpoint: the shared one answers 429 when the
+ * hosting's outgoing IP is busy, and Bing forwards what it receives to the other engines anyway.
+ */
+const ENDPOINTS = ["https://api.indexnow.org/indexnow", "https://www.bing.com/indexnow"];
 const DAY = 24 * 60 * 60 * 1000;
 
 function json(data: unknown, status = 200) {
@@ -66,22 +70,31 @@ export const Route = createFileRoute("/indexnow")({
           return json({ envoye: false, depuis, message: "Aucune page modifiée sur la période." });
         }
 
-        const res = await fetch(ENDPOINT, {
-          method: "POST",
-          headers: { "content-type": "application/json; charset=utf-8" },
-          body: JSON.stringify({
-            host: new URL(SITE_URL).host,
-            key: INDEXNOW_KEY,
-            keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
-            urlList,
-          }),
+        const payload = JSON.stringify({
+          host: new URL(SITE_URL).host,
+          key: INDEXNOW_KEY,
+          keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
+          urlList,
         });
+        let res: Response | undefined;
+        let endpoint = ENDPOINTS[0];
+        for (const e of ENDPOINTS) {
+          endpoint = e;
+          res = await fetch(e, {
+            method: "POST",
+            headers: { "content-type": "application/json; charset=utf-8" },
+            body: payload,
+          });
+          if (res.status !== 429 && res.status < 500) break;
+        }
+        if (!res) return json({ erreur: "Aucun service IndexNow joignable" }, 502);
         // 200 = accepted, 202 = accepted while the key is still being checked.
         const ok = res.status === 200 || res.status === 202;
         return json(
           {
             envoye: ok,
             statutIndexNow: res.status,
+            service: endpoint,
             depuis: slugs.length > 0 ? null : (depuis ?? "tout"),
             pages: urlList,
             ...(ok ? {} : { reponse: (await res.text()).slice(0, 500) }),
