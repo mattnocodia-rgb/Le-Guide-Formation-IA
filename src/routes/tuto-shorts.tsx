@@ -122,6 +122,9 @@ function BuyBox({ className = "" }: { className?: string }) {
           </Link>
         </>
       )}
+      <span className="text-[15px] text-ink-soft">
+        <Link to="/conditions-de-vente">conditions de vente</Link>
+      </span>
     </div>
   );
 }
