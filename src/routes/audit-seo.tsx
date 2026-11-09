@@ -234,7 +234,8 @@ function AuditPage() {
       <section className="container-wide max-w-[880px] pt-12 md:pt-16">
         <p className="note m-0 -rotate-2 text-[28px]">audit fait pour vous</p>
         <h1 className="mt-3 mb-6 text-[clamp(36px,5vw,58px)] leading-[1.05]">
-          Je vérifie votre site pour Google et ChatGPT
+          Audit de votre site web pour être mieux référencé par Google et les intelligences
+          artificielles
         </h1>
         <p className="m-0 max-w-[680px] text-xl leading-relaxed text-ink-soft">
           Vos clients vous cherchent sur Google, et de plus en plus en posant la question à ChatGPT.

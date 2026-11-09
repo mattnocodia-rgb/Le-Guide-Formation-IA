@@ -35,7 +35,8 @@ export const PRODUCTS: Product[] = [
   {
     id: "audit-seo",
     kicker: "fait pour vous",
-    title: "Je vérifie votre site pour Google et ChatGPT",
+    title:
+      "Audit de votre site web pour être mieux référencé par Google et les intelligences artificielles",
     promise:
       "Un rapport complet avec un plan d'action priorisé, puis 45 minutes en visio pour vous expliquer quoi corriger en premier.",
     includes: [
