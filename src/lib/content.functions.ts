@@ -131,7 +131,7 @@ export const getLayoutData = createServerFn({ method: "GET" }).handler(async () 
 export const getHomeData = createServerFn({ method: "GET" }).handler(async () => {
   const { getPublishedArticles, getCarnet, getParcours, linkOfType } =
     await import("./airtable.server");
-  const { formatDateFr, START_GUIDE_SLUG } = await import("./site");
+  const { formatDateFr, KEY_GUIDE_SLUGS, START_GUIDE_SLUG } = await import("./site");
   const [{ links }, articles, carnet, parcours] = await Promise.all([
     sharedLinks(),
     getPublishedArticles(),
@@ -198,10 +198,19 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
   const startGuide =
     articles.find((a) => a.slug === START_GUIDE_SLUG)?.slug ?? articles[0]?.slug ?? null;
 
+  const keySlugs: readonly string[] = KEY_GUIDE_SLUGS;
+  const keyGuides = keySlugs.flatMap((slug) => {
+    const a = articles.find((x) => x.slug === slug);
+    return a ? [toSummary(a)] : [];
+  });
+  // « Derniers guides » skips the essential guides already shown above it.
+  const latest = articles.filter((a) => !keySlugs.includes(a.slug));
+
   return {
     programmes,
     startGuide,
-    articles: articles.slice(0, 6).map(toSummary),
+    keyGuides,
+    articles: latest.slice(0, 6).map(toSummary),
     totalArticles: articles.length,
     carnet,
     reco,
