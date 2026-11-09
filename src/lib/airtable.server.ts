@@ -276,8 +276,13 @@ export async function getParcours(): Promise<Record<string, string>> {
 
 /* ------------------------------------------------------------- Réalisations */
 
+export const CONTEXTES = ["En entreprise", "Projet personnel", "Projet de formation"] as const;
+export type Contexte = (typeof CONTEXTES)[number];
+
 export type Realisation = {
   id: string;
+  contexte: Contexte;
+  image: string | null;
   projet: string;
   probleme: string;
   outils: string[];
@@ -288,6 +293,19 @@ export type Realisation = {
   payant: { url: string; label: string } | null;
 };
 
+/** Drops "[À compléter…]" placeholders so unfinished notes never reach the public page. */
+function clean(text: string) {
+  return text
+    .replace(/\[\s*à compléter[^\]]*\]/gi, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+/** Screenshot file name (public/img/realisations/), or null. Rejects anything but a plain name. */
+function imageName(value: string) {
+  return /^[a-z0-9-]+\.(jpe?g|png|webp)$/i.test(value) ? value : null;
+}
+
 /** Case studies for /realisations. Only rows ticked "Visible" with a project name are shown. */
 export async function getRealisations(): Promise<Realisation[]> {
   const records = await fetchAll(TABLES.realisations, { filterByFormula: "{Visible}" });
@@ -296,15 +314,19 @@ export async function getRealisations(): Promise<Realisation[]> {
     .sort((a, b) => Number(a.fields["Ordre"] ?? 999) - Number(b.fields["Ordre"] ?? 999))
     .map((r) => ({
       id: r.id,
+      contexte: (CONTEXTES as readonly string[]).includes(str(r.fields["Contexte"]))
+        ? (str(r.fields["Contexte"]) as Contexte)
+        : "Projet personnel",
+      image: imageName(str(r.fields["Image"])),
       projet: str(r.fields["Projet"]),
-      probleme: str(r.fields["Problème"]),
+      probleme: clean(str(r.fields["Problème"])),
       outils: str(r.fields["Outils"])
         .split(",")
         .map((t) => t.trim())
         .filter(Boolean),
-      construit: str(r.fields["Ce que j'ai construit"]),
-      resultat: str(r.fields["Résultat"]),
-      formation: str(r.fields["Ce que la formation m'a apporté"]),
+      construit: clean(str(r.fields["Ce que j'ai construit"])),
+      resultat: clean(str(r.fields["Résultat"])),
+      formation: clean(str(r.fields["Ce que la formation m'a apporté"])),
       lien: str(r.fields["Lien"]) || null,
       payant: str(r.fields["Version payante (lien)"])
         ? {
