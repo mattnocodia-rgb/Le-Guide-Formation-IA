@@ -36,6 +36,10 @@ const LAYERS = [
 
 const CONTENTS = [
   {
+    file: "Le mode rédaction",
+    text: "Donnez un sujet : l'article arrive champ par champ, prêt à coller dans votre site (WordPress, Wix, Webflow…), écrit avec votre voix et la grille cochée dès la publication.",
+  },
+  {
     file: "La méthode d'audit",
     text: "Une démarche complète, de l'inventaire du site au plan d'action, que Claude applique de lui-même.",
   },
@@ -51,24 +55,20 @@ const CONTENTS = [
     file: "Un guide PDF pas à pas",
     text: "12 pages pour installer le skill, réaliser un premier audit, écrire un premier article et l'adapter à votre métier. Avec des demandes prêtes à copier.",
   },
-  {
-    file: "Un mode rédaction",
-    text: "Demandez un article : il arrive champ par champ, prêt à coller dans votre site (WordPress, Wix, Webflow…), écrit avec votre voix et la grille cochée dès la publication.",
-  },
 ];
 
 const STEPS = [
   {
     title: "Vous demandez",
-    text: "Un audit de votre site, la vérification d'un article ou un nouvel article, en français.",
+    text: "Un article sur un sujet de votre métier, ou la vérification de vos articles déjà en ligne, en français.",
   },
   {
     title: "Il analyse",
     text: "Chaque page, puis le site dans son ensemble : c'est là qu'apparaissent les doublons et les contradictions.",
   },
   {
-    title: "Vous agissez",
-    text: "Un plan d'action priorisé, ou un article prêt à coller dans votre site, champ par champ.",
+    title: "Vous publiez",
+    text: "Un article prêt à coller dans votre site, champ par champ, ou un plan de corrections priorisé pour vos anciens articles.",
   },
 ];
 
@@ -182,9 +182,9 @@ export const Route = createFileRoute("/skill-seo-aeo-geo")({
   loader: () => getSkillOffer(),
   head: () => {
     const head = pageHead({
-      title: `${SKILL_NAME} : le skill Claude`,
+      title: "Skill Claude : des articles trouvés sur Google et ChatGPT",
       description:
-        "Le skill Claude qui vérifie votre site et écrit vos articles pour Google et ChatGPT : 32 contrôles SEO, AEO et GEO, sans code ni abonnement.",
+        "Le skill Claude qui écrit vos articles de blog pour être trouvé sur Google et cité par ChatGPT, et vérifie ceux déjà en ligne. Sans code ni abonnement.",
       path: PATH,
     });
     return {
@@ -259,11 +259,11 @@ function SkillPage() {
         <p className="note m-0 -rotate-2 text-[28px]">le skill Claude qui a écrit ce site</p>
         <h1 className="mt-3 mb-6 text-[clamp(36px,5vw,58px)] leading-[1.05]">{SKILL_NAME}</h1>
         <p className="m-0 max-w-[680px] text-xl leading-relaxed text-ink-soft">
-          Un skill pour Claude qui vérifie votre site, vous dit quoi corriger, et écrit vos articles
-          pour que Google vous trouve et que ChatGPT vous recommande. Si vous êtes tombé sur ce
-          site, vous avez déjà vu ce skill à l'œuvre : chaque article a été rédigé puis vérifié avec
-          lui, pour être trouvé par Google, compris par les IA et cité par elles. Je l'ai construit
-          pour mes propres sites. Le voici, prêt à installer dans Claude.
+          Un skill pour Claude qui écrit vos articles de blog pour que Google vous trouve et que
+          ChatGPT vous recommande, et qui vérifie ceux que vous avez déjà publiés. Si vous êtes
+          tombé sur ce site, vous avez déjà vu ce skill à l'œuvre : chaque article a été rédigé puis
+          vérifié avec lui, pour être trouvé par Google, compris par les IA et cité par elles. Je
+          l'ai construit pour mes propres sites. Le voici, prêt à installer dans Claude.
         </p>
         <BuyBox className="mt-8" />
       </section>

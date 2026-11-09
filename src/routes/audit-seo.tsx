@@ -89,7 +89,7 @@ const FAQ = [
   },
   {
     q: "Quelle différence avec le skill Claude vendu dans la boutique ?",
-    a: `Le skill « ${SKILL_NAME} » vous permet de faire l'audit vous-même dans Claude, autant de fois que vous voulez. Avec l'audit, c'est moi qui le fais : je vérifie aussi la vitesse, le code et la lisibilité par les IA avec d'autres outils, et je vous explique les résultats en visio.`,
+    a: `Le skill « ${SKILL_NAME} » sert surtout à écrire vous-même, dans Claude, des articles de blog qui seront trouvés et cités. L'audit, c'est moi qui le fais sur l'ensemble de votre site : technique, vitesse, données structurées, lisibilité par les IA, avec un rapport et une visio pour vous l'expliquer.`,
   },
   {
     q: "Les corrections sont-elles comprises ?",
@@ -297,9 +297,9 @@ function AuditPage() {
           joue hors du site, comme votre fiche Google et vos avis.
         </p>
         <p className="m-0 mt-4 max-w-[720px] text-[17px] leading-relaxed">
-          Vous préférez faire l'audit vous-même ? Le skill Claude{" "}
-          <Link to="/skill-seo-aeo-geo">« {SKILL_NAME} »</Link> vous permet de le lancer dans
-          Claude, autant de fois que vous le voulez.
+          Vous voulez surtout écrire vos articles vous-même ? Le skill Claude{" "}
+          <Link to="/skill-seo-aeo-geo">« {SKILL_NAME} »</Link> les rédige pour Google et ChatGPT,
+          et vérifie ceux déjà en ligne.
         </p>
       </Section>
 

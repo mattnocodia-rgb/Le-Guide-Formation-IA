@@ -52,12 +52,12 @@ export const PRODUCTS: Product[] = [
     kicker: "à faire vous-même, dans Claude",
     title: SKILL_NAME,
     promise:
-      "Claude vérifie votre site page par page, vous dit quoi corriger, puis écrit vos articles pour Google et ChatGPT.",
+      "Claude écrit vos articles de blog pour qu'ils soient trouvés sur Google et cités par ChatGPT, et vérifie ceux déjà en ligne.",
     includes: [
-      "Audit de votre site entier",
-      "Articles prêts à coller",
-      "Guide PDF de 12 pages",
-      "Sans abonnement, sans code",
+      "Articles prêts à coller dans votre site",
+      "Écrits avec votre voix, sans rien inventer",
+      "Vérification de vos articles existants",
+      "Guide PDF de 12 pages, sans abonnement",
     ],
     status: "disponible",
     path: "/skill-seo-aeo-geo",
