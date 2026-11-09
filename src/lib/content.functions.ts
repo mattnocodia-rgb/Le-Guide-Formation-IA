@@ -382,7 +382,7 @@ export const getSaleTerms = createServerFn({ method: "GET" }).handler(async () =
     address: parcours["adresse_vendeur"] ?? "Nantes, France",
     mediator: parcours["mediateur_conso"] ?? null,
     mediatorUrl: /^https:\/\//.test(url) ? url : null,
-    updated: "24 octobre 2026",
+    updated: "9 novembre 2026",
   };
 });
 

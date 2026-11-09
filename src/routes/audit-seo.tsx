@@ -59,11 +59,11 @@ const STEPS = [
   },
   {
     title: "Vous recevez le rapport",
-    text: "Un PDF avec une note sur 100, les problèmes classés par gravité et un plan d'action en quatre étapes.",
+    text: "Sous 7 jours ouvrés : un PDF avec une note sur 100, les problèmes classés par gravité et un plan d'action en quatre étapes.",
   },
   {
     title: "On en parle en visio",
-    text: "45 minutes pour passer le rapport en revue, répondre à vos questions et décider par quoi commencer.",
+    text: "Dans les 15 jours : 45 minutes pour passer le rapport en revue, répondre à vos questions et décider par quoi commencer.",
   },
 ];
 
@@ -155,7 +155,7 @@ function OrderBox({ className = "" }: { className?: string }) {
         </Link>
       )}
       <span className="text-[15px] text-ink-soft">
-        Rapport PDF + 45 min de visio
+        Rapport PDF sous 7 jours ouvrés + 45 min de visio
         {buyUrl ? " · paiement sécurisé par Stripe" : ""} ·{" "}
         <Link to="/conditions-de-vente">conditions de vente</Link> · une question ?{" "}
         <Link to="/contact" search={{ besoin: "audit" }}>
