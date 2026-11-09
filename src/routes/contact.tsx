@@ -31,9 +31,40 @@ export const Route = createFileRoute("/contact")({
 
 type State = "idle" | "sending" | "sent" | "error";
 
+/** « … pour parler {ABOUT[need]} » in the confirmation message. */
+const ABOUT: Record<ContactNeedId, string> = {
+  audit: "de l'audit de votre site",
+  redaction: "de vos articles",
+  automatisation: "de votre automatisation",
+  site: "de votre site web",
+  autre: "de votre projet",
+};
+
+/** What to read while waiting, depending on the need chosen in the form. */
+const WHILE_WAITING: Record<
+  ContactNeedId,
+  {
+    text: string;
+    to: "/audit-seo" | "/skill-seo-aeo-geo" | "/simulateur-roi" | "/realisations" | "/";
+  }
+> = {
+  audit: { text: "Voir ce que contient l'audit, avec l'exemple réel de ce site", to: "/audit-seo" },
+  redaction: {
+    text: "Voir comment le skill rédige les articles de ce guide",
+    to: "/skill-seo-aeo-geo",
+  },
+  automatisation: {
+    text: "Calculer ce que la tâche vous coûte aujourd'hui (simulateur gratuit)",
+    to: "/simulateur-roi",
+  },
+  site: { text: "Voir ce que j'ai déjà construit", to: "/realisations" },
+  autre: { text: "Parcourir les guides du site", to: "/" },
+};
+
 function ContactPage() {
   const { besoin } = Route.useSearch();
   const [state, setState] = useState<State>("idle");
+  const [sent, setSent] = useState<{ prenom: string; besoin: ContactNeedId } | null>(null);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -54,6 +85,7 @@ function ContactPage() {
           website: get("website"),
         },
       });
+      if (res.ok) setSent({ prenom: get("prenom").trim(), besoin: get("besoin") as ContactNeedId });
       setState(res.ok ? "sent" : "error");
     } catch {
       setState("error");
@@ -74,15 +106,27 @@ function ContactPage() {
         {state === "sent" ? (
           <div className="sheet relative mt-10 p-6 md:p-8" style={r("-0.5deg")}>
             <span aria-hidden="true" className="tape -top-2.5 left-10" style={r("3deg")} />
-            <h2 className="m-0 text-[clamp(24px,2.6vw,32px)] leading-tight">Message envoyé</h2>
-            <p className="m-0 mt-3 text-[17px] leading-relaxed text-ink-soft">
-              Merci, votre demande est bien arrivée. Je vous réponds par e-mail ou par téléphone.
+            <p className="note m-0 -rotate-1 text-[26px]">c'est bien reçu !</p>
+            <h2 className="m-0 mt-1 text-[clamp(26px,2.8vw,34px)] leading-tight">
+              Merci{sent?.prenom ? ` ${sent.prenom}` : ""}, votre message est arrivé
+            </h2>
+            <p className="m-0 mt-3 text-[17px] leading-relaxed">
+              Je lis chaque demande moi-même, et je reviens vers vous par e-mail ou par téléphone
+              pour parler {sent ? ABOUT[sent.besoin] : "de votre projet"}. Pas de robot, pas de
+              relance automatique.
             </p>
-            <p className="m-0 mt-4">
-              <Link to="/" className="font-semibold">
-                Retour à l'accueil →
-              </Link>
+            <p className="m-0 mt-3 text-[15px] leading-relaxed text-ink-soft">
+              Ma réponse viendra de {CONTACT_EMAIL} : si vous ne la voyez pas, pensez à jeter un œil
+              dans vos courriers indésirables.
             </p>
+            {sent ? (
+              <p className="m-0 mt-6 text-[16px]">
+                <span className="font-semibold">En attendant :</span>{" "}
+                <Link to={WHILE_WAITING[sent.besoin].to} className="font-semibold">
+                  {WHILE_WAITING[sent.besoin].text} →
+                </Link>
+              </p>
+            ) : null}
           </div>
         ) : (
           <form onSubmit={onSubmit} className="sheet mt-10 flex flex-col gap-5 p-6 md:p-8">
