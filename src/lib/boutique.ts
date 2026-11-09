@@ -6,7 +6,8 @@ import { type ContactNeedId, SKILL_NAME } from "@/lib/site";
 export type ProductStatus = "disponible" | "bientot";
 
 /** Internal pages a card can link to. Add each new sales page route to this union. */
-export type ShopPath = "/skill-seo-aeo-geo" | "/audit-seo" | "/simulateur-roi" | "/realisations";
+export type ShopPath =
+  "/skill-seo-aeo-geo" | "/audit-seo" | "/tuto-shorts" | "/simulateur-roi" | "/realisations";
 
 export type Product = {
   id: string;
@@ -71,7 +72,8 @@ export const PRODUCTS: Product[] = [
       "Tuto pas à pas pour débutant",
       "Pour YouTube Shorts, Reels et TikTok",
     ],
-    status: "bientot",
+    status: "disponible",
+    path: "/tuto-shorts",
     price: "29 €",
   },
   {

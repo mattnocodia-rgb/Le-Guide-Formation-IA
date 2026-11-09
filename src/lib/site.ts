@@ -49,6 +49,7 @@ export const STATIC_PAGES_UPDATED: Record<string, string> = {
   "/skill-seo-aeo-geo": "2026-11-09",
   "/audit-seo": "2026-11-09",
   "/contact": "2026-11-09",
+  "/tuto-shorts": "2026-11-09",
   "/boutique": "2026-11-09",
   "/simulateur-roi": "2026-11-05",
   "/realisations": "2026-11-09",

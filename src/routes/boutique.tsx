@@ -46,7 +46,9 @@ function BoutiquePage() {
                     ? (offers.skill.price ?? p.price)
                     : p.id === "audit-seo"
                       ? (offers.audit.price ?? p.price)
-                      : p.price
+                      : p.id === "tuto-shorts"
+                        ? (offers.shorts.price ?? p.price)
+                        : p.price
                 }
                 tilt={tiltFor(i + 1)}
               />

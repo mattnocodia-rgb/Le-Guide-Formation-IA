@@ -323,7 +323,7 @@ export const getArticle = createServerFn({ method: "GET" })
   });
 
 /** Price and Stripe link of a product, read from « Mon parcours » (<prefix>_prix, <prefix>_lien_stripe). */
-function offerFrom(parcours: Record<string, string>, prefix: "skill" | "audit") {
+function offerFrom(parcours: Record<string, string>, prefix: "skill" | "audit" | "shorts") {
   const link = parcours[`${prefix}_lien_stripe`] ?? "";
   return {
     price: parcours[`${prefix}_prix`] ?? null,
@@ -344,11 +344,21 @@ export const getAuditOffer = createServerFn({ method: "GET" }).handler(async () 
   return offerFrom(await getParcours(), "audit");
 });
 
-/** Prices shown on the shop cards (skill and audit), from « Mon parcours ». */
+/** Sale settings of the shorts skill + tutorial ("Mon parcours": shorts_prix, shorts_lien_stripe). */
+export const getShortsOffer = createServerFn({ method: "GET" }).handler(async () => {
+  const { getParcours } = await import("./airtable.server");
+  return offerFrom(await getParcours(), "shorts");
+});
+
+/** Prices shown on the shop cards, from « Mon parcours ». */
 export const getShopOffers = createServerFn({ method: "GET" }).handler(async () => {
   const { getParcours } = await import("./airtable.server");
   const parcours = await getParcours();
-  return { skill: offerFrom(parcours, "skill"), audit: offerFrom(parcours, "audit") };
+  return {
+    skill: offerFrom(parcours, "skill"),
+    audit: offerFrom(parcours, "audit"),
+    shorts: offerFrom(parcours, "shorts"),
+  };
 });
 
 /** Verifies a skill purchase for the thank-you page (the file itself is served by a server route). */
