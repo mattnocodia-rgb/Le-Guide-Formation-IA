@@ -182,7 +182,7 @@ export const Route = createFileRoute("/skill-seo-aeo-geo")({
   loader: () => getSkillOffer(),
   head: () => {
     const head = pageHead({
-      title: "Skill Claude : des articles trouvés sur Google et ChatGPT",
+      title: SKILL_NAME,
       description:
         "Le skill Claude qui écrit vos articles de blog pour être trouvé sur Google et cité par ChatGPT, et vérifie ceux déjà en ligne. Sans code ni abonnement.",
       path: PATH,

@@ -124,7 +124,7 @@ export function SiteFooter({
               Audit de votre site
             </Link>
             <Link to="/skill-seo-aeo-geo" className="text-[#d8d1c2] no-underline hover:text-paper">
-              Skill : vos articles trouvés sur Google et ChatGPT
+              Skill : rédiger des articles pour Google et ChatGPT
             </Link>
             <Link to="/mentions-legales" className="text-[#d8d1c2] no-underline hover:text-paper">
               Mentions légales

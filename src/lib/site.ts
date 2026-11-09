@@ -22,7 +22,7 @@ export const START_GUIDE_SLUG = "devenir-product-builder";
 export const CONTACT_EMAIL = "contact@optimatt.fr";
 
 /** Public name of the SEO / AEO / GEO skill, worded for non-specialists: it mainly writes blog articles. */
-export const SKILL_NAME = "Des articles de blog trouvés sur Google et ChatGPT";
+export const SKILL_NAME = "Rédiger des articles pour être référencé sur Google et ChatGPT";
 
 export const LINKEDIN_URL = "https://www.linkedin.com/in/matthieuaudineau/";
 /**
