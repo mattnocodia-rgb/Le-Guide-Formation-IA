@@ -203,8 +203,10 @@ function About() {
           <p className="note m-0 text-[24px]">mon tout premier effet wahou</p>
           <p className="m-0 mt-2 text-[17px] leading-relaxed text-ink-soft">
             C'est quand ChatGPT m'a aidé à construire des macros pour mes présentations PowerPoint.
-            Je ne comprenais rien aux macros, et l'IA m'a permis de créer mes propres
-            automatisations : un temps fou gagné sur mes présentations d'offres commerciales.
+            C'était en juillet 2023 ! Je ne comprenais rien aux macros, et l'IA m'a permis de créer
+            mes propres automatisations : un temps fou gagné sur mes présentations d'offres
+            commerciales. C'est le premier résultat concret qui m'a fait gagner du temps, et donc un
+            vrai avantage dans mon travail au quotidien.
           </p>
         </div>
         <ol className="m-0 mt-8 flex list-none flex-col gap-4 p-0">
