@@ -33,7 +33,7 @@ export const Route = createFileRoute("/llms.txt")({
           `- [Simulateur ROI de l'automatisation](${absUrl("/simulateur-roi")})`,
           `- [Ce que j'ai construit : études de cas no-code et IA](${absUrl("/realisations")})`,
           `- [Contact : audit, rédaction, automatisation, site web](${absUrl("/contact")})`,
-          `- [Tuto : créer un short vidéo à partir d'un article, en 2 minutes](${absUrl("/tuto-shorts")})`,
+          `- [Tuto : Créer des shorts automatiquement pour les réseaux sociaux](${absUrl("/tuto-shorts")})`,
           `- [Audit SEO, AEO et GEO de votre site, fait par l'auteur](${absUrl("/audit-seo")})`,
           `- [Skill Claude « Rédiger des articles pour être référencé sur Google et ChatGPT » (SEO / AEO / GEO), utilisé pour écrire et auditer ce guide](${absUrl("/skill-seo-aeo-geo")})`,
           "",
