@@ -9,7 +9,7 @@ import { getArticle } from "@/lib/content.functions";
 import { splitForVideos, youtubeEmbed, youtubeThumb, youtubeWatch } from "@/lib/video";
 import {
   AUTHOR_NAME,
-  AUTHOR_PHOTO_PATH,
+  AUTHOR_PHOTO_80,
   AUTHOR_REF,
   LINKEDIN_URL,
   ORGANIZATION_ID,
@@ -174,7 +174,7 @@ function ArticlePage() {
             ) : null}
             <p className="m-0 flex items-center gap-3 text-[15px] text-ink-soft">
               <img
-                src={AUTHOR_PHOTO_PATH}
+                src={AUTHOR_PHOTO_80}
                 alt={AUTHOR_NAME}
                 width={40}
                 height={40}
