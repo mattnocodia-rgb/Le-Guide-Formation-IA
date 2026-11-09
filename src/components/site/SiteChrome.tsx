@@ -18,8 +18,16 @@ export function SiteHeader({
       <div className="container-wide flex flex-wrap items-center justify-between gap-x-6 gap-y-1 py-4">
         <Link
           to="/"
-          className="font-serif text-[22px] font-extrabold tracking-[-0.01em] text-ink no-underline"
+          className="flex items-center gap-2.5 font-serif text-[22px] font-extrabold tracking-[-0.01em] text-ink no-underline"
         >
+          <img
+            src="/favicon.svg"
+            alt=""
+            aria-hidden="true"
+            width={34}
+            height={34}
+            className="block h-[34px] w-[34px] shrink-0"
+          />
           {SITE_NAME}
         </Link>
         <nav aria-label="Catégories" className="flex flex-wrap gap-x-6 text-[15px] font-medium">
