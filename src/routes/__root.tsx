@@ -16,9 +16,6 @@ import { getLayoutData } from "../lib/content.functions";
 import { PageFrame } from "../components/site/SiteChrome";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_PROMISE } from "../lib/site";
 
-const FONTS_HREF =
-  "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap";
-
 function NotFoundComponent() {
   return (
     <PageFrame>
@@ -83,9 +80,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: FONTS_HREF },
+      // Titles and body text first; Caveat (handwritten notes) is left to load on its own.
+      {
+        rel: "preload",
+        href: "/fonts/fraunces-v1.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        href: "/fonts/inter-v1.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", sizes: "any" },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },

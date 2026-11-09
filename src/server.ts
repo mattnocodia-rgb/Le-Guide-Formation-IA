@@ -44,12 +44,56 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+/**
+ * Headers added to every response. No X-Frame-Options: the Lovable editor shows the site in a
+ * frame, so framing is limited with CSP frame-ancestors instead (own site + Lovable only).
+ */
+const SECURITY_HEADERS: Record<string, string> = {
+  "x-content-type-options": "nosniff",
+  "referrer-policy": "strict-origin-when-cross-origin",
+  "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+  "content-security-policy":
+    "frame-ancestors 'self' https://lovable.dev https://*.lovable.dev https://*.lovable.app https://*.lovableproject.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests",
+};
+
+/** Pages that are personal or have side effects: never cached at the edge. */
+const NO_EDGE_CACHE = /^\/(go\/|mode-test|indexnow|skill-seo-aeo-geo\/(merci|fichier))/;
+
+/** Public HTML pages: 5 min at the edge, then served stale while it refreshes in the background. */
+const HTML_CACHE = "public, max-age=0, s-maxage=300, stale-while-revalidate=86400";
+
+function withHeaders(request: Request, response: Response): Response {
+  const headers = new Headers(response.headers);
+  for (const [k, v] of Object.entries(SECURITY_HEADERS)) {
+    if (!headers.has(k)) headers.set(k, v);
+  }
+  const url = new URL(request.url);
+  const current = headers.get("cache-control") ?? "";
+  const cacheable =
+    request.method === "GET" &&
+    response.status === 200 &&
+    (headers.get("content-type") ?? "").includes("text/html") &&
+    !headers.has("set-cookie") &&
+    url.search === "" &&
+    !NO_EDGE_CACHE.test(url.pathname) &&
+    !/no-store|private/.test(current);
+  if (cacheable) {
+    headers.set("cache-control", HTML_CACHE);
+    headers.set("cdn-cache-control", "max-age=300, stale-while-revalidate=86400");
+  }
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return withHeaders(request, await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {
