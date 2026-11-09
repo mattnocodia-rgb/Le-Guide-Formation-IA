@@ -38,7 +38,7 @@ const CPF_GUIDE_SLUG = "formation-ia-cpf-2026";
 const r = (deg: string) => ({ "--r": deg }) as React.CSSProperties;
 
 function Home() {
-  const { articles, carnet, reco, programmes, photoUrl, totalArticles, startGuide } =
+  const { articles, carnet, reco, programmes, photoUrl, totalArticles, startGuide, keyGuides } =
     Route.useLoaderData();
 
   return (
@@ -342,6 +342,23 @@ function Home() {
           ))}
         </div>
       </section>
+
+      {/* Guides essentiels */}
+      {keyGuides.length > 0 ? (
+        <section aria-labelledby="essentiels" className="container-wide flex flex-col gap-7 pt-20">
+          <div className="flex flex-col gap-2">
+            <p className="note m-0 -rotate-1 self-start text-[24px]">les plus utiles</p>
+            <h2 id="essentiels" className="m-0 text-[clamp(30px,3.2vw,38px)]">
+              Les guides essentiels
+            </h2>
+          </div>
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6">
+            {keyGuides.map((a, i) => (
+              <ArticleCard key={a.slug} article={a} index={i + 1} />
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {/* Derniers guides */}
       <section
