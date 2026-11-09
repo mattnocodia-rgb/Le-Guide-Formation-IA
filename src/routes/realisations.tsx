@@ -85,21 +85,20 @@ function Carte({ r }: { r: RealisationCard }) {
                 {r.payant.label}
               </a>
             )}
-            {r.lien ? (
+            {r.lien && (
               <a href={r.lien} target="_blank" rel="noopener" className="btn-outline text-[15px]">
                 Voir le projet
               </a>
-            ) : (
-              r.cube && (
-                <a
-                  href={track(r.cube.url, "realisations")}
-                  rel="sponsored noopener"
-                  title={`École Cube : ${r.cube.label}`}
-                  className="btn-outline text-[15px]"
-                >
-                  La formation qui m'a appris à le faire
-                </a>
-              )
+            )}
+            {r.cube && (
+              <a
+                href={track(r.cube.url, "realisations")}
+                rel="sponsored noopener"
+                title={`École Cube : ${r.cube.label}`}
+                className="btn-outline text-[15px]"
+              >
+                La formation qui correspond
+              </a>
             )}
           </p>
         )}
