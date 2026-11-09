@@ -8,7 +8,6 @@ import { getHomeData } from "@/lib/content.functions";
 import {
   CATEGORIES,
   LINKEDIN_URL,
-  ORGANIZATION_LD,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_PROMISE,
@@ -16,6 +15,7 @@ import {
   formatDateShort,
   jsonLdScript,
   pageHead,
+  siteEntitiesLd,
   tiltFor,
 } from "@/lib/site";
 
@@ -27,17 +27,7 @@ export const Route = createFileRoute("/")({
       description: SITE_DESCRIPTION,
       path: "/",
     }),
-    scripts: [
-      jsonLdScript({
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: SITE_NAME,
-        url: SITE_URL,
-        inLanguage: "fr-FR",
-        description: SITE_DESCRIPTION,
-        publisher: ORGANIZATION_LD,
-      }),
-    ],
+    scripts: [jsonLdScript({ "@context": "https://schema.org", "@graph": siteEntitiesLd() })],
   }),
   component: Home,
 });

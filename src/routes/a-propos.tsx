@@ -4,7 +4,18 @@ import type { CSSProperties } from "react";
 
 import { LinkedInIcon } from "@/components/site/Cards";
 import { PageFrame } from "@/components/site/SiteChrome";
-import { LINKEDIN_URL, SITE_NAME, SITE_URL, authorLd, jsonLdScript, pageHead } from "@/lib/site";
+import {
+  AUTHOR_NAME,
+  AUTHOR_PHOTO_PATH,
+  LINKEDIN_URL,
+  PERSON_ID,
+  SITE_NAME,
+  SITE_URL,
+  WEBSITE_ID,
+  jsonLdScript,
+  pageHead,
+  siteEntitiesLd,
+} from "@/lib/site";
 
 const BOOTCAMP_SLUG = "bootcamp-product-builder-retour-experience";
 const ENDO_URL = "https://endo-serenite.fr/";
@@ -142,9 +153,12 @@ export const Route = createFileRoute("/a-propos")({
         jsonLdScript({
           "@context": "https://schema.org",
           "@type": "ProfilePage",
+          "@id": `${SITE_URL}/a-propos#page`,
           url: `${SITE_URL}/a-propos`,
-          mainEntity: authorLd(),
+          isPartOf: { "@id": WEBSITE_ID },
+          mainEntity: { "@id": PERSON_ID },
         }),
+        jsonLdScript({ "@context": "https://schema.org", "@graph": siteEntitiesLd() }),
       ],
     };
   },
@@ -163,11 +177,24 @@ function About() {
         <h1 className="mt-3 mb-8 text-[clamp(36px,5vw,56px)] leading-[1.05]">
           Un guide écrit depuis le terrain
         </h1>
+        <figure className="m-0 mb-8 flex items-center gap-4">
+          <img
+            src={AUTHOR_PHOTO_PATH}
+            alt={`${AUTHOR_NAME}, product builder no-code à Nantes`}
+            width={112}
+            height={112}
+            className="block h-28 w-28 shrink-0 rounded-full object-cover"
+          />
+          <figcaption className="text-[17px] leading-snug text-ink-soft">
+            <strong className="block text-ink">{AUTHOR_NAME}</strong>
+            Product builder No-Code &amp; IA, Nantes
+          </figcaption>
+        </figure>
         <div className="prose-article">
           <p>
-            Je m'appelle Matthieu. Ingénieur BTP de formation et commercial expérimenté, j'ai
-            développé une passion pour les technologies qui permettent de construire, d'innover et
-            d'optimiser.
+            Je m'appelle Matthieu Audineau. Ingénieur BTP de formation et commercial expérimenté,
+            j'ai développé une passion pour les technologies qui permettent de construire, d'innover
+            et d'optimiser.
           </p>
           <p>
             L'École Cube m'a ouvert les portes d'un monde que je n'aurais jamais imaginé explorer.

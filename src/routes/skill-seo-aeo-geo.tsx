@@ -3,7 +3,14 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { PageFrame } from "@/components/site/SiteChrome";
 import { getSkillOffer } from "@/lib/content.functions";
-import { SITE_NAME, SITE_URL, authorLd, jsonLdScript, pageHead } from "@/lib/site";
+import {
+  AUTHOR_REF,
+  SITE_NAME,
+  SITE_URL,
+  jsonLdScript,
+  pageHead,
+  siteEntitiesLd,
+} from "@/lib/site";
 
 const PATH = "/skill-seo-aeo-geo";
 const r = (deg: string) => ({ "--r": deg }) as CSSProperties;
@@ -191,8 +198,9 @@ export const Route = createFileRoute("/skill-seo-aeo-geo")({
             name: f.q,
             acceptedAnswer: { "@type": "Answer", text: f.a },
           })),
-          author: authorLd(),
+          author: AUTHOR_REF,
         }),
+        jsonLdScript({ "@context": "https://schema.org", "@graph": siteEntitiesLd() }),
       ],
     };
   },

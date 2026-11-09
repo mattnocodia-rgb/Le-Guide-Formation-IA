@@ -8,11 +8,15 @@ import { PageFrame } from "@/components/site/SiteChrome";
 import { getArticle } from "@/lib/content.functions";
 import { splitForVideos, youtubeEmbed, youtubeThumb, youtubeWatch } from "@/lib/video";
 import {
+  AUTHOR_NAME,
+  AUTHOR_PHOTO_PATH,
+  AUTHOR_REF,
   LINKEDIN_URL,
-  ORGANIZATION_LD,
+  ORGANIZATION_ID,
   SITE_NAME,
+  WEBSITE_ID,
   absUrl,
-  authorLd,
+  siteEntitiesLd,
   categoryBySlug,
   formatDateFr,
   jsonLdScript,
@@ -42,6 +46,8 @@ export const Route = createFileRoute("/$slug")({
       {
         "@context": "https://schema.org",
         "@type": "Article",
+        "@id": `${absUrl(path)}#article`,
+        isPartOf: { "@id": WEBSITE_ID },
         headline: a.title,
         description,
         inLanguage: "fr-FR",
@@ -49,8 +55,8 @@ export const Route = createFileRoute("/$slug")({
         image: ogImageFor(a.categorySlug),
         ...(a.publishedAt ? { datePublished: a.publishedAt } : {}),
         ...(a.updatedAt ? { dateModified: a.updatedAt } : {}),
-        author: authorLd(a.authorName),
-        publisher: ORGANIZATION_LD,
+        author: AUTHOR_REF,
+        publisher: { "@id": ORGANIZATION_ID },
         ...(a.category ? { articleSection: a.category } : {}),
       },
       {
@@ -72,6 +78,7 @@ export const Route = createFileRoute("/$slug")({
         ],
       },
     ];
+    ld.push({ "@context": "https://schema.org", "@graph": siteEntitiesLd() });
     for (const v of a.videos) {
       ld.push({
         "@context": "https://schema.org",
@@ -165,12 +172,21 @@ function ArticlePage() {
                 {a.excerpt}
               </p>
             ) : null}
-            <p className="m-0 text-[15px] text-ink-soft">
-              Par{" "}
-              <Link to="/a-propos" className="font-semibold">
-                Matthieu
-              </Link>
-              , responsable commercial et product builder
+            <p className="m-0 flex items-center gap-3 text-[15px] text-ink-soft">
+              <img
+                src={AUTHOR_PHOTO_PATH}
+                alt={AUTHOR_NAME}
+                width={40}
+                height={40}
+                className="block h-10 w-10 shrink-0 rounded-full object-cover"
+              />
+              <span>
+                Par{" "}
+                <Link to="/a-propos" className="font-semibold">
+                  {AUTHOR_NAME}
+                </Link>
+                , responsable commercial et product builder
+              </span>
             </p>
             <p className="m-0 text-sm text-muted-foreground">
               {a.updatedAt ? (
@@ -419,10 +435,10 @@ function AuthorBox({ withCube }: { withCube: boolean }) {
       >
         <p className="note m-0 text-[26px]">L'auteur</p>
         <p className="m-0 text-[17px] leading-[1.65] text-[#2b2823]">
-          Je suis Matthieu, ingénieur BTP de formation, responsable commercial et product builder
-          certifié (titre RNCP Product builder no-code, niveau 6) : j'allie les deux au quotidien.
-          Je crée des sites web et j'améliore les process des entreprises. Je ne suis pas là pour
-          vous orienter ni vous conseiller : je partage de l'information et mon parcours.
+          Je suis Matthieu Audineau, ingénieur BTP de formation, responsable commercial et product
+          builder certifié (titre RNCP Product builder no-code, niveau 6) : j'allie les deux au
+          quotidien. Je crée des sites web et j'améliore les process des entreprises. Je ne suis pas
+          là pour vous orienter ni vous conseiller : je partage de l'information et mon parcours.
         </p>
         <div className="flex flex-wrap gap-x-6 gap-y-1">
           <Link to="/a-propos" className="py-1.5 text-[15px] font-semibold">
