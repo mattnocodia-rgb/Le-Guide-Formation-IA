@@ -322,16 +322,33 @@ export const getArticle = createServerFn({ method: "GET" })
     };
   });
 
-/** Sale settings of the SEO/AEO/GEO skill, edited in Airtable ("Mon parcours": skill_prix, skill_lien_stripe). */
-export const getSkillOffer = createServerFn({ method: "GET" }).handler(async () => {
-  const { getParcours } = await import("./airtable.server");
-  const parcours = await getParcours();
-  const link = parcours["skill_lien_stripe"] ?? "";
+/** Price and Stripe link of a product, read from « Mon parcours » (<prefix>_prix, <prefix>_lien_stripe). */
+function offerFrom(parcours: Record<string, string>, prefix: "skill" | "audit") {
+  const link = parcours[`${prefix}_lien_stripe`] ?? "";
   return {
-    price: parcours["skill_prix"] ?? null,
+    price: parcours[`${prefix}_prix`] ?? null,
     // Only Stripe-hosted checkout links are accepted, so a typo can never send buyers elsewhere.
     buyUrl: /^https:\/\/buy\.stripe\.com\/[A-Za-z0-9_-]+$/.test(link) ? link : null,
   };
+}
+
+/** Sale settings of the SEO/AEO/GEO skill, edited in Airtable ("Mon parcours": skill_prix, skill_lien_stripe). */
+export const getSkillOffer = createServerFn({ method: "GET" }).handler(async () => {
+  const { getParcours } = await import("./airtable.server");
+  return offerFrom(await getParcours(), "skill");
+});
+
+/** Sale settings of the done-for-you site audit ("Mon parcours": audit_prix, audit_lien_stripe). */
+export const getAuditOffer = createServerFn({ method: "GET" }).handler(async () => {
+  const { getParcours } = await import("./airtable.server");
+  return offerFrom(await getParcours(), "audit");
+});
+
+/** Prices shown on the shop cards (skill and audit), from « Mon parcours ». */
+export const getShopOffers = createServerFn({ method: "GET" }).handler(async () => {
+  const { getParcours } = await import("./airtable.server");
+  const parcours = await getParcours();
+  return { skill: offerFrom(parcours, "skill"), audit: offerFrom(parcours, "audit") };
 });
 
 /** Verifies a skill purchase for the thank-you page (the file itself is served by a server route). */

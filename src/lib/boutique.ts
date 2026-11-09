@@ -1,7 +1,12 @@
 // Client-safe product catalogue for the /boutique page.
 // Add a product here to list it in the shop; set `status: "bientot"` while it is being built.
 
+import { CONTACT_EMAIL, SKILL_NAME } from "@/lib/site";
+
 export type ProductStatus = "disponible" | "bientot";
+
+/** Internal pages a card can link to. Add each new sales page route to this union. */
+export type ShopPath = "/skill-seo-aeo-geo" | "/audit-seo" | "/simulateur-roi" | "/realisations";
 
 export type Product = {
   id: string;
@@ -13,58 +18,101 @@ export type Product = {
   /** What the buyer gets, kept short. */
   includes: string[];
   status: ProductStatus;
-  /** Internal sales page, for available products. Add each new sales page route to this union. */
-  path?: "/skill-seo-aeo-geo" | "/simulateur-roi";
+  /** Internal sales page, for available products. */
+  path?: ShopPath;
+  /** For services without a sales page: the button opens an e-mail to me. */
+  contactSubject?: string;
+  /** Extra links under the card (case studies, free tool…). */
+  links?: { label: string; to: ShopPath; hash?: string }[];
   /** Price shown when it is not loaded from Airtable. */
   price?: string;
 };
 
+export const contactHref = (subject: string) =>
+  `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`;
+
 export const PRODUCTS: Product[] = [
   {
-    id: "skill-seo-aeo-geo",
-    kicker: "skill Claude",
-    title: "Le skill SEO, AEO et GEO",
+    id: "audit-seo",
+    kicker: "fait pour vous",
+    title: "Je vérifie votre site pour Google et ChatGPT",
     promise:
-      "Auditer et écrire du contenu pour être trouvé par Google, compris et cité par les IA.",
+      "Un rapport complet avec un plan d'action priorisé, puis 45 minutes en visio pour vous expliquer quoi corriger en premier.",
     includes: [
-      "32 contrôles numérotés",
-      "Audit du site entier",
-      "Mode rédaction",
+      "Une note sur 100 et 7 domaines contrôlés",
+      "Problèmes classés par gravité",
+      "Plan d'action en 4 étapes",
+      "Visio de restitution de 45 min",
+    ],
+    status: "disponible",
+    path: "/audit-seo",
+  },
+  {
+    id: "skill-seo-aeo-geo",
+    kicker: "à faire vous-même, dans Claude",
+    title: SKILL_NAME,
+    promise:
+      "Claude vérifie votre site page par page, vous dit quoi corriger, puis écrit vos articles pour Google et ChatGPT.",
+    includes: [
+      "Audit de votre site entier",
+      "Articles prêts à coller",
       "Guide PDF de 12 pages",
+      "Sans abonnement, sans code",
     ],
     status: "disponible",
     path: "/skill-seo-aeo-geo",
   },
   {
-    id: "simulateur-roi",
-    kicker: "outil gratuit",
-    title: "Combien vous coûte cette tâche ?",
+    id: "tuto-shorts",
+    kicker: "skill Claude + tuto",
+    title: "Un short vidéo par article, en 2 minutes",
     promise:
-      "Estimez en une minute ce qu'une tâche manuelle vous coûte par an et quand son automatisation devient rentable.",
-    includes: ["Coût manuel annuel", "Délai de rentabilité", "Gain sur 5 ans"],
-    status: "disponible",
-    path: "/simulateur-roi",
-    price: "Gratuit",
-  },
-  {
-    id: "tuto-clients-proximite",
-    kicker: "tuto Claude + Apify",
-    title: "Trouver 50 clients potentiels près de chez vous",
-    promise:
-      "Une liste d'entreprises qualifiées de votre secteur et de votre ville, sans y passer la journée.",
-    includes: ["Skill prêt à installer", "Pas-à-pas avec captures", "Coût réel annoncé"],
-    status: "bientot",
-  },
-  {
-    id: "installation-visio",
-    kicker: "accompagnement",
-    title: "Je l'installe avec vous",
-    promise: "Une heure en visio : vous repartez avec vos premières recettes Claude qui tournent.",
+      "Donnez le sujet de votre article : Claude écrit le script, la voix off et l'animation d'une vidéo verticale, sans tournage ni montage.",
     includes: [
-      "Choix des recettes selon votre métier",
-      "Installation sur votre compte",
-      "Sans code",
+      "Skill prêt à installer",
+      "Tuto pas à pas pour débutant",
+      "Pour YouTube Shorts, Reels et TikTok",
     ],
     status: "bientot",
+    price: "29 €",
+  },
+  {
+    id: "accompagnement-automatisation",
+    kicker: "accompagnement",
+    title: "Automatiser une tâche de votre activité",
+    promise:
+      "On repère ensemble la tâche qui vous fait perdre le plus de temps, et je construis l'automatisation qui la fait à votre place.",
+    includes: [
+      "Saisies, relances, e-mails, tableaux de bord",
+      "Avec les outils que vous utilisez déjà",
+      "Sur devis, après un premier échange",
+    ],
+    status: "disponible",
+    contactSubject: "Accompagnement : automatiser une tâche",
+    links: [
+      { label: "Ce que j'ai automatisé en entreprise", to: "/realisations", hash: "en-entreprise" },
+      { label: "Combien vous coûte cette tâche ? (gratuit)", to: "/simulateur-roi" },
+    ],
+  },
+  {
+    id: "accompagnement-site",
+    kicker: "accompagnement",
+    title: "Créer votre site web",
+    promise:
+      "Un site construit pour être trouvé sur Google et cité par ChatGPT dès le départ, que vous mettez à jour sans toucher au code.",
+    includes: [
+      "Site sur mesure, rapide sur mobile",
+      "Contenu mis à jour depuis une base simple",
+      "Sur devis, après un premier échange",
+    ],
+    status: "disponible",
+    contactSubject: "Accompagnement : créer mon site web",
+    links: [
+      {
+        label: "Le site que vous lisez, construit ainsi",
+        to: "/realisations",
+        hash: "projets-personnels",
+      },
+    ],
   },
 ];

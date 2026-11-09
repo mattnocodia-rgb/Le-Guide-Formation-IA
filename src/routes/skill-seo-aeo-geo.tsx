@@ -7,6 +7,7 @@ import {
   AUTHOR_REF,
   SITE_NAME,
   SITE_URL,
+  SKILL_NAME,
   jsonLdScript,
   pageHead,
   siteEntitiesLd,
@@ -181,9 +182,9 @@ export const Route = createFileRoute("/skill-seo-aeo-geo")({
   loader: () => getSkillOffer(),
   head: () => {
     const head = pageHead({
-      title: `Skill Claude SEO, AEO et GEO — ${SITE_NAME}`,
+      title: `${SKILL_NAME} : le skill Claude`,
       description:
-        "Le skill Claude qui a écrit et audité ce guide : 32 contrôles SEO, AEO et GEO, audit de site entier et articles prêts à publier, sans code.",
+        "Le skill Claude qui vérifie votre site et écrit vos articles pour Google et ChatGPT : 32 contrôles SEO, AEO et GEO, sans code ni abonnement.",
       path: PATH,
     });
     return {
@@ -255,15 +256,14 @@ function SkillPage() {
     <PageFrame>
       {/* Hero */}
       <section className="container-wide max-w-[880px] pt-12 md:pt-16">
-        <p className="note m-0 -rotate-2 text-[28px]">l'outil derrière ce guide</p>
-        <h1 className="mt-3 mb-6 text-[clamp(36px,5vw,58px)] leading-[1.05]">
-          Le skill Claude qui a écrit et audité ce site
-        </h1>
+        <p className="note m-0 -rotate-2 text-[28px]">le skill Claude qui a écrit ce site</p>
+        <h1 className="mt-3 mb-6 text-[clamp(36px,5vw,58px)] leading-[1.05]">{SKILL_NAME}</h1>
         <p className="m-0 max-w-[680px] text-xl leading-relaxed text-ink-soft">
-          Si vous êtes tombé sur ce site, vous avez déjà vu ce skill à l'œuvre : chaque article a
-          été rédigé puis vérifié avec lui, pour être trouvé par Google, compris par les IA et cité
-          par elles. Je l'ai construit pour mes propres sites. Le voici, prêt à installer dans
-          Claude.
+          Un skill pour Claude qui vérifie votre site, vous dit quoi corriger, et écrit vos articles
+          pour que Google vous trouve et que ChatGPT vous recommande. Si vous êtes tombé sur ce
+          site, vous avez déjà vu ce skill à l'œuvre : chaque article a été rédigé puis vérifié avec
+          lui, pour être trouvé par Google, compris par les IA et cité par elles. Je l'ai construit
+          pour mes propres sites. Le voici, prêt à installer dans Claude.
         </p>
         <BuyBox className="mt-8" />
       </section>
@@ -433,6 +433,10 @@ function SkillPage() {
           <li>Il ne mesure pas votre trafic et n'accède pas à Search Console.</li>
           <li>Il ne publie rien sur votre site sans que vous le fassiez.</li>
         </ul>
+        <p className="m-0 mt-4 max-w-[720px] text-[17px] leading-relaxed">
+          Vous préférez que quelqu'un le fasse pour vous ? Je propose aussi un{" "}
+          <Link to="/audit-seo">audit de votre site, avec rapport et visio</Link>.
+        </p>
       </Section>
 
       {/* FAQ */}

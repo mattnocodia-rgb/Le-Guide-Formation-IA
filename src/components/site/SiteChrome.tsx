@@ -120,8 +120,11 @@ export function SiteFooter({
             <Link to="/simulateur-roi" className="text-[#d8d1c2] no-underline hover:text-paper">
               Simulateur ROI
             </Link>
+            <Link to="/audit-seo" className="text-[#d8d1c2] no-underline hover:text-paper">
+              Audit de votre site
+            </Link>
             <Link to="/skill-seo-aeo-geo" className="text-[#d8d1c2] no-underline hover:text-paper">
-              Le skill SEO, AEO et GEO
+              Skill « Être trouvé sur Google et ChatGPT »
             </Link>
             <Link to="/mentions-legales" className="text-[#d8d1c2] no-underline hover:text-paper">
               Mentions légales
