@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import type { CubeLink, Realisation } from "./airtable.server";
+import { isValidPhone } from "./contact-validation";
 import { goPath } from "./track";
 
 /** A case study as shown on /realisations, with the Cube course behind it resolved. */
@@ -396,7 +397,8 @@ export const sendContact = createServerFn({ method: "POST" })
         telephone: z
           .string()
           .trim()
-          .regex(/^[+0-9 ().-]{6,25}$/),
+          .max(25)
+          .refine((v) => isValidPhone(v)),
         besoin: z.enum(["audit", "redaction", "automatisation", "site", "autre"]),
         message: z.string().trim().max(3000),
         rgpd: z.literal(true),
