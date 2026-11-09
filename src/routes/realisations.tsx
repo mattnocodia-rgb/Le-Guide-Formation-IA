@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { PageFrame } from "@/components/site/SiteChrome";
+import type { Realisation } from "@/lib/airtable.server";
 import { getRealisationsData } from "@/lib/content.functions";
 import { LINKEDIN_URL, SITE_NAME, pageHead } from "@/lib/site";
 
@@ -24,8 +25,91 @@ function Bloc({ label, text }: { label: string; text: string }) {
   );
 }
 
+const GROUPES = [
+  {
+    id: "en-entreprise",
+    contexte: "En entreprise",
+    title: "En entreprise",
+    note: "dans mon poste de responsable commercial",
+    intro:
+      "Des automatisations et des outils construits pour mon équipe commerciale et nos clients, utilisés au quotidien.",
+  },
+  {
+    id: "projets-personnels",
+    contexte: "Projet personnel",
+    title: "Mes projets",
+    note: "pour moi et mes projets",
+    intro: "Les outils qui font tourner ce guide, Endo-sérénité et ma propre activité.",
+  },
+  {
+    id: "en-formation",
+    contexte: "Projet de formation",
+    title: "Pendant la formation",
+    note: "les exercices du bootcamp",
+    intro:
+      "Des applications et des automatisations construites pendant la formation de product builder, sur des cas réalistes.",
+  },
+] as const;
+
+function Carte({ r }: { r: Realisation }) {
+  return (
+    <article className="sheet flex flex-col overflow-hidden">
+      {r.image && (
+        <img
+          src={`/img/realisations/${r.image}`}
+          alt={`Capture d'écran : ${r.projet}`}
+          loading="lazy"
+          decoding="async"
+          className="block max-h-[340px] w-full border-b border-rule bg-paper-light object-cover object-top"
+        />
+      )}
+      <div className="flex flex-1 flex-col p-6 md:p-7">
+        <h3 className="m-0 text-[clamp(22px,2.4vw,27px)] leading-tight">{r.projet}</h3>
+        {r.outils.length > 0 && (
+          <ul aria-label="Outils utilisés" className="m-0 mt-3 flex list-none flex-wrap gap-2 p-0">
+            {r.outils.map((o) => (
+              <li
+                key={o}
+                className="rounded-full border border-rule px-3 py-0.5 text-[14px] text-ink-soft"
+              >
+                {o}
+              </li>
+            ))}
+          </ul>
+        )}
+        <Bloc label="Le problème" text={r.probleme} />
+        <Bloc label="Ce que j'ai construit" text={r.construit} />
+        <Bloc label="Le résultat" text={r.resultat} />
+        <Bloc label="Ce que la formation m'a apporté" text={r.formation} />
+        {(r.payant || r.lien) && (
+          <p className="m-0 mt-auto flex flex-wrap gap-3 pt-5">
+            {r.payant && (
+              <a
+                href={r.payant.url}
+                rel={r.payant.url.startsWith("/") ? undefined : "noopener"}
+                className="btn-ink text-[15px]"
+              >
+                {r.payant.label}
+              </a>
+            )}
+            {r.lien && (
+              <a href={r.lien} target="_blank" rel="noopener" className="btn-outline text-[15px]">
+                Voir le projet
+              </a>
+            )}
+          </p>
+        )}
+      </div>
+    </article>
+  );
+}
+
 function Realisations() {
   const { items, rdv, formations } = Route.useLoaderData();
+  const groups = GROUPES.map((g) => ({
+    ...g,
+    items: items.filter((r) => r.contexte === g.contexte),
+  })).filter((g) => g.items.length > 0);
 
   return (
     <PageFrame>
@@ -40,67 +124,59 @@ function Realisations() {
               Je ne suis pas développeur : tout ce qui suit est construit avec des outils no-code et
               l'IA.
             </strong>{" "}
-            Pour chaque projet, le même plan : le problème de départ, ce que j'ai construit, le
-            résultat, et ce que la formation de product builder m'a apporté pour y arriver.
+            Pour chaque projet, le même plan : le problème de départ, ce que j'ai construit et le
+            résultat. Les projets sont classés selon leur contexte : en entreprise, pour moi, ou
+            pendant la formation.
           </p>
         </div>
       </section>
 
-      <section aria-label="Études de cas" className="container-wide max-w-[780px] pt-10">
-        {items.length === 0 ? (
+      {items.length === 0 ? (
+        <section className="container-wide max-w-[780px] pt-10">
           <p className="text-[17px] text-ink-soft">Les études de cas arrivent très bientôt.</p>
-        ) : (
-          <div className="flex flex-col gap-8">
-            {items.map((r) => (
-              <article key={r.id} className="sheet p-6 md:p-8">
-                <h2 className="m-0 text-[clamp(24px,2.8vw,32px)] leading-tight">{r.projet}</h2>
-                {r.outils.length > 0 && (
-                  <ul
-                    aria-label="Outils utilisés"
-                    className="m-0 mt-3 flex list-none flex-wrap gap-2 p-0"
-                  >
-                    {r.outils.map((o) => (
-                      <li
-                        key={o}
-                        className="rounded-full border border-rule px-3 py-0.5 text-[14px] text-ink-soft"
-                      >
-                        {o}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <Bloc label="Le problème" text={r.probleme} />
-                <Bloc label="Ce que j'ai construit" text={r.construit} />
-                <Bloc label="Le résultat" text={r.resultat} />
-                <Bloc label="Ce que la formation m'a apporté" text={r.formation} />
-                {r.payant && (
-                  <p className="m-0 mt-5">
-                    {r.payant.url.startsWith("/") ? (
-                      <a href={r.payant.url} className="btn-ink text-[15px]">
-                        {r.payant.label}
-                      </a>
-                    ) : (
-                      <a href={r.payant.url} rel="noopener" className="btn-ink text-[15px]">
-                        {r.payant.label}
-                      </a>
-                    )}
-                  </p>
-                )}
-                {r.lien && (
+        </section>
+      ) : (
+        <>
+          <nav
+            aria-label="Types de projets"
+            className="container-wide max-w-[780px] pt-6 text-[15px] font-medium"
+          >
+            <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
+              {groups.map((g) => (
+                <li key={g.id}>
                   <a
-                    href={r.lien}
-                    target="_blank"
-                    rel="noopener"
-                    className="btn-outline mt-5 text-[15px]"
+                    href={`#${g.id}`}
+                    className="inline-block rounded-full border border-ink/20 px-4 py-1.5 text-ink no-underline hover:border-ink"
                   >
-                    Voir le projet
+                    {g.title} <span className="text-ink-soft">({g.items.length})</span>
                   </a>
-                )}
-              </article>
-            ))}
-          </div>
-        )}
-      </section>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          {groups.map((g) => (
+            <section
+              key={g.id}
+              id={g.id}
+              aria-labelledby={`${g.id}-titre`}
+              className="container-wide scroll-mt-24 pt-14"
+            >
+              <div className="max-w-[780px]">
+                <p className="note m-0 -rotate-1 text-[24px]">{g.note}</p>
+                <h2 id={`${g.id}-titre`} className="m-0 mt-1 text-[clamp(28px,3.2vw,38px)]">
+                  {g.title}
+                </h2>
+                <p className="m-0 mt-2 text-[17px] leading-relaxed text-ink-soft">{g.intro}</p>
+              </div>
+              <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
+                {g.items.map((r) => (
+                  <Carte key={r.id} r={r} />
+                ))}
+              </div>
+            </section>
+          ))}
+        </>
+      )}
 
       <section className="container-wide max-w-[780px] pt-14 pb-4">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
