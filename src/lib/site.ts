@@ -6,14 +6,15 @@ export const SITE_DESCRIPTION =
   "Métiers, outils, financement CPF : les guides d'un commercial et product builder certifié, ingénieur BTP de formation, pour choisir sa formation à l'IA et au no-code.";
 /**
  * Guides linked from the home page in the « Les guides essentiels » section, in this order.
- * Chosen for their search potential (pages close to Google's first page); unpublished slugs are skipped.
+ * Chosen for their search potential from Search Console (pages with impressions ranking in the top 30,
+ * export of 11/11/2026); unpublished slugs are skipped.
  */
 export const KEY_GUIDE_SLUGS = [
   "formation-ia-cpf-2026",
   "formation-product-builder-rncp-comparatif",
   "bootcamp-product-builder-retour-experience",
   "contrat-freelance-product-builder",
-  "design-ux-ui-no-code",
+  "strategie-contenu-linkedin",
 ] as const;
 
 /** Article opened by the "Lire le guide de départ" button on the home page. */
