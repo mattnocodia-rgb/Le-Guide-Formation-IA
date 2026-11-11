@@ -353,10 +353,46 @@ function Home() {
               Les guides essentiels
             </h2>
           </div>
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6">
-            {keyGuides.map((a, i) => (
-              <ArticleCard key={a.slug} article={a} index={i + 1} />
-            ))}
+          <div
+            className="sheet relative max-w-[920px] px-6 pt-8 pb-4 md:px-10"
+            style={r("-0.3deg")}
+          >
+            <div aria-hidden="true" className="tape tape-yellow top-[-10px] left-10 -rotate-2" />
+            <ol className="m-0 list-none p-0">
+              {keyGuides.map((a, i) => (
+                <li
+                  key={a.slug}
+                  className="relative flex gap-5 border-b border-dashed border-rule py-5 last:border-b-0 md:gap-8"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="font-hand w-10 shrink-0 text-[46px] leading-none font-semibold text-accent md:w-12"
+                  >
+                    {i + 1}
+                  </span>
+                  <div className="flex min-w-0 flex-col gap-1.5">
+                    <h3 className="m-0 text-[21px] leading-[1.2] md:text-[23px]">
+                      <Link
+                        to="/$slug"
+                        params={{ slug: a.slug }}
+                        className="text-ink no-underline after:absolute after:inset-0 after:content-[''] hover:underline hover:decoration-accent hover:underline-offset-4"
+                      >
+                        {a.title}
+                      </Link>
+                    </h3>
+                    {a.excerpt ? (
+                      <p className="m-0 line-clamp-2 text-base leading-relaxed text-ink-soft">
+                        {a.excerpt}
+                      </p>
+                    ) : null}
+                    <p className="m-0 text-[13px] text-muted-foreground">
+                      {a.category ? `${a.category} · ` : ""}
+                      {a.readingMinutes} min
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
       ) : null}
