@@ -10,7 +10,12 @@ export type ProductKind = "service" | "diy";
 
 /** Internal pages a card can link to. Add each new sales page route to this union. */
 export type ShopPath =
-  "/skill-seo-aeo-geo" | "/audit-seo" | "/tuto-shorts" | "/simulateur-roi" | "/realisations";
+  | "/skill-seo-aeo-geo"
+  | "/audit-seo"
+  | "/tuto-shorts"
+  | "/simulateur-roi"
+  | "/realisations"
+  | "/creation-site-web";
 
 export type Product = {
   id: string;
@@ -110,14 +115,14 @@ export const PRODUCTS: Product[] = [
     kicker: "accompagnement",
     title: "Créer votre site web",
     promise:
-      "Un site construit pour être trouvé sur Google et cité par ChatGPT dès le départ, que vous mettez à jour sans toucher au code.",
+      "Je prépare gratuitement la maquette de votre site, vous la corrigez vous-même, et vous ne payez que si elle vous plaît.",
     includes: [
-      "Site sur mesure, rapide sur mobile",
-      "Contenu mis à jour depuis une base simple",
-      "Sur devis, après un premier échange",
+      "Maquette gratuite, sans engagement",
+      "Un seul paiement : 690 € ou 990 €",
+      "Tout à votre nom, sans abonnement",
     ],
     status: "disponible",
-    contactNeed: "site",
+    path: "/creation-site-web",
     links: [
       {
         label: "Le site que vous lisez, construit ainsi",

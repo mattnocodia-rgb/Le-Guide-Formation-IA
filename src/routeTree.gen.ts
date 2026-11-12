@@ -16,6 +16,7 @@ import { Route as AuditSeoRouteImport } from './routes/audit-seo'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as ConditionsDeVenteRouteImport } from './routes/conditions-de-vente'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CreationSiteWebRouteImport } from './routes/creation-site-web'
 import { Route as IndexnowRouteImport } from './routes/indexnow'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
@@ -65,6 +66,11 @@ const ConditionsDeVenteRoute = ConditionsDeVenteRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreationSiteWebRoute = CreationSiteWebRouteImport.update({
+  id: '/creation-site-web',
+  path: '/creation-site-web',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexnowRoute = IndexnowRouteImport.update({
@@ -152,6 +158,7 @@ export interface FileRoutesByFullPath {
   '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/contact': typeof ContactRoute
+  '/creation-site-web': typeof CreationSiteWebRoute
   '/indexnow': typeof IndexnowRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -176,6 +183,7 @@ export interface FileRoutesByTo {
   '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/contact': typeof ContactRoute
+  '/creation-site-web': typeof CreationSiteWebRoute
   '/indexnow': typeof IndexnowRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -201,6 +209,7 @@ export interface FileRoutesById {
   '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/contact': typeof ContactRoute
+  '/creation-site-web': typeof CreationSiteWebRoute
   '/indexnow': typeof IndexnowRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -227,6 +236,7 @@ export interface FileRouteTypes {
     | '/boutique'
     | '/conditions-de-vente'
     | '/contact'
+    | '/creation-site-web'
     | '/indexnow'
     | '/llms.txt'
     | '/mentions-legales'
@@ -251,6 +261,7 @@ export interface FileRouteTypes {
     | '/boutique'
     | '/conditions-de-vente'
     | '/contact'
+    | '/creation-site-web'
     | '/indexnow'
     | '/llms.txt'
     | '/mentions-legales'
@@ -275,6 +286,7 @@ export interface FileRouteTypes {
     | '/boutique'
     | '/conditions-de-vente'
     | '/contact'
+    | '/creation-site-web'
     | '/indexnow'
     | '/llms.txt'
     | '/mentions-legales'
@@ -300,6 +312,7 @@ export interface RootRouteChildren {
   BoutiqueRoute: typeof BoutiqueRoute
   ConditionsDeVenteRoute: typeof ConditionsDeVenteRoute
   ContactRoute: typeof ContactRoute
+  CreationSiteWebRoute: typeof CreationSiteWebRoute
   IndexnowRoute: typeof IndexnowRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
@@ -366,6 +379,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creation-site-web': {
+      id: '/creation-site-web'
+      path: '/creation-site-web'
+      fullPath: '/creation-site-web'
+      preLoaderRoute: typeof CreationSiteWebRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/indexnow': {
@@ -484,6 +504,7 @@ const rootRouteChildren: RootRouteChildren = {
   BoutiqueRoute: BoutiqueRoute,
   ConditionsDeVenteRoute: ConditionsDeVenteRoute,
   ContactRoute: ContactRoute,
+  CreationSiteWebRoute: CreationSiteWebRoute,
   IndexnowRoute: IndexnowRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
