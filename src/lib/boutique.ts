@@ -27,7 +27,9 @@ export type Product = {
   path?: ShopPath;
   /** For services without a sales page: the button opens the contact form with this need. */
   contactNeed?: ContactNeedId;
-  /** Extra links under the card (case studies, free tool…). */
+  /** Secondary button next to the main one (e.g. a free tool). */
+  secondary?: { label: string; to: ShopPath };
+  /** Extra links under the card (case studies…). */
   links?: { label: string; to: ShopPath; hash?: string }[];
   /** Price shown when it is not loaded from Airtable. */
   price?: string;
@@ -99,8 +101,8 @@ export const PRODUCTS: Product[] = [
     contactNeed: "automatisation",
     links: [
       { label: "Ce que j'ai automatisé en entreprise", to: "/realisations", hash: "en-entreprise" },
-      { label: "Combien vous coûte cette tâche ? (gratuit)", to: "/simulateur-roi" },
     ],
+    secondary: { label: "Combien vous coûte cette tâche ?", to: "/simulateur-roi" },
   },
   {
     id: "accompagnement-site",
