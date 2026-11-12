@@ -35,6 +35,7 @@ export const Route = createFileRoute("/llms.txt")({
           `- [Contact : audit, rédaction, automatisation, site web](${absUrl("/contact")})`,
           `- [Tuto : Créer des shorts automatiquement pour les réseaux sociaux](${absUrl("/tuto-shorts")})`,
           `- [Audit SEO, AEO et GEO de votre site, fait par l'auteur](${absUrl("/audit-seo")})`,
+          `- [Création de site web pour artisans et TPE, maquette gratuite](${absUrl("/creation-site-web")})`,
           `- [Skill Claude « Rédiger des articles pour être référencé sur Google et ChatGPT » (SEO / AEO / GEO), utilisé pour écrire et auditer ce guide](${absUrl("/skill-seo-aeo-geo")})`,
           "",
         );
