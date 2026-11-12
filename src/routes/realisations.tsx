@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import type React from "react";
 
 import { PageFrame } from "@/components/site/SiteChrome";
 import { type RealisationCard, getRealisationsData } from "@/lib/content.functions";
@@ -43,10 +44,15 @@ const GROUPES = [
   },
 ] as const;
 
-function Carte({ r }: { r: RealisationCard }) {
+/** Screenshots (raster files) are shown beside the card; SVG icons stay as a faded background. */
+function isScreenshot(image: string | null): image is string {
+  return !!image && /\.(webp|png|jpe?g)$/i.test(image);
+}
+
+function Carte({ r, background = true }: { r: RealisationCard; background?: boolean }) {
   return (
     <article className="sheet relative isolate flex flex-col overflow-hidden">
-      {r.image && (
+      {background && r.image && (
         <img
           src={`/img/realisations/${r.image}`}
           alt=""
@@ -105,6 +111,37 @@ function Carte({ r }: { r: RealisationCard }) {
         )}
       </div>
     </article>
+  );
+}
+
+/** One project per row: the card on one side, its screenshot on the other, alternating. */
+function LigneProjet({ r, index }: { r: RealisationCard; index: number }) {
+  if (!isScreenshot(r.image)) return <Carte r={r} />;
+  const imageFirst = index % 2 === 1;
+  return (
+    <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-10">
+      <div className={imageFirst ? "lg:order-2" : undefined}>
+        <Carte r={r} background={false} />
+      </div>
+      <figure
+        className={`tilt m-0 ${imageFirst ? "lg:order-1" : ""}`}
+        style={{ "--r": imageFirst ? "-1deg" : "1deg" } as React.CSSProperties}
+      >
+        <div className="sheet relative p-2.5">
+          <div
+            aria-hidden="true"
+            className={`tape tape-yellow top-[-10px] ${imageFirst ? "right-8 rotate-3" : "left-8 -rotate-3"}`}
+          />
+          <img
+            src={`/img/realisations/${r.image}`}
+            alt={`Capture d'écran du projet « ${r.projet} »`}
+            loading="lazy"
+            decoding="async"
+            className="block max-h-[520px] w-full bg-paper object-contain"
+          />
+        </div>
+      </figure>
+    </div>
   );
 }
 
@@ -171,11 +208,19 @@ function Realisations() {
                 </h2>
                 <p className="m-0 mt-2 text-[17px] leading-relaxed text-ink-soft">{g.intro}</p>
               </div>
-              <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
-                {g.items.map((r) => (
-                  <Carte key={r.id} r={r} />
-                ))}
-              </div>
+              {g.id === "projets-personnels" ? (
+                <div className="mt-8 flex flex-col gap-12 lg:gap-16">
+                  {g.items.map((r, i) => (
+                    <LigneProjet key={r.id} r={r} index={i} />
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
+                  {g.items.map((r) => (
+                    <Carte key={r.id} r={r} />
+                  ))}
+                </div>
+              )}
             </section>
           ))}
         </>
