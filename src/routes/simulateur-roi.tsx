@@ -178,18 +178,25 @@ function SimulateurRoi() {
           <div className="flex flex-col gap-6" aria-live="polite">
             <div className="postit relative -rotate-1 rounded-sm p-6 md:p-7">
               <span className="tape -top-3 left-8" aria-hidden="true" />
-              <p className="m-0 text-[18px] leading-relaxed text-ink">
-                Si je réalise cette automatisation, vous gagnerez environ{" "}
-                <strong className="text-accent-ink">{Math.round(r.hoursPerYear)} heures</strong> par an.
-                Le coût estimé est de{" "}
-                <strong className="text-accent-ink">{eur(r.buildCost + input.toolCostMonthly * 12)}</strong>{" "}
-                la 1ère année, puis{" "}
-                <strong className="text-accent-ink">{eur(Math.max(0, input.toolCostMonthly) * 12)}</strong>{" "}
-                les années suivantes, au lieu de{" "}
-                <strong className="text-accent-ink">{eur(r.humanAnnualCost)}</strong> par an en restant
-                sur votre process manuel actuel ! La rentabilité est de{" "}
-                <strong className="text-accent-ink">{roiLabel}</strong>.
-              </p>
+              <div className="flex flex-col gap-3 text-[18px] leading-relaxed text-ink">
+                <p className="m-0">
+                  Si je réalise cette automatisation, vous gagnerez environ{" "}
+                  <strong className="text-accent-ink">{Math.round(r.hoursPerYear)} heures</strong> par
+                  an.
+                </p>
+                <p className="m-0">
+                  Le coût estimé est de{" "}
+                  <strong className="text-accent-ink">{eur(r.buildCost + input.toolCostMonthly * 12)}</strong>{" "}
+                  la 1ère année, puis{" "}
+                  <strong className="text-accent-ink">{eur(Math.max(0, input.toolCostMonthly) * 12)}</strong>{" "}
+                  les années suivantes, au lieu de{" "}
+                  <strong className="text-accent-ink">{eur(r.humanAnnualCost)}</strong> par an en
+                  restant sur votre process manuel actuel !
+                </p>
+                <p className="m-0">
+                  La rentabilité est de <strong className="text-accent-ink">{roiLabel}</strong>.
+                </p>
+              </div>
               <p className="m-0 mt-4 font-serif text-[22px] font-bold text-ink">
                 Soit <span className="text-accent-ink">{eur(r.fiveYearSavings)}</span> de gagnés sur 5
                 ans !
