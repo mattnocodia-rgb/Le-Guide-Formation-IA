@@ -151,6 +151,11 @@ function ProductCard({
             Bientôt disponible{price ? ` · ${price}` : ""}
           </span>
         )}
+        {product.secondary ? (
+          <Link to={product.secondary.to} className="btn-outline text-[15px]">
+            {product.secondary.label}
+          </Link>
+        ) : null}
       </div>
       {product.links?.length ? (
         <ul className="m-0 flex list-none flex-col gap-1 p-0 text-[14.5px]">
