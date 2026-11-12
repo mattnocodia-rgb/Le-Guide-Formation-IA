@@ -44,15 +44,10 @@ const GROUPES = [
   },
 ] as const;
 
-/** Screenshots (raster files) are shown beside the card; SVG icons stay as a faded background. */
-function isScreenshot(image: string | null): image is string {
-  return !!image && /\.(webp|png|jpe?g)$/i.test(image);
-}
-
-function Carte({ r, background = true }: { r: RealisationCard; background?: boolean }) {
+function Carte({ r }: { r: RealisationCard }) {
   return (
     <article className="sheet relative isolate flex flex-col overflow-hidden">
-      {background && r.image && (
+      {r.image && (
         <img
           src={`/img/realisations/${r.image}`}
           alt=""
@@ -116,12 +111,12 @@ function Carte({ r, background = true }: { r: RealisationCard; background?: bool
 
 /** One project per row: the card on one side, its screenshot on the other, alternating. */
 function LigneProjet({ r, index }: { r: RealisationCard; index: number }) {
-  if (!isScreenshot(r.image)) return <Carte r={r} />;
+  if (!r.illustration) return <Carte r={r} />;
   const imageFirst = index % 2 === 1;
   return (
     <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-10">
       <div className={imageFirst ? "lg:order-2" : undefined}>
-        <Carte r={r} background={false} />
+        <Carte r={r} />
       </div>
       <figure
         className={`tilt m-0 ${imageFirst ? "lg:order-1" : ""}`}
@@ -133,7 +128,7 @@ function LigneProjet({ r, index }: { r: RealisationCard; index: number }) {
             className={`tape tape-yellow top-[-10px] ${imageFirst ? "right-8 rotate-3" : "left-8 -rotate-3"}`}
           />
           <img
-            src={`/img/realisations/${r.image}`}
+            src={`/img/realisations/${r.illustration}`}
             alt={`Capture d'écran du projet « ${r.projet} »`}
             loading="lazy"
             decoding="async"
