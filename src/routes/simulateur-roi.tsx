@@ -187,12 +187,10 @@ function SimulateurRoi() {
                 <strong className="text-accent-ink">{eur(Math.max(0, input.toolCostMonthly) * 12)}</strong>{" "}
                 les années suivantes, au lieu de{" "}
                 <strong className="text-accent-ink">{eur(r.humanAnnualCost)}</strong> par an en restant
-                sur votre process manuel actuel !
+                sur votre process manuel actuel ! La rentabilité est de{" "}
+                <strong className="text-accent-ink">{roiLabel}</strong>.
               </p>
               <p className="m-0 mt-4 font-serif text-[22px] font-bold text-ink">
-                La rentabilité est de <span className="text-accent-ink">{roiLabel}</span>.
-              </p>
-              <p className="m-0 mt-2 font-serif text-[22px] font-bold text-ink">
                 Soit <span className="text-accent-ink">{eur(r.fiveYearSavings)}</span> de gagnés sur 5
                 ans !
               </p>
