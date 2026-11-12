@@ -20,29 +20,18 @@ const r = (deg: string) => ({ "--r": deg }) as CSSProperties;
 
 const DEMOS = [
   {
-    href: "https://maquettes.matt-nocodia.workers.dev/demo-batiment/",
     img: `${IMG}/demo-batiment.webp`,
     alt: "Site de démonstration d'un plâtrier : plan d'architecte dessiné à côté du titre",
     title: "Artisan du bâtiment",
     text: "Un plâtrier fictif à Bouguenais : un plan d'architecte se dessine à côté de ses prestations.",
   },
   {
-    href: "https://maquettes.matt-nocodia.workers.dev/demo-bien-etre/",
     img: `${IMG}/demo-bien-etre.webp`,
     alt: "Site de démonstration d'une sophrologue : titre apaisant et prise de rendez-vous en ligne",
     title: "Praticienne du bien-être",
     text: "Une sophrologue fictive à Rezé : un exercice de respiration guidé dès l'accueil.",
   },
 ];
-
-const METIERS = [
-  ["Plâtrier, plaquiste", "bâtiment"],
-  ["Maçon", "maçonnerie"],
-  ["Charpentier, couvreur", "charpente"],
-  ["Sophrologue, praticien", "bien-être"],
-  ["Restaurant, crêperie", "restauration"],
-  ["Gîte, chambre d'hôtes", "hébergement"],
-] as const;
 
 const CASQUETTES = [
   {
@@ -51,7 +40,7 @@ const CASQUETTES = [
   },
   {
     title: "Le formateur",
-    text: "Des années à former des professionnels pressés à leurs logiciels. Sans jargon, promis.",
+    text: "Des années à former des artisans et des entreprises à leurs logiciels métier. Je vous apprends à vous servir de votre site sans jargon, promis.",
   },
   {
     title: "Le product builder",
@@ -274,28 +263,39 @@ function CreationSiteWeb() {
               agglomération nantaise
             </p>
           </div>
-          <img
-            src={`${IMG}/demo-batiment.webp`}
-            alt="Exemple de site d'artisan réalisé : un plâtrier fictif à Bouguenais"
-            width={960}
-            height={600}
-            className="tilt w-full rounded-lg border-4 border-ink shadow-[var(--shadow-card)]"
-            style={r("2deg")}
-          />
+          <div className="relative pb-10 md:pb-6">
+            <img
+              src={`${IMG}/demo-batiment.webp`}
+              alt="Exemple de site d'artisan : un plâtrier fictif à Bouguenais, sur ordinateur"
+              width={960}
+              height={600}
+              className="tilt w-[88%] rounded-lg border-4 border-ink shadow-[var(--shadow-card)]"
+              style={r("2deg")}
+            />
+            <div
+              className="absolute right-0 bottom-0 w-[30%] overflow-hidden rounded-[22px] border-[6px] border-ink bg-ink shadow-[var(--shadow-card)]"
+              style={{ transform: "rotate(-3deg)" }}
+            >
+              <img
+                src={`${IMG}/demo-batiment-mobile.webp`}
+                alt="Le même site sur téléphone"
+                width={390}
+                height={664}
+                className="block w-full rounded-[16px]"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
       {/* 2. Fait pour votre métier */}
       <Band id="metier" kicker="fait pour votre métier" title="Un site pensé pour chaque métier">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {DEMOS.map((d, i) => (
-            <a
-              key={d.href}
-              href={d.href}
-              target="_blank"
-              rel="noopener"
-              className="sheet tilt flex flex-col gap-3 p-4 text-ink no-underline"
-              style={r(i % 2 ? "1deg" : "-1deg")}
+            <figure
+              key={d.title}
+              className="sheet m-0 flex flex-col gap-3 rounded-lg p-4 text-ink"
+              style={{ transform: `rotate(${i % 2 ? "1deg" : "-1deg"})` }}
             >
               <img
                 src={d.img}
@@ -305,26 +305,16 @@ function CreationSiteWeb() {
                 loading="lazy"
                 className="w-full rounded border border-rule"
               />
-              <span className="font-serif text-[20px] font-extrabold">{d.title}</span>
-              <span className="text-[15px] leading-normal text-ink-soft">{d.text}</span>
-              <span className="mt-auto text-[15px] font-bold text-accent-ink">Voir le site ↗</span>
-            </a>
+              <figcaption className="flex flex-col gap-1">
+                <span className="font-serif text-[20px] font-extrabold">{d.title}</span>
+                <span className="text-[15px] leading-normal text-ink-soft">{d.text}</span>
+              </figcaption>
+            </figure>
           ))}
-          <div className="rounded-lg border border-dashed border-ink/40 bg-paper-light p-5">
-            <p className="note m-0 text-[22px]">un modèle par métier</p>
-            <ul className="m-0 mt-3 flex list-none flex-col gap-2 p-0 text-[15px]">
-              {METIERS.map(([m, s]) => (
-                <li key={m} className="flex justify-between gap-3 border-b border-rule pb-2">
-                  <span>{m}</span>
-                  <span className="text-ink-soft">{s}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
         <p className="m-0 mt-5 text-[14px] text-ink-soft">
-          Sites de démonstration, avec des entreprises fictives. Ouvrez-les sur votre téléphone :
-          c'est là que vos clients les verront.
+          Deux sites de démonstration, avec des entreprises fictives. Le vôtre sera construit sur
+          mesure, à partir de votre métier, de vos clients et de ce qui vous rend différent.
         </p>
       </Band>
 
@@ -372,7 +362,7 @@ function CreationSiteWeb() {
             href="https://endo-serenite.fr/"
             target="_blank"
             rel="noopener"
-            className="sheet tilt flex items-center gap-5 p-5 text-ink no-underline"
+            className="sheet tilt flex items-center gap-5 rounded-lg p-5 text-ink no-underline"
             style={r("-0.8deg")}
           >
             <img
@@ -384,7 +374,14 @@ function CreationSiteWeb() {
               className="w-[110px] shrink-0"
             />
             <span className="flex flex-col gap-2">
-              <span className="font-serif text-[21px] font-extrabold">Endo-sérénité</span>
+              <img
+                src={`${IMG}/logo-endo-serenite.webp`}
+                alt="Endo-sérénité"
+                width={420}
+                height={62}
+                loading="lazy"
+                className="h-auto w-[210px]"
+              />
               <span className="text-[15px] leading-normal text-ink-soft">
                 Une application pour les femmes atteintes d'endométriose : recettes
                 anti-inflammatoires, analyse des repas en photo, entraide.
@@ -531,21 +528,23 @@ function CreationSiteWeb() {
       </Band>
 
       {/* 8. Bonus : rédacteur d'articles */}
-      <Band id="bonus" title="Votre rédacteur d'articles avec Claude" tone="bg-ink text-paper">
+      <Band id="bonus" title="Un assistant qui écrit vos articles" tone="bg-ink text-paper">
         <span className="-mt-4 mb-6 inline-block rounded-full bg-postit px-3 py-1 text-[13px] font-bold text-ink">
           Bonus offert avec la formule à 990 €
         </span>
         <div className="grid items-center gap-10 md:grid-cols-[1.1fr_0.9fr]">
           <div>
             <p className="m-0 max-w-[560px] text-[17px] leading-relaxed text-[#d9d2c3]">
-              Un skill Claude, disponible sur ce site, que j'installe avec vous. Il applique les
-              mêmes règles SEO, AEO et GEO que votre espace d'administration.
+              Publier des articles fait venir des clients, encore faut-il avoir le temps de les
+              écrire. Vous donnez un sujet de votre métier : l'assistant écrit l'article pour que
+              Google vous trouve et que ChatGPT vous recommande. Je l'installe avec vous pendant la
+              formation, aucune connaissance en intelligence artificielle n'est nécessaire.
             </p>
             <ol className="m-0 mt-6 flex list-none flex-col gap-3 p-0 text-[17px]">
               {[
-                "Vous lui donnez un sujet.",
-                "Il rédige selon les règles SEO, AEO et GEO.",
-                "Vous copiez chaque champ dans votre espace.",
+                "Vous lui donnez un sujet de votre métier.",
+                "Il écrit l'article avec vos mots, sans rien inventer.",
+                "Vous copiez chaque partie dans votre espace : c'est publié.",
               ].map((t, i) => (
                 <li key={t} className="flex items-center gap-3">
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-[14px] font-bold text-ink">
@@ -557,7 +556,7 @@ function CreationSiteWeb() {
             </ol>
             <p className="m-0 mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
               <Link to="/skill-seo-aeo-geo" className="font-bold text-postit">
-                Découvrir le skill →
+                En savoir plus sur l'assistant →
               </Link>
               <span className="text-[14px] text-[#b7af9f]">29 € sur ce site, offert ici.</span>
             </p>
