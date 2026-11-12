@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import type { CubeLink, Realisation } from "./airtable.server";
-import { isValidPhone } from "./contact-validation";
+import { isValidPhone, messageRequired } from "./contact-validation";
 import { goPath } from "./track";
 
 /** A case study as shown on /realisations, with the Cube course behind it resolved. */
@@ -405,6 +405,9 @@ export const sendContact = createServerFn({ method: "POST" })
         page: z.string().max(200),
         // Hidden field: humans leave it empty.
         website: z.string().max(200),
+      })
+      .refine((v) => !messageRequired(v.besoin) || v.message.length > 0, {
+        path: ["message"],
       })
       .parse(d),
   )

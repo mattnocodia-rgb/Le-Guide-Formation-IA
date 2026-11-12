@@ -10,7 +10,9 @@ export function isValidEmail(raw: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(raw.trim());
 }
 
-export type ContactErrors = Partial<Record<"prenom" | "nom" | "email" | "telephone" | "besoin" | "rgpd", string>>;
+export type ContactErrors = Partial<
+  Record<"prenom" | "nom" | "email" | "telephone" | "besoin" | "message" | "rgpd", string>
+>;
 
 export const CONTACT_MESSAGES = {
   prenom: "Indiquez votre prénom.",
@@ -18,8 +20,14 @@ export const CONTACT_MESSAGES = {
   email: "Adresse e-mail invalide (exemple : prenom@domaine.fr).",
   telephone: "Le numéro doit comporter 10 chiffres (exemple : 06 12 34 56 78).",
   besoin: "Choisissez votre besoin.",
+  message: "Indiquez le nom de votre entreprise et votre ville.",
   rgpd: "Cochez la case pour accepter l'utilisation de vos informations.",
 } as const;
+
+/** For a website, the message must give the company name (the mockup is built from it). */
+export function messageRequired(besoin: string): boolean {
+  return besoin === "site";
+}
 
 export function validateContact(v: {
   prenom: string;
@@ -27,6 +35,7 @@ export function validateContact(v: {
   email: string;
   telephone: string;
   besoin: string;
+  message?: string;
   rgpd: boolean;
 }): ContactErrors {
   const e: ContactErrors = {};
@@ -35,6 +44,7 @@ export function validateContact(v: {
   if (!isValidEmail(v.email)) e.email = CONTACT_MESSAGES.email;
   if (!isValidPhone(v.telephone)) e.telephone = CONTACT_MESSAGES.telephone;
   if (!v.besoin) e.besoin = CONTACT_MESSAGES.besoin;
+  if (messageRequired(v.besoin) && !(v.message ?? "").trim()) e.message = CONTACT_MESSAGES.message;
   if (!v.rgpd) e.rgpd = CONTACT_MESSAGES.rgpd;
   return e;
 }
