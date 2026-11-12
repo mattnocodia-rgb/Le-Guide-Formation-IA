@@ -5,7 +5,7 @@ import { z } from "zod";
 
 import { PageFrame } from "@/components/site/SiteChrome";
 import { sendContact } from "@/lib/content.functions";
-import { type ContactErrors, validateContact } from "@/lib/contact-validation";
+import { type ContactErrors, messageRequired, validateContact } from "@/lib/contact-validation";
 import { CONTACT_EMAIL, CONTACT_NEEDS, type ContactNeedId, pageHead } from "@/lib/site";
 
 const PATH = "/contact";
@@ -51,7 +51,7 @@ const WHILE_WAITING: Record<
 > = {
   audit: { text: "Voir ce que contient l'audit, avec l'exemple réel de ce site", to: "/audit-seo" },
   redaction: {
-    text: "Voir comment le skill rédige les articles de ce guide",
+    text: "Voir comment le skill m'aide à rédiger les articles de ce guide",
     to: "/skill-seo-aeo-geo",
   },
   automatisation: {
@@ -67,6 +67,8 @@ function ContactPage() {
   const [state, setState] = useState<State>("idle");
   const [sent, setSent] = useState<{ prenom: string; besoin: ContactNeedId } | null>(null);
   const [errors, setErrors] = useState<ContactErrors>({});
+  const [need, setNeed] = useState<string>(besoin ?? "");
+  const siteMessage = messageRequired(need);
 
   const err = (k: keyof ContactErrors) =>
     errors[k] ? (
@@ -97,6 +99,7 @@ function ContactPage() {
       email: get("email"),
       telephone: get("telephone"),
       besoin: get("besoin"),
+      message: get("message"),
       rgpd: f.get("rgpd") === "on",
     });
     setErrors(found);
@@ -171,7 +174,11 @@ function ContactPage() {
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="prenom" className={label}>
-                  Prénom<span className="text-accent-ink" aria-hidden="true"> *</span>
+                  Prénom
+                  <span className="text-accent-ink" aria-hidden="true">
+                    {" "}
+                    *
+                  </span>
                 </label>
                 <input
                   id="prenom"
@@ -185,7 +192,11 @@ function ContactPage() {
               </div>
               <div>
                 <label htmlFor="nom" className={label}>
-                  Nom<span className="text-accent-ink" aria-hidden="true"> *</span>
+                  Nom
+                  <span className="text-accent-ink" aria-hidden="true">
+                    {" "}
+                    *
+                  </span>
                 </label>
                 <input
                   id="nom"
@@ -199,7 +210,11 @@ function ContactPage() {
               </div>
               <div>
                 <label htmlFor="email" className={label}>
-                  E-mail<span className="text-accent-ink" aria-hidden="true"> *</span>
+                  E-mail
+                  <span className="text-accent-ink" aria-hidden="true">
+                    {" "}
+                    *
+                  </span>
                 </label>
                 <input
                   id="email"
@@ -214,7 +229,11 @@ function ContactPage() {
               </div>
               <div>
                 <label htmlFor="telephone" className={label}>
-                  Téléphone<span className="text-accent-ink" aria-hidden="true"> *</span>
+                  Téléphone
+                  <span className="text-accent-ink" aria-hidden="true">
+                    {" "}
+                    *
+                  </span>
                 </label>
                 <input
                   id="telephone"
@@ -232,13 +251,18 @@ function ContactPage() {
 
             <div>
               <label htmlFor="besoin" className={label}>
-                Votre besoin<span className="text-accent-ink" aria-hidden="true"> *</span>
+                Votre besoin
+                <span className="text-accent-ink" aria-hidden="true">
+                  {" "}
+                  *
+                </span>
               </label>
               <select
                 id="besoin"
                 name="besoin"
                 required
                 defaultValue={besoin ?? ""}
+                onChange={(e) => setNeed(e.target.value)}
                 {...invalid("besoin")}
               >
                 <option value="" disabled>
@@ -255,16 +279,37 @@ function ContactPage() {
 
             <div>
               <label htmlFor="message" className={label}>
-                Votre message <span className="font-normal text-ink-soft">(facultatif)</span>
+                Votre message
+                {siteMessage ? (
+                  <span className="text-accent-ink" aria-hidden="true">
+                    {" "}
+                    *
+                  </span>
+                ) : (
+                  <span className="font-normal text-ink-soft"> (facultatif)</span>
+                )}
               </label>
+              {siteMessage ? (
+                <p id="message-hint" className="m-0 mb-1.5 text-[14px] text-ink-soft">
+                  Indiquez le nom de votre entreprise et votre ville : je prépare votre maquette à
+                  partir de ce qui existe déjà sur vous.
+                </p>
+              ) : null}
               <textarea
                 id="message"
                 name="message"
                 rows={5}
                 maxLength={3000}
-                placeholder="Votre site, votre activité, ce que vous aimeriez améliorer…"
-                className={field}
+                required={siteMessage}
+                placeholder={
+                  siteMessage
+                    ? "Le nom de votre entreprise, votre ville, ce que vous aimeriez sur votre site…"
+                    : "Votre site, votre activité, ce que vous aimeriez améliorer…"
+                }
+                {...invalid("message")}
+                {...(siteMessage && !errors.message ? { "aria-describedby": "message-hint" } : {})}
               />
+              {err("message")}
             </div>
 
             {/* Honeypot: hidden from people, filled in by bots. */}
@@ -273,7 +318,9 @@ function ContactPage() {
               <input id="website" name="website" tabIndex={-1} autoComplete="off" />
             </div>
 
-            <p className="text-[13px] text-ink-soft"><span className="text-accent-ink">*</span> Champs obligatoires</p>
+            <p className="text-[13px] text-ink-soft">
+              <span className="text-accent-ink">*</span> Champs obligatoires
+            </p>
             <label className="flex items-start gap-3 text-[14.5px] leading-snug text-ink-soft">
               <input type="checkbox" name="rgpd" required className="mt-1 h-4 w-4 shrink-0" />
               <span>

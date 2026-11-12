@@ -298,9 +298,9 @@ function Home() {
               Votre site trouvé sur Google et ChatGPT
             </h2>
             <p className="m-0 text-[17px] leading-relaxed text-ink-soft">
-              Faites vérifier votre site, ou faites-le vous-même avec le skill Claude qui a écrit et
-              audité ce guide. Et si vous voulez aller plus loin : automatisation et création de
-              site sur mesure.
+              Faites vérifier votre site, ou faites-le vous-même avec le skill Claude qui m'aide à
+              écrire et à auditer ce guide. Et si vous voulez aller plus loin : automatisation et
+              création de site sur mesure.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-5">

@@ -174,7 +174,7 @@ const FAQ = [
   },
   {
     q: "Le skill accède-t-il à mes données Search Console ?",
-    a: "Non. Il travaille sur le contenu : vos pages en ligne, ou les textes et exports que vous lui donnez. Il ne mesure ni le trafic ni les positions.",
+    a: "Non. Il travaille sur le contenu : vos pages en ligne, ou les textes et exports que vous lui donnez. Il ne mesure ni le trafic ni les positions. Il ne remplace donc pas Google Search Console, qui reste l'outil gratuit pour suivre l'indexation de vos pages et les recherches qui vous amènent des visiteurs : les deux se complètent, et vous pouvez lui donner un export de Search Console pour qu'il en tienne compte.",
   },
 ];
 
@@ -256,14 +256,16 @@ function SkillPage() {
     <PageFrame>
       {/* Hero */}
       <section className="container-wide max-w-[880px] pt-12 md:pt-16">
-        <p className="note m-0 -rotate-2 text-[28px]">le skill Claude qui a écrit ce site</p>
+        <p className="note m-0 -rotate-2 text-[28px]">
+          le skill Claude qui m'aide à écrire ce site
+        </p>
         <h1 className="mt-3 mb-6 text-[clamp(36px,5vw,58px)] leading-[1.05]">{SKILL_NAME}</h1>
         <p className="m-0 max-w-[680px] text-xl leading-relaxed text-ink-soft">
           Un skill pour Claude qui écrit vos articles de blog pour que Google vous trouve et que
           ChatGPT vous recommande, et qui vérifie ceux que vous avez déjà publiés. Si vous êtes
-          tombé sur ce site, vous avez déjà vu ce skill à l'œuvre : chaque article a été rédigé puis
-          vérifié avec lui, pour être trouvé par Google, compris par les IA et cité par elles. Je
-          l'ai construit pour mes propres sites. Le voici, prêt à installer dans Claude.
+          tombé sur ce site, vous avez déjà vu ce skill à l'œuvre : il m'aide à rédiger puis à
+          vérifier chaque article, pour qu'il soit trouvé par Google, compris par les IA et cité par
+          elles. Je l'ai construit pour mes propres sites. Le voici, prêt à installer dans Claude.
         </p>
         <BuyBox className="mt-8" />
       </section>
@@ -432,7 +434,10 @@ function SkillPage() {
       <Section id="limites" title="Ce que le skill ne fait pas">
         <ul className="m-0 flex list-disc flex-col gap-1.5 pl-5 text-[17px] leading-relaxed marker:text-accent">
           <li>Il ne garantit ni une position sur Google, ni une citation par une IA.</li>
-          <li>Il ne mesure pas votre trafic et n'accède pas à Search Console.</li>
+          <li>
+            Il ne mesure pas votre trafic et n'accède pas à Search Console : gardez Google Search
+            Console pour suivre vos visites et l'indexation, les deux se complètent.
+          </li>
           <li>Il ne publie rien sur votre site sans que vous le fassiez.</li>
         </ul>
       </Section>
