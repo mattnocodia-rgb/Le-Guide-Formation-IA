@@ -44,7 +44,9 @@ const GROUPES = [
   },
 ] as const;
 
-function Carte({ r }: { r: RealisationCard }) {
+function Carte({ r, lienSurImage = false }: { r: RealisationCard; lienSurImage?: boolean }) {
+  // When the illustration beside the card is clickable, it replaces the "Voir le projet" button.
+  const lien = lienSurImage ? null : r.lien;
   return (
     <article className="sheet relative isolate flex flex-col overflow-hidden">
       {r.image && (
@@ -75,7 +77,7 @@ function Carte({ r }: { r: RealisationCard }) {
         <Bloc label="Ce que j'ai construit" text={r.construit} />
         <Bloc label="Le résultat" text={r.resultat} />
         <Bloc label="Ce que la formation m'a apporté" text={r.formation} />
-        {(r.payant || r.lien || r.cube.length > 0) && (
+        {(r.payant || lien || r.cube.length > 0) && (
           <p className="m-0 mt-auto flex flex-wrap gap-3 pt-5">
             {r.payant && (
               <a
@@ -86,8 +88,8 @@ function Carte({ r }: { r: RealisationCard }) {
                 {r.payant.label}
               </a>
             )}
-            {r.lien && (
-              <a href={r.lien} target="_blank" rel="noopener" className="btn-outline text-[15px]">
+            {lien && (
+              <a href={lien} target="_blank" rel="noopener" className="btn-outline text-[15px]">
                 Voir le projet
               </a>
             )}
@@ -109,6 +111,18 @@ function Carte({ r }: { r: RealisationCard }) {
   );
 }
 
+function Illustration({ r }: { r: RealisationCard }) {
+  return (
+    <img
+      src={`/img/realisations/${r.illustration}`}
+      alt={`Capture d'écran du projet « ${r.projet} »`}
+      loading="lazy"
+      decoding="async"
+      className="block max-h-[520px] w-full bg-paper object-contain"
+    />
+  );
+}
+
 /** One project per row: the card on one side, its screenshot on the other, alternating. */
 function LigneProjet({ r, index }: { r: RealisationCard; index: number }) {
   if (!r.illustration) return <Carte r={r} />;
@@ -116,7 +130,7 @@ function LigneProjet({ r, index }: { r: RealisationCard; index: number }) {
   return (
     <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-10">
       <div className={imageFirst ? "lg:order-2" : undefined}>
-        <Carte r={r} />
+        <Carte r={r} lienSurImage={!!r.lien} />
       </div>
       <figure
         className={`tilt m-0 ${imageFirst ? "lg:order-1" : ""}`}
@@ -127,13 +141,22 @@ function LigneProjet({ r, index }: { r: RealisationCard; index: number }) {
             aria-hidden="true"
             className={`tape tape-yellow top-[-10px] ${imageFirst ? "right-8 rotate-3" : "left-8 -rotate-3"}`}
           />
-          <img
-            src={`/img/realisations/${r.illustration}`}
-            alt={`Capture d'écran du projet « ${r.projet} »`}
-            loading="lazy"
-            decoding="async"
-            className="block max-h-[520px] w-full bg-paper object-contain"
-          />
+          {r.lien ? (
+            <a
+              href={r.lien}
+              target="_blank"
+              rel="noopener"
+              title={`Voir le projet « ${r.projet} »`}
+              className="group block"
+            >
+              <Illustration r={r} />
+              <span className="absolute right-4 bottom-4 rounded-full bg-ink px-3 py-1 text-[14px] font-semibold text-paper shadow-[var(--shadow-card)] transition-transform group-hover:-translate-y-0.5">
+                Voir le projet →
+              </span>
+            </a>
+          ) : (
+            <Illustration r={r} />
+          )}
         </div>
       </figure>
     </div>
