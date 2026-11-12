@@ -290,6 +290,8 @@ export type Realisation = {
   id: string;
   contexte: Contexte;
   image: string | null;
+  /** Screenshot shown beside the card (field "Illustration"), file in public/img/realisations/. */
+  illustration: string | null;
   projet: string;
   probleme: string;
   outils: string[];
@@ -334,6 +336,7 @@ export async function getRealisations(): Promise<Realisation[]> {
         ? (str(r.fields["Contexte"]) as Contexte)
         : "Projet personnel",
       image: imageName(str(r.fields["Image"])),
+      illustration: imageName(str(r.fields["Illustration"])),
       projet: str(r.fields["Projet"]),
       probleme: clean(str(r.fields["Problème"])),
       outils: str(r.fields["Outils"])
