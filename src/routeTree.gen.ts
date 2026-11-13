@@ -32,6 +32,8 @@ import { Route as GoIdRouteImport } from './routes/go.$id'
 import { Route as SkillSeoAeoGeoFichierRouteImport } from './routes/skill-seo-aeo-geo_.fichier'
 import { Route as SkillSeoAeoGeoInstallationRouteImport } from './routes/skill-seo-aeo-geo_.installation'
 import { Route as SkillSeoAeoGeoMerciRouteImport } from './routes/skill-seo-aeo-geo_.merci'
+import { Route as TutoShortsFichierRouteImport } from './routes/tuto-shorts_.fichier'
+import { Route as TutoShortsMerciRouteImport } from './routes/tuto-shorts_.merci'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -149,6 +151,16 @@ const SkillSeoAeoGeoMerciRoute = SkillSeoAeoGeoMerciRouteImport.update({
   path: '/skill-seo-aeo-geo/merci',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TutoShortsFichierRoute = TutoShortsFichierRouteImport.update({
+  id: '/tuto-shorts_/fichier',
+  path: '/tuto-shorts/fichier',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TutoShortsMerciRoute = TutoShortsMerciRouteImport.update({
+  id: '/tuto-shorts_/merci',
+  path: '/tuto-shorts/merci',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -174,6 +186,8 @@ export interface FileRoutesByFullPath {
   '/skill-seo-aeo-geo/fichier': typeof SkillSeoAeoGeoFichierRoute
   '/skill-seo-aeo-geo/installation': typeof SkillSeoAeoGeoInstallationRoute
   '/skill-seo-aeo-geo/merci': typeof SkillSeoAeoGeoMerciRoute
+  '/tuto-shorts/fichier': typeof TutoShortsFichierRoute
+  '/tuto-shorts/merci': typeof TutoShortsMerciRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -199,6 +213,8 @@ export interface FileRoutesByTo {
   '/skill-seo-aeo-geo/fichier': typeof SkillSeoAeoGeoFichierRoute
   '/skill-seo-aeo-geo/installation': typeof SkillSeoAeoGeoInstallationRoute
   '/skill-seo-aeo-geo/merci': typeof SkillSeoAeoGeoMerciRoute
+  '/tuto-shorts/fichier': typeof TutoShortsFichierRoute
+  '/tuto-shorts/merci': typeof TutoShortsMerciRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -225,6 +241,8 @@ export interface FileRoutesById {
   '/skill-seo-aeo-geo_/fichier': typeof SkillSeoAeoGeoFichierRoute
   '/skill-seo-aeo-geo_/installation': typeof SkillSeoAeoGeoInstallationRoute
   '/skill-seo-aeo-geo_/merci': typeof SkillSeoAeoGeoMerciRoute
+  '/tuto-shorts_/fichier': typeof TutoShortsFichierRoute
+  '/tuto-shorts_/merci': typeof TutoShortsMerciRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -252,6 +270,8 @@ export interface FileRouteTypes {
     | '/skill-seo-aeo-geo/fichier'
     | '/skill-seo-aeo-geo/installation'
     | '/skill-seo-aeo-geo/merci'
+    | '/tuto-shorts/fichier'
+    | '/tuto-shorts/merci'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -277,6 +297,8 @@ export interface FileRouteTypes {
     | '/skill-seo-aeo-geo/fichier'
     | '/skill-seo-aeo-geo/installation'
     | '/skill-seo-aeo-geo/merci'
+    | '/tuto-shorts/fichier'
+    | '/tuto-shorts/merci'
   id:
     | '__root__'
     | '/'
@@ -302,6 +324,8 @@ export interface FileRouteTypes {
     | '/skill-seo-aeo-geo_/fichier'
     | '/skill-seo-aeo-geo_/installation'
     | '/skill-seo-aeo-geo_/merci'
+    | '/tuto-shorts_/fichier'
+    | '/tuto-shorts_/merci'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -328,6 +352,8 @@ export interface RootRouteChildren {
   SkillSeoAeoGeoFichierRoute: typeof SkillSeoAeoGeoFichierRoute
   SkillSeoAeoGeoInstallationRoute: typeof SkillSeoAeoGeoInstallationRoute
   SkillSeoAeoGeoMerciRoute: typeof SkillSeoAeoGeoMerciRoute
+  TutoShortsFichierRoute: typeof TutoShortsFichierRoute
+  TutoShortsMerciRoute: typeof TutoShortsMerciRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -493,6 +519,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SkillSeoAeoGeoMerciRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tuto-shorts_/fichier': {
+      id: '/tuto-shorts_/fichier'
+      path: '/tuto-shorts/fichier'
+      fullPath: '/tuto-shorts/fichier'
+      preLoaderRoute: typeof TutoShortsFichierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tuto-shorts_/merci': {
+      id: '/tuto-shorts_/merci'
+      path: '/tuto-shorts/merci'
+      fullPath: '/tuto-shorts/merci'
+      preLoaderRoute: typeof TutoShortsMerciRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -520,6 +560,8 @@ const rootRouteChildren: RootRouteChildren = {
   SkillSeoAeoGeoFichierRoute: SkillSeoAeoGeoFichierRoute,
   SkillSeoAeoGeoInstallationRoute: SkillSeoAeoGeoInstallationRoute,
   SkillSeoAeoGeoMerciRoute: SkillSeoAeoGeoMerciRoute,
+  TutoShortsFichierRoute: TutoShortsFichierRoute,
+  TutoShortsMerciRoute: TutoShortsMerciRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

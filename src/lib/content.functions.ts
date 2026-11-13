@@ -373,6 +373,17 @@ export const checkSkillPurchase = createServerFn({ method: "GET" })
     return result.ok ? { ok: true as const } : { ok: false as const, reason: result.reason };
   });
 
+/** Verifies a shorts skill + tutorial purchase for its thank-you page. */
+export const checkShortsPurchase = createServerFn({ method: "GET" })
+  .validator((d: unknown) => z.object({ sessionId: z.string().max(300) }).parse(d))
+  .handler(async ({ data }) => {
+    const { getParcours } = await import("./airtable.server");
+    const { checkPurchase } = await import("./stripe.server");
+    const parcours = await getParcours();
+    const result = await checkPurchase(data.sessionId, parcours["shorts_lien_stripe"] ?? null);
+    return result.ok ? { ok: true as const } : { ok: false as const, reason: result.reason };
+  });
+
 /** Seller details for the terms of sale, edited in Airtable ("Mon parcours"). */
 export const getSaleTerms = createServerFn({ method: "GET" }).handler(async () => {
   const { getParcours } = await import("./airtable.server");
