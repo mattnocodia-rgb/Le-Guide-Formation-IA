@@ -1,3 +1,4 @@
+import { ForWho } from "@/components/for-who";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import type { CSSProperties, ReactNode } from "react";
 
@@ -251,6 +252,22 @@ function AuditPage() {
         <OrderBox className="mt-8" />
         <DiyBox />
       </section>
+
+      <ForWho
+        id="pour-qui"
+        kicker="pour qui"
+        title="Est-ce fait pour vous ?"
+        yes={[
+          "Votre site est en ligne, mais il vous apporte peu de contacts.",
+          "Vous voulez comprendre pourquoi Google et les IA ne vous citent pas.",
+          "Vous n'avez ni le temps ni l'envie de plonger dans le code.",
+          "Vous voulez un échange en visio pour passer le plan en revue ensemble.",
+        ]}
+        no={[
+          "Votre site n'est pas encore publié.",
+          "Vous cherchez de la publicité payante ou des liens achetés en masse.",
+        ]}
+      />
 
       {/* Ce qui est vérifié */}
       <Section id="verifie" kicker="7 domaines" title="Qu'est-ce que je vérifie ?">
