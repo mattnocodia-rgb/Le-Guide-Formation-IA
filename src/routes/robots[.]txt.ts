@@ -25,6 +25,8 @@ export const Route = createFileRoute("/robots.txt")({
           "Disallow: /indexnow",
           "Disallow: /skill-seo-aeo-geo/merci",
           "Disallow: /skill-seo-aeo-geo/fichier",
+          "Disallow: /tuto-shorts/merci",
+          "Disallow: /tuto-shorts/fichier",
           "",
           // Explicitly welcome AI crawlers: being cited by answer engines is a goal of this site.
           ...AI_BOTS.flatMap((bot) => [
@@ -35,6 +37,8 @@ export const Route = createFileRoute("/robots.txt")({
             "Disallow: /indexnow",
             "Disallow: /skill-seo-aeo-geo/merci",
             "Disallow: /skill-seo-aeo-geo/fichier",
+            "Disallow: /tuto-shorts/merci",
+            "Disallow: /tuto-shorts/fichier",
             "",
           ]),
           `Sitemap: ${absUrl("/sitemap.xml")}`,
