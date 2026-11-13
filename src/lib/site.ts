@@ -55,6 +55,7 @@ export const STATIC_PAGES_UPDATED: Record<string, string> = {
   "/simulateur-roi": "2026-11-05",
   "/realisations": "2026-11-09",
   "/creation-site-web": "2026-11-12",
+  "/automatisation": "2026-11-13",
 };
 
 export const YOUTUBE_URL = "https://www.youtube.com/@LeGuideFormationIA";
