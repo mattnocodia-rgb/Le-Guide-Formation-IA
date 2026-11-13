@@ -294,7 +294,8 @@ function SimulateurRoi() {
           <p>
             Une automatisation simple entre deux outils se monte souvent seul avec Make ou n8n.
             Dès qu'il y a plusieurs étapes, des conditions ou de l'IA, un accompagnement fait gagner
-            du temps et évite les scénarios fragiles.
+            du temps et évite les scénarios fragiles : découvrez comment fonctionne{" "}
+            <Link to="/automatisation">l'accompagnement sur mesure</Link>.
           </p>
         </div>
 
@@ -302,7 +303,8 @@ function SimulateurRoi() {
           <span className="tape -top-3 left-8" aria-hidden="true" />
           <p className="note m-0 text-[24px]">besoin d'un coup de main ?</p>
           <p className="m-0 mt-2 text-[17px] leading-relaxed text-ink">
-            Je réalise aussi des prestations d'automatisation : j'identifie avec vous les tâches à
+            Je réalise aussi des{" "}
+            <Link to="/automatisation">prestations d'automatisation</Link> : j'identifie avec vous les tâches à
             automatiser, puis je mets en place les scénarios. Écrivez-moi à{" "}
             <a href="mailto:contact@optimatt.fr">contact@optimatt.fr</a> ou sur{" "}
             <a href={LINKEDIN_URL} target="_blank" rel="noopener">
