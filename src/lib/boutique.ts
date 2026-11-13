@@ -15,7 +15,8 @@ export type ShopPath =
   | "/tuto-shorts"
   | "/simulateur-roi"
   | "/realisations"
-  | "/creation-site-web";
+  | "/creation-site-web"
+  | "/automatisation";
 
 export type Product = {
   id: string;
@@ -103,7 +104,7 @@ export const PRODUCTS: Product[] = [
       "Sur devis, après un premier échange",
     ],
     status: "disponible",
-    contactNeed: "automatisation",
+    path: "/automatisation",
     links: [
       { label: "Ce que j'ai automatisé en entreprise", to: "/realisations", hash: "en-entreprise" },
     ],
