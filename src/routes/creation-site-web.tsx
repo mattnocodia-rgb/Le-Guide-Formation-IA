@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import type { CSSProperties, ReactNode } from "react";
 
+import { ForWho } from "@/components/for-who";
 import { PageFrame } from "@/components/site/SiteChrome";
 import {
   AUTHOR_REF,
@@ -287,6 +288,22 @@ function CreationSiteWeb() {
           </div>
         </div>
       </section>
+
+      <ForWho
+        id="pour-qui"
+        kicker="pour qui"
+        title="Est-ce fait pour vous ?"
+        yes={[
+          "Vous êtes artisan, commerçant, praticien ou dirigeant de TPE.",
+          "Vous travaillez dans le Pays de Retz ou l'agglomération nantaise.",
+          "Vous n'avez pas de site, ou un site qui ne vous ressemble plus.",
+          "Vous voulez un site à votre nom, sans abonnement, et savoir vous en servir.",
+        ]}
+        no={[
+          "Vous cherchez une boutique en ligne avec paiement et gestion de stock.",
+          "Vous préférez ne rien voir avant de vous engager : ici, la maquette vient d'abord.",
+        ]}
+      />
 
       {/* 2. Fait pour votre métier */}
       <Band id="metier" kicker="fait pour votre métier" title="Un site pensé pour chaque métier">

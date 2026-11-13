@@ -2,6 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 
+import { ForWho } from "@/components/for-who";
 import { PageFrame } from "@/components/site/SiteChrome";
 import { getShortsOffer } from "@/lib/content.functions";
 import { AUTHOR_REF, SITE_URL, jsonLdScript, pageHead, siteEntitiesLd } from "@/lib/site";
@@ -220,6 +221,22 @@ function ShortsPage() {
         </div>
         <ExampleShort />
       </section>
+
+      <ForWho
+        id="pour-qui"
+        kicker="pour qui"
+        title="Pour qui est fait ce tuto ?"
+        yes={[
+          "Vous écrivez des articles et voulez les faire connaître sur les réseaux sociaux.",
+          "Vous ne voulez ni tourner, ni monter, ni apparaître à l'écran.",
+          "Vous avez un abonnement Claude, ou êtes prêt à en prendre un.",
+          "Vous préférez publier vous-même, quand vous le voulez.",
+        ]}
+        no={[
+          "Vous voulez une vidéo filmée ou un avatar qui parle.",
+          "Vous cherchez une publication automatique ou un nombre de vues garanti.",
+        ]}
+      />
 
       {/* Déroulé */}
       <Section id="comment" kicker="en cinq temps" title="Comment ça marche ?">
