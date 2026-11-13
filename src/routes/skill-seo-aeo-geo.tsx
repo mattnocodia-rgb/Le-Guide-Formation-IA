@@ -1,3 +1,4 @@
+import { ForWho } from "@/components/for-who";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import type { CSSProperties, ReactNode } from "react";
 
@@ -269,6 +270,25 @@ function SkillPage() {
         </p>
         <BuyBox className="mt-8" />
       </section>
+
+      <ForWho
+        id="pour-qui"
+        kicker="profils"
+        title="Pour qui est fait ce skill ?"
+        yes={[
+          "Vous écrivez vos articles et voulez arrêter de les structurer à la main.",
+          "Vous voulez des articles que les IA peuvent citer, sans jargon technique.",
+          "Vous avez déjà des articles et voulez repérer les pages isolées ou en doublon.",
+          "Vous cherchez une méthode durable, sans abonnement mensuel.",
+        ]}
+        no={[
+          "Vous n'avez pas de compte Claude.",
+          <>
+            Vous ne voulez pas toucher au texte vous-même : l'
+            <a href="/audit-seo" className="underline">audit personnalisé</a> est alors plus adapté.
+          </>,
+        ]}
+      />
 
       {/* SEO / AEO / GEO */}
       <Section id="quoi" kicker="en une phrase" title="Qu'est-ce que ce skill ?">
