@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as AuditSeoRouteImport } from './routes/audit-seo'
+import { Route as AutomatisationRouteImport } from './routes/automatisation'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as ConditionsDeVenteRouteImport } from './routes/conditions-de-vente'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -53,6 +54,11 @@ const AProposRoute = AProposRouteImport.update({
 const AuditSeoRoute = AuditSeoRouteImport.update({
   id: '/audit-seo',
   path: '/audit-seo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomatisationRoute = AutomatisationRouteImport.update({
+  id: '/automatisation',
+  path: '/automatisation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BoutiqueRoute = BoutiqueRouteImport.update({
@@ -167,6 +173,7 @@ export interface FileRoutesByFullPath {
   '/$slug': typeof SlugRoute
   '/a-propos': typeof AProposRoute
   '/audit-seo': typeof AuditSeoRoute
+  '/automatisation': typeof AutomatisationRoute
   '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/contact': typeof ContactRoute
@@ -194,6 +201,7 @@ export interface FileRoutesByTo {
   '/$slug': typeof SlugRoute
   '/a-propos': typeof AProposRoute
   '/audit-seo': typeof AuditSeoRoute
+  '/automatisation': typeof AutomatisationRoute
   '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/contact': typeof ContactRoute
@@ -222,6 +230,7 @@ export interface FileRoutesById {
   '/$slug': typeof SlugRoute
   '/a-propos': typeof AProposRoute
   '/audit-seo': typeof AuditSeoRoute
+  '/automatisation': typeof AutomatisationRoute
   '/boutique': typeof BoutiqueRoute
   '/conditions-de-vente': typeof ConditionsDeVenteRoute
   '/contact': typeof ContactRoute
@@ -251,6 +260,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/a-propos'
     | '/audit-seo'
+    | '/automatisation'
     | '/boutique'
     | '/conditions-de-vente'
     | '/contact'
@@ -278,6 +288,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/a-propos'
     | '/audit-seo'
+    | '/automatisation'
     | '/boutique'
     | '/conditions-de-vente'
     | '/contact'
@@ -305,6 +316,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/a-propos'
     | '/audit-seo'
+    | '/automatisation'
     | '/boutique'
     | '/conditions-de-vente'
     | '/contact'
@@ -333,6 +345,7 @@ export interface RootRouteChildren {
   SlugRoute: typeof SlugRoute
   AProposRoute: typeof AProposRoute
   AuditSeoRoute: typeof AuditSeoRoute
+  AutomatisationRoute: typeof AutomatisationRoute
   BoutiqueRoute: typeof BoutiqueRoute
   ConditionsDeVenteRoute: typeof ConditionsDeVenteRoute
   ContactRoute: typeof ContactRoute
@@ -384,6 +397,13 @@ declare module '@tanstack/react-router' {
       path: '/audit-seo'
       fullPath: '/audit-seo'
       preLoaderRoute: typeof AuditSeoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automatisation': {
+      id: '/automatisation'
+      path: '/automatisation'
+      fullPath: '/automatisation'
+      preLoaderRoute: typeof AutomatisationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/boutique': {
@@ -541,6 +561,7 @@ const rootRouteChildren: RootRouteChildren = {
   SlugRoute: SlugRoute,
   AProposRoute: AProposRoute,
   AuditSeoRoute: AuditSeoRoute,
+  AutomatisationRoute: AutomatisationRoute,
   BoutiqueRoute: BoutiqueRoute,
   ConditionsDeVenteRoute: ConditionsDeVenteRoute,
   ContactRoute: ContactRoute,
