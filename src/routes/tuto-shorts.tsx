@@ -215,7 +215,9 @@ function ShortsPage() {
           <p className="m-0 text-xl leading-relaxed text-ink-soft">
             Vous écrivez des articles, mais personne ne les voit sur les réseaux ? Donnez le sujet
             de votre article : Claude écrit le script, génère la voix off et anime une vidéo
-            verticale, prête à publier. Sans tournage, sans montage, sans apparaître à l'écran.
+            verticale, prête à publier. Sans tournage, sans montage, sans apparaître à l'écran. Zéro logiciel de montage payant : la voix et l'animation
+            reposent sur des outils gratuits, sans abonnement vidéo à empiler ni configuration
+            complexe.
           </p>
           <BuyBox className="mt-8" />
         </div>
@@ -231,6 +233,7 @@ function ShortsPage() {
           "Vous ne voulez ni tourner, ni monter, ni apparaître à l'écran.",
           "Vous avez un abonnement Claude, ou êtes prêt à en prendre un.",
           "Vous préférez publier vous-même, quand vous le voulez.",
+          "Vous cherchez une méthode à faible coût et sans prise de tête, avec des outils gratuits (ElevenLabs, HyperFrames) plutôt qu'un abonnement vidéo.",
         ]}
         no={[
           "Vous voulez une vidéo filmée ou un avatar qui parle.",
@@ -274,6 +277,10 @@ function ShortsPage() {
 
       {/* Prérequis */}
       <Section id="prerequis" kicker="pas de mauvaise surprise" title="De quoi avez-vous besoin ?">
+        <p className="m-0 mb-6 text-[17px] leading-relaxed text-ink-soft">
+          Un principe simple : pas d'outil vidéo coûteux. En dehors de votre accès Claude, la voix
+          off et l'animation s'appuient sur des outils gratuits.
+        </p>
         <ul className="m-0 grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-3">
           {NEEDS.map((n) => (
             <li key={n.what} className="sheet p-5">
