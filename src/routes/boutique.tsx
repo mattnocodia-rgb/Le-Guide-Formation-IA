@@ -36,7 +36,9 @@ function BoutiquePage() {
     <PageFrame>
       <section className="container-wide max-w-[880px] pt-12 md:pt-16">
         <p className="note m-0 -rotate-2 text-[28px]">les outils derrière ce guide</p>
-        <h1 className="mt-3 mb-6 text-[clamp(36px,5vw,58px)] leading-[1.05]">Boutique</h1>
+        <h1 className="mt-3 mb-6 text-[clamp(36px,5vw,58px)] leading-[1.05]">
+          Outils, tutoriels et services pour votre site et vos automatisations
+        </h1>
         <p className="m-0 max-w-[680px] text-xl leading-relaxed text-ink-soft">
           Faites vérifier votre site, faites-le vous-même avec les outils que j'utilise pour ce
           guide, ou confiez-moi une automatisation ou votre site web.
