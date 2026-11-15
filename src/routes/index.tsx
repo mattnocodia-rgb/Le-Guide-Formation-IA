@@ -117,7 +117,14 @@ function Home() {
               Ingénieur BTP de formation et commercial expérimenté, je suis certifié Product builder
               no-code par l'École Cube (titre RNCP niveau 6). L'école m'a ouvert les portes d'un
               monde que je n'aurais jamais imaginé explorer, et m'a appris une méthode qui a fait de
-              moi un expert en automatisation.
+              moi un expert en automatisation.{" "}
+              <Link
+                to="/$slug"
+                params={{ slug: "bootcamp-product-builder-retour-experience" }}
+                className="font-semibold text-ink underline underline-offset-4"
+              >
+                Mon avis sur l'École Cube
+              </Link>
             </p>
             <p className="m-0">
               Aujourd'hui, je transforme des besoins métiers en sites web, outils internes et
