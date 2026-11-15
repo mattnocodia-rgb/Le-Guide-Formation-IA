@@ -24,6 +24,7 @@ export const CONTACT_EMAIL = "contact@optimatt.fr";
 
 /** Choices of the contact form (« Besoin »). `label` must match the Airtable single-select option. */
 export const CONTACT_NEEDS = [
+  { id: "accompagnement", label: "Savoir par où commencer avec l'IA" },
   { id: "audit", label: "Audit SEO de mon site" },
   { id: "redaction", label: "Rédaction d'articles" },
   { id: "automatisation", label: "Automatisation" },

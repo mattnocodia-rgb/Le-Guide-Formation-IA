@@ -3,6 +3,7 @@ import { track } from "@/lib/track";
 import type { CSSProperties } from "react";
 
 import { LinkedInIcon } from "@/components/site/Cards";
+import { PRODUCTS } from "@/lib/boutique";
 import { PageFrame } from "@/components/site/SiteChrome";
 import {
   AUTHOR_NAME,
@@ -17,6 +18,8 @@ import {
   siteEntitiesLd,
 } from "@/lib/site";
 
+/** Services offered to readers (shop cards of kind « service »). */
+const SERVICES = PRODUCTS.filter((p) => p.kind === "service" && p.status === "disponible");
 const BOOTCAMP_SLUG = "bootcamp-product-builder-retour-experience";
 const ENDO_URL = "https://endo-serenite.fr/";
 const r = (deg: string) => ({ "--r": deg }) as CSSProperties;
@@ -416,6 +419,39 @@ function About() {
             Découvrir Endo-sérénité
           </a>
         </div>
+      </section>
+
+      {/* Ce que je peux vous apporter */}
+      <section aria-labelledby="apporter" className="container-wide max-w-[780px] pt-14 md:pt-16">
+        <p className="note m-0 -rotate-1 text-[24px]">et pour vous ?</p>
+        <h2 id="apporter" className="m-0 mt-1 text-[clamp(28px,3.2vw,38px)] leading-[1.1]">
+          Ce que je peux vous apporter
+        </h2>
+        <ul className="m-0 mt-6 flex list-none flex-col gap-3 p-0">
+          {SERVICES.map((p) => (
+            <li key={p.id} className="sheet p-5">
+              {p.path ? (
+                <Link to={p.path} className="font-serif text-[20px] font-extrabold">
+                  {p.title} →
+                </Link>
+              ) : (
+                <Link
+                  to="/contact"
+                  search={{ besoin: p.contactNeed }}
+                  className="font-serif text-[20px] font-extrabold"
+                >
+                  {p.title} →
+                </Link>
+              )}
+              <p className="m-0 mt-1.5 text-[16px] leading-relaxed text-ink-soft">{p.promise}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="m-0 mt-6">
+          <Link to="/boutique" className="btn-ink text-[15px]">
+            Voir la boutique
+          </Link>
+        </p>
       </section>
 
       {/* Ligne éditoriale & transparence */}

@@ -410,7 +410,7 @@ export const sendContact = createServerFn({ method: "POST" })
           .trim()
           .max(25)
           .refine((v) => isValidPhone(v)),
-        besoin: z.enum(["audit", "redaction", "automatisation", "site", "autre"]),
+        besoin: z.enum(["accompagnement", "audit", "redaction", "automatisation", "site", "autre"]),
         message: z.string().trim().max(3000),
         rgpd: z.literal(true),
         page: z.string().max(200),
