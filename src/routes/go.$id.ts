@@ -1,40 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { isRealClick, originPage } from "@/lib/click-filter";
 import { isTestDevice } from "@/lib/test-mode";
 import { PLACES, type Place } from "@/lib/track";
-
-const BOT_UA =
-  /bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|whatsapp|telegram|discord|curl|wget|python|headless/i;
-
-/** Page of origin, taken from the Referer when it comes from this site. */
-function originPage(request: Request) {
-  const ref = request.headers.get("referer");
-  if (!ref) return "(inconnue)";
-  try {
-    const from = new URL(ref);
-    const self = new URL(request.url);
-    return from.host === self.host ? from.pathname : `(externe) ${from.host}`;
-  } catch {
-    return "(inconnue)";
-  }
-}
-
-/**
- * A real click on the site always carries the placement (?e=...) and, in practice, a
- * Referer from this site. A request with neither comes from outside the pages: a crawler,
- * a link checker or an audit tool calling /go/ addresses directly. Not counted.
- */
-function comesFromSite(request: Request) {
-  const e = new URL(request.url).searchParams.get("e") ?? "";
-  if (e in PLACES) return true;
-  const page = originPage(request);
-  return page.startsWith("/");
-}
-
-function isPrefetch(request: Request) {
-  const purpose = request.headers.get("sec-purpose") ?? request.headers.get("purpose") ?? "";
-  return /prefetch|prerender/i.test(purpose);
-}
 
 /**
  * /go/<linkId>?e=<placement> : counts the click in Airtable, then redirects to the
@@ -53,8 +21,7 @@ export const Route = createFileRoute("/go/$id")({
         const target = isLinkValid(wanted) ? wanted : linkOfType(links, "ressources");
         if (!target) return Response.redirect(new URL("/", request.url).toString(), 302);
 
-        const ua = request.headers.get("user-agent") ?? "";
-        if (!BOT_UA.test(ua) && !isPrefetch(request) && comesFromSite(request)) {
+        if (isRealClick(request)) {
           const e = new URL(request.url).searchParams.get("e") ?? "";
           const place = e in PLACES ? PLACES[e as Place] : "Autre";
           // Bounded wait so a slow Airtable never delays the visitor much.
