@@ -43,6 +43,23 @@ export type Product = {
 
 export const PRODUCTS: Product[] = [
   {
+    id: "accompagnement-ia",
+    kind: "service",
+    kicker: "accompagnement",
+    title: "Savoir par où commencer avec l'IA",
+    promise:
+      "Vous sentez que l'IA pourrait vous faire gagner du temps, sans savoir par où commencer ni tout ce qu'elle pourrait vous apporter. On en parle ensemble, à partir de votre activité.",
+    includes: [
+      "Un échange sur votre activité et vos tâches",
+      "Les pistes concrètes : automatisation, application, mini site, outil sur mesure",
+      "Le premier projet à lancer, et ce qu'il vous rapporterait",
+      "Sur devis, après un premier échange",
+    ],
+    status: "disponible",
+    contactNeed: "accompagnement",
+    links: [{ label: "Ce que l'IA m'a permis de construire", to: "/realisations" }],
+  },
+  {
     id: "audit-seo",
     kind: "service",
     kicker: "fait pour vous",

@@ -41,6 +41,7 @@ type State = "idle" | "sending" | "sent" | "error";
 
 /** « … pour parler {ABOUT[need]} » in the confirmation message. */
 const ABOUT: Record<ContactNeedId, string> = {
+  accompagnement: "de ce que l'IA peut faire pour votre activité",
   audit: "de l'audit de votre site",
   redaction: "de vos articles",
   automatisation: "de votre automatisation",
@@ -56,6 +57,10 @@ const WHILE_WAITING: Record<
     to: "/audit-seo" | "/skill-seo-aeo-geo" | "/simulateur-roi" | "/realisations" | "/";
   }
 > = {
+  accompagnement: {
+    text: "Voir ce que l'IA m'a permis de construire, en entreprise et pour moi",
+    to: "/realisations",
+  },
   audit: { text: "Voir ce que contient l'audit, avec l'exemple réel de ce site", to: "/audit-seo" },
   redaction: {
     text: "Voir comment le skill m'aide à rédiger les articles de ce guide",
