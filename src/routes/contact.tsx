@@ -6,7 +6,14 @@ import { z } from "zod";
 import { PageFrame } from "@/components/site/SiteChrome";
 import { sendContact } from "@/lib/content.functions";
 import { type ContactErrors, messageRequired, validateContact } from "@/lib/contact-validation";
-import { CONTACT_EMAIL, CONTACT_NEEDS, type ContactNeedId, pageHead } from "@/lib/site";
+import {
+  AUTHOR_NAME,
+  AUTHOR_PHOTO_224,
+  CONTACT_EMAIL,
+  CONTACT_NEEDS,
+  type ContactNeedId,
+  pageHead,
+} from "@/lib/site";
 
 const PATH = "/contact";
 const r = (deg: string) => ({ "--r": deg }) as CSSProperties;
@@ -139,6 +146,22 @@ function ContactPage() {
           automatisation ou un site web : décrivez votre besoin en quelques lignes, je vous réponds
           personnellement.
         </p>
+        <figure className="m-0 mt-7 flex items-center gap-4">
+          <img
+            src={AUTHOR_PHOTO_224}
+            alt={`${AUTHOR_NAME}, product builder no-code à Nantes`}
+            width={80}
+            height={80}
+            className="block h-20 w-20 shrink-0 rounded-full object-cover"
+          />
+          <figcaption className="text-[16px] leading-snug text-ink-soft">
+            <strong className="block text-ink">{AUTHOR_NAME}</strong>
+            Product builder no-code &amp; IA, commercial et ingénieur BTP de formation, à Nantes.{" "}
+            <Link to="/a-propos" className="font-semibold">
+              Qui suis-je ?
+            </Link>
+          </figcaption>
+        </figure>
 
         {state === "sent" ? (
           <div className="sheet relative mt-10 p-6 md:p-8" style={r("-0.5deg")}>
@@ -154,7 +177,8 @@ function ContactPage() {
             </p>
             <p className="m-0 mt-3 text-[15px] leading-relaxed text-ink-soft">
               Ma réponse viendra de {CONTACT_EMAIL} : si vous ne la voyez pas, pensez à jeter un œil
-              dans vos courriers indésirables.
+              dans vos courriers indésirables. D'ici là, vous pouvez{" "}
+              <Link to="/a-propos">découvrir mon parcours</Link>.
             </p>
             {sent ? (
               <p className="m-0 mt-6 text-[16px]">

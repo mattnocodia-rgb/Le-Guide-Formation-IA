@@ -215,6 +215,10 @@ function About() {
             Pour un avis adapté à votre situation, un conseiller en évolution professionnelle (CEP),
             service gratuit, ou l'organisme de formation lui-même sont les bons interlocuteurs.
           </p>
+          <p>
+            Pour un site, une automatisation ou un audit de votre contenu, en revanche, je peux vous
+            aider : <Link to="/contact">écrivez-moi</Link>.
+          </p>
         </div>
       </section>
 
@@ -379,7 +383,8 @@ function About() {
         <p className="m-0 mt-6 max-w-[780px] text-[17px] leading-relaxed text-ink-soft">
           C'est tout l'intérêt d'un profil hybride : ces automatisations, je les applique aussi à
           mon métier de commercial.{" "}
-          <Link to="/realisations">Voir ce que j'ai construit, projet par projet</Link>.
+          <Link to="/realisations">Voir ce que j'ai construit, projet par projet</Link>, ou{" "}
+          <Link to="/contact">me parler de votre projet</Link>.
         </p>
       </section>
 
@@ -443,15 +448,20 @@ function About() {
             ne vends pas de formation moi-même.
           </p>
         </div>
-        <a
-          href={LINKEDIN_URL}
-          rel="noopener me"
-          target="_blank"
-          className="btn-outline mt-10 text-[15px]"
-        >
-          <LinkedInIcon />
-          Mon profil LinkedIn
-        </a>
+        <p className="m-0 mt-10 flex flex-wrap items-center gap-3">
+          <Link to="/contact" className="btn-ink text-[15px]">
+            Me contacter
+          </Link>
+          <a
+            href={LINKEDIN_URL}
+            rel="noopener me"
+            target="_blank"
+            className="btn-outline text-[15px]"
+          >
+            <LinkedInIcon />
+            Mon profil LinkedIn
+          </a>
+        </p>
       </article>
     </PageFrame>
   );
