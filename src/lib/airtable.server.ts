@@ -21,7 +21,6 @@ const CACHE_TTL_MS = 5 * 60 * 1000;
 type AirtableRecord = { id: string; fields: Record<string, unknown> };
 
 const cache = new Map<string, { at: number; data: AirtableRecord[] }>();
-const inflight = new Map<string, Promise<AirtableRecord[]>>();
 
 export function readToken(name = "AIRTABLE_TOKEN"): string | undefined {
   // `process` exists on the server runtime; guard so a missing global never throws.
@@ -40,10 +39,8 @@ async function fetchAll(
   const key = `${table}?${new URLSearchParams(params).toString()}`;
   const hit = cache.get(key);
   if (hit && Date.now() - hit.at < CACHE_TTL_MS) return hit.data;
-  const pending = inflight.get(key);
-  if (pending) return pending;
-
-  const p = (async () => {
+  // No shared in-flight promise: on Workers a promise can't be awaited from another request.
+  return (async () => {
     const out: AirtableRecord[] = [];
     let offset: string | undefined;
     try {
@@ -66,12 +63,8 @@ async function fetchAll(
     } catch (e) {
       console.error("Airtable fetch failed", e);
       return hit?.data ?? [];
-    } finally {
-      inflight.delete(key);
     }
   })();
-  inflight.set(key, p);
-  return p;
 }
 
 const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
