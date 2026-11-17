@@ -69,7 +69,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   loader: () => getLayoutData(),
   staleTime: 5 * 60 * 1000,
-  head: ({ matches }) => ({
+  head: ({ matches }) => { console.log("HEADDBG", JSON.stringify(matches.map((m) => [m.routeId, m.status, m.globalNotFound]))); return ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
