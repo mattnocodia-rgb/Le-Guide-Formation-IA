@@ -69,24 +69,12 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   loader: () => getLayoutData(),
   staleTime: 5 * 60 * 1000,
-  head: ({ matches }) => ({
+  head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      ...(matches.some((m) => m.globalNotFound || m.status === "notFound")
-        ? [
-            { title: `Page introuvable — ${SITE_NAME}` },
-            {
-              name: "description",
-              content:
-                "Cette page n'existe pas ou a changé d'adresse. Retrouvez tous les guides depuis l'accueil.",
-            },
-            { name: "robots", content: "noindex" },
-          ]
-        : [
-            { title: `${SITE_NAME} — ${SITE_PROMISE}` },
-            { name: "description", content: SITE_DESCRIPTION },
-          ]),
+      { title: `${SITE_NAME} — ${SITE_PROMISE}` },
+      { name: "description", content: SITE_DESCRIPTION },
       { name: "theme-color", content: "#f3eee3" },
       { property: "og:site_name", content: SITE_NAME },
       { property: "og:locale", content: "fr_FR" },
