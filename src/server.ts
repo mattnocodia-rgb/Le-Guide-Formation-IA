@@ -63,6 +63,30 @@ const NO_EDGE_CACHE = /^\/(go\/|mode-test|indexnow|skill-seo-aeo-geo\/(merci|fic
 /** Public HTML pages: 5 min at the edge, then served stale while it refreshes in the background. */
 const HTML_CACHE = "public, max-age=0, s-maxage=300, stale-while-revalidate=86400";
 
+const NOT_FOUND_TITLE = "Page introuvable — Le Guide Formation IA";
+const NOT_FOUND_DESCRIPTION =
+  "Cette page n'existe pas ou a changé d'adresse. Retrouvez tous les guides depuis l'accueil.";
+
+/**
+ * The router renders 404 pages with the parent route's head (home title). Rewrite the head of
+ * every HTML 404 so it gets its own title, description and noindex; the status stays 404.
+ */
+async function fixNotFoundHead(response: Response): Promise<Response> {
+  if (response.status !== 404) return response;
+  if (!(response.headers.get("content-type") ?? "").includes("text/html")) return response;
+  let html = await response.text();
+  html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${NOT_FOUND_TITLE}</title>`);
+  html = html.replace(/<meta name="description"[^>]*>/g, "");
+  html = html.replace(/<meta name="robots"[^>]*>/g, "");
+  html = html.replace(
+    "</title>",
+    `</title><meta name="description" content="${NOT_FOUND_DESCRIPTION.replace(/'/g, "&#x27;")}"/><meta name="robots" content="noindex"/>`,
+  );
+  const headers = new Headers(response.headers);
+  headers.delete("content-length");
+  return new Response(html, { status: 404, statusText: response.statusText, headers });
+}
+
 function withHeaders(request: Request, response: Response): Response {
   const headers = new Headers(response.headers);
   for (const [k, v] of Object.entries(SECURITY_HEADERS)) {
@@ -91,10 +115,16 @@ function withHeaders(request: Request, response: Response): Response {
 
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    // Trailing slash: permanent redirect to the slash-less URL (the router would answer 307).
+    const url = new URL(request.url);
+    if (url.pathname.length > 1 && url.pathname.endsWith("/")) {
+      url.pathname = url.pathname.replace(/\/+$/, "") || "/";
+      return withHeaders(request, new Response(null, { status: 301, headers: { location: url.pathname + url.search } }));
+    }
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return withHeaders(request, await normalizeCatastrophicSsrResponse(response));
+      return withHeaders(request, await fixNotFoundHead(await normalizeCatastrophicSsrResponse(response)));
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {

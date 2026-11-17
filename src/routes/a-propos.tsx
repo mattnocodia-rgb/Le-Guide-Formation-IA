@@ -8,6 +8,8 @@ import { PageFrame } from "@/components/site/SiteChrome";
 import {
   AUTHOR_NAME,
   AUTHOR_PHOTO_224,
+  AUTHOR_PHOTO_224_AVIF,
+  AUTHOR_PHOTO_PATH,
   LINKEDIN_URL,
   PERSON_ID,
   SITE_NAME,
@@ -181,13 +183,17 @@ function About() {
           Un guide écrit depuis le terrain
         </h1>
         <figure className="m-0 mb-8 flex items-center gap-4">
-          <img
-            src={AUTHOR_PHOTO_224}
-            alt={`${AUTHOR_NAME}, product builder no-code à Nantes`}
-            width={112}
-            height={112}
-            className="block h-28 w-28 shrink-0 rounded-full object-cover"
-          />
+          <picture className="shrink-0">
+            <source srcSet={AUTHOR_PHOTO_224_AVIF} type="image/avif" />
+            <source srcSet={AUTHOR_PHOTO_224} type="image/webp" />
+            <img
+              src={AUTHOR_PHOTO_PATH}
+              alt={`${AUTHOR_NAME}, product builder no-code à Nantes`}
+              width={112}
+              height={112}
+              className="block h-28 w-28 shrink-0 rounded-full object-cover"
+            />
+          </picture>
           <figcaption className="text-[17px] leading-snug text-ink-soft">
             <strong className="block text-ink">{AUTHOR_NAME}</strong>
             Product builder No-Code &amp; IA, Nantes

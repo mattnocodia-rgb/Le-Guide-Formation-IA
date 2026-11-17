@@ -17,8 +17,20 @@ import { PageFrame } from "../components/site/SiteChrome";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_PROMISE } from "../lib/site";
 
 function NotFoundComponent() {
+  // The server already sends the 404 head; keep it once the page is live in the browser.
+  useEffect(() => {
+    document.title = `Page introuvable — ${SITE_NAME}`;
+    let robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    if (!robots) {
+      robots = document.createElement("meta");
+      robots.name = "robots";
+      document.head.appendChild(robots);
+    }
+    robots.content = "noindex";
+  });
   return (
     <PageFrame>
+
       <div className="container-wide flex min-h-[60vh] flex-col items-start justify-center gap-6 py-20">
         <p className="note m-0 -rotate-2 text-[30px]">Oups, page introuvable</p>
         <h1 className="m-0 text-5xl leading-none">Cette page n'existe pas (ou plus).</h1>

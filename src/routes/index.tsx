@@ -6,6 +6,9 @@ import { ArticleCard, LinkedInIcon } from "@/components/site/Cards";
 import { PageFrame } from "@/components/site/SiteChrome";
 import { getHomeData } from "@/lib/content.functions";
 import {
+  AUTHOR_PHOTO_AVIF,
+  AUTHOR_PHOTO_PATH,
+  AUTHOR_PHOTO_WEBP,
   CATEGORIES,
   LINKEDIN_URL,
   SITE_DESCRIPTION,
@@ -21,14 +24,23 @@ import {
 
 export const Route = createFileRoute("/")({
   loader: () => getHomeData(),
-  head: () => ({
-    ...pageHead({
+  head: ({ loaderData }) => {
+    const base = pageHead({
       title: `${SITE_NAME} — ${SITE_PROMISE}`,
       description: SITE_DESCRIPTION,
       path: "/",
-    }),
+    });
+    return {
+    ...base,
+    links: [
+      ...(base.links ?? []),
+      ...(loaderData?.photoUrl === AUTHOR_PHOTO_PATH
+        ? [{ rel: "preload", as: "image", href: AUTHOR_PHOTO_WEBP, type: "image/webp", fetchPriority: "high" as const }]
+        : []),
+    ],
     scripts: [jsonLdScript({ "@context": "https://schema.org", "@graph": siteEntitiesLd() })],
-  }),
+    };
+  },
   component: Home,
 });
 
@@ -128,9 +140,9 @@ function Home() {
             </p>
             <p className="m-0">
               Aujourd'hui, je transforme des besoins métiers en sites web, outils internes et
-              automatisations, y compris pour mon propre métier de responsable commercial. Je ne
-              suis pas là pour vous orienter ni vous conseiller : je partage de l'information et mon
-              parcours.{" "}
+              automatisations, y compris pour mon propre métier de responsable commercial. Je ne vous
+              dirai pas quelle école de formation IA choisir : je partage de l'information et mon
+              parcours pour que vous décidiez vous-même.{" "}
               <Link to="/a-propos" className="font-semibold text-ink underline underline-offset-4">
                 Mon parcours en détail
               </Link>{" "}
@@ -447,13 +459,22 @@ function HeroVisual({ photoUrl }: { photoUrl: string | null }) {
             style={r("3deg")}
           >
             <figure className="sheet tilt m-0 px-3.5 pt-3.5 pb-12" style={r("0deg")}>
-              <img
-                src={photoUrl}
-                alt="L'auteur du guide au travail"
-                width={312}
-                height={360}
-                className="block h-[340px] w-full object-cover sm:h-[360px]"
-              />
+              <picture>
+                {photoUrl === AUTHOR_PHOTO_PATH && (
+                  <>
+                    <source srcSet={AUTHOR_PHOTO_AVIF} type="image/avif" />
+                    <source srcSet={AUTHOR_PHOTO_WEBP} type="image/webp" />
+                  </>
+                )}
+                <img
+                  src={photoUrl}
+                  alt="L'auteur du guide au travail"
+                  width={312}
+                  height={360}
+                  fetchPriority="high"
+                  className="block h-[340px] w-full object-cover sm:h-[360px]"
+                />
+              </picture>
               <figcaption className="note mt-3.5 text-center text-[26px] text-ink">
                 moi, avec un vrai projet
               </figcaption>
