@@ -545,7 +545,11 @@ function CreationSiteWeb() {
       </Band>
 
       {/* 8. Bonus : rédacteur d'articles */}
-      <Band id="bonus" title="Un assistant qui écrit vos articles" tone="bg-ink text-paper">
+      <Band
+        id="bonus"
+        title="Un assistant d'aide à la rédaction de vos articles"
+        tone="bg-ink text-paper"
+      >
         <span className="-mt-4 mb-6 inline-block rounded-full bg-postit px-3 py-1 text-[13px] font-bold text-ink">
           Bonus offert avec la formule à 990 €
         </span>
