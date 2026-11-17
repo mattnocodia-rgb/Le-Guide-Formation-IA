@@ -528,11 +528,11 @@ function CreationSiteWeb() {
           <div aria-hidden="true" className="sheet p-6" style={{ transform: "rotate(2deg)" }}>
             <p className="m-0 text-[12px] text-ink-soft">← Retour au site</p>
             <p className="m-0 mt-3 font-serif text-[24px] leading-tight font-extrabold">
-              Isoler ses combles : par où commencer ?
+              Comment mieux dormir avec la sophrologie ?
             </p>
-            <p className="m-0 mt-2 text-[12px] text-ink-soft">Publié par votre artisan</p>
+            <p className="m-0 mt-2 text-[12px] text-ink-soft">Publié par votre praticienne</p>
             <p className="m-0 mt-3 text-[14px] leading-normal">
-              Avant de choisir un isolant, trois points à vérifier sous la toiture…
+              Trois rituels de sophrologie aident à préparer le sommeil…
             </p>
             <p className="m-0 mt-4 text-[15px] font-bold">Questions fréquentes</p>
             <div className="mt-2 flex flex-col gap-1.5">
@@ -588,9 +588,9 @@ function CreationSiteWeb() {
             style={{ transform: "rotate(-1.5deg)" }}
           >
             {[
-              ["Titre", "Isoler ses combles : par où commencer ?"],
-              ["Expression principale", "isoler ses combles"],
-              ["Réponse en deux phrases", "Avant de choisir un isolant, trois points à vérifier…"],
+              ["Titre", "Comment mieux dormir avec la sophrologie ?"],
+              ["Expression principale", "mieux dormir"],
+              ["Réponse en deux phrases", "Trois rituels de sophrologie aident à préparer…"],
               ["Questions fréquentes", "4 questions et leurs réponses"],
             ].map(([k, v]) => (
               <div key={k}>
