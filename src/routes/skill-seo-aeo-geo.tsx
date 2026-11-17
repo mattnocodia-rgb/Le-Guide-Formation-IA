@@ -132,7 +132,8 @@ const SUPPORT_LABEL: Record<Support, string> = {
 const SECTORS = [
   {
     who: "Argent, droit, et tout sujet qui engage le lecteur",
-    example: "un courtier indépendant, un agent immobilier, un expert-comptable",
+    example:
+      "un courtier indépendant, un agent immobilier, un conseiller en rénovation énergétique",
     what: "Google et les IA y sont plus exigeants. Le skill renforce les contrôles sur les sources (officielles, datées), la qualification réelle de l'auteur, et signale toute promesse de résultat (« rendement garanti », « vous gagnerez à coup sûr »). Il ne remplace pas la relecture par un professionnel du domaine, et le dit.",
   },
   {
