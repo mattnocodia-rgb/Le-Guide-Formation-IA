@@ -17,6 +17,17 @@ import { PageFrame } from "../components/site/SiteChrome";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_PROMISE } from "../lib/site";
 
 function NotFoundComponent() {
+  // The server already sends the 404 head; keep it once the page is live in the browser.
+  useEffect(() => {
+    document.title = `Page introuvable — ${SITE_NAME}`;
+    let robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    if (!robots) {
+      robots = document.createElement("meta");
+      robots.name = "robots";
+      document.head.appendChild(robots);
+    }
+    robots.content = "noindex";
+  });
   return (
     <PageFrame>
 
