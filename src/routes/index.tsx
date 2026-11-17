@@ -35,7 +35,7 @@ export const Route = createFileRoute("/")({
     links: [
       ...(base.links ?? []),
       ...(loaderData?.photoUrl === AUTHOR_PHOTO_PATH
-        ? [{ rel: "preload", as: "image", href: AUTHOR_PHOTO_WEBP, type: "image/webp", fetchPriority: "high" }]
+        ? [{ rel: "preload", as: "image", href: AUTHOR_PHOTO_WEBP, type: "image/webp", fetchPriority: "high" as const }]
         : []),
     ],
     scripts: [jsonLdScript({ "@context": "https://schema.org", "@graph": siteEntitiesLd() })],
