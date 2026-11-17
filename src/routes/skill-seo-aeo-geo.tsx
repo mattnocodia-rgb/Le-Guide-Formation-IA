@@ -519,7 +519,7 @@ function SkillPage() {
         <div className="sheet relative p-6 md:p-8" style={r("-0.5deg")}>
           <span aria-hidden="true" className="tape -top-2.5 left-10" style={r("3deg")} />
           <h2 className="m-0 text-[clamp(24px,2.6vw,32px)] leading-tight">
-            Le même outil que pour ce guide, dans votre Claude
+            L'outil qui m'aide à écrire ce guide, installé chez vous dans votre Claude
           </h2>
           <p className="m-0 mt-3 text-[16.5px] leading-relaxed text-ink-soft">
             Un produit personnel de Matthieu, product builder à Nantes, sans lien avec l'École Cube.
