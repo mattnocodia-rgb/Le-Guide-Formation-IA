@@ -41,12 +41,16 @@ const CONTENTS = [
     text: "Donnez un sujet : l'article arrive champ par champ, prêt à coller dans votre site (WordPress, Wix, Webflow…), écrit avec votre voix et la grille cochée dès la publication.",
   },
   {
+    file: "Le mode maillage",
+    text: "Il repère les pages qui ne reçoivent aucun lien et les articles qui ne mènent nulle part, puis vous donne les liens à ajouter, avec la phrase exacte à coller.",
+  },
+  {
     file: "La méthode d'audit",
     text: "Une démarche complète, de l'inventaire du site au plan d'action, que Claude applique de lui-même.",
   },
   {
-    file: "La grille de 32 contrôles",
-    text: "8 contrôles par paragraphe, 14 par article, 10 pour le site entier. Chaque contrôle est numéroté et dit comment le vérifier.",
+    file: "La grille de 41 contrôles",
+    text: "8 contrôles par paragraphe, 14 par article, 12 pour le site entier et 7 pour le maillage. Chaque contrôle est numéroté et dit comment le vérifier.",
   },
   {
     file: "5 problèmes invisibles article par article",
@@ -88,7 +92,7 @@ const BENEFITS = [
   },
   {
     title: "En français, pour tout type de site",
-    text: "Santé, artisanat, SaaS, e-commerce, formation : il adapte ses contrôles au secteur, et n'impose pas le gabarit aux témoignages.",
+    text: "Artisanat, conseil, SaaS, e-commerce, formation : il adapte ses contrôles au secteur, et n'impose pas le gabarit aux témoignages.",
   },
   {
     title: "Acheté une fois, utilisé sans limite",
@@ -127,13 +131,14 @@ const SUPPORT_LABEL: Record<Support, string> = {
 
 const SECTORS = [
   {
-    who: "Santé et bien-être",
-    example: "une application sur l'endométriose, un cabinet de sophrologie",
-    what: "Le skill renforce l'exigence sur les sources, la qualification de l'auteur et les promesses de résultat, sur lesquelles Google et les IA sont plus sévères. Il ne remplace pas la relecture par un professionnel de santé, et le dit.",
+    who: "Argent, droit, et tout sujet qui engage le lecteur",
+    example:
+      "un courtier indépendant, un agent immobilier, un conseiller en rénovation énergétique",
+    what: "Google et les IA y sont plus exigeants. Le skill renforce les contrôles sur les sources (officielles, datées), la qualification réelle de l'auteur, et signale toute promesse de résultat (« rendement garanti », « vous gagnerez à coup sûr »). Il ne remplace pas la relecture par un professionnel du domaine, et le dit.",
   },
   {
     who: "Artisans et activités locales",
-    example: "un charpentier, un praticien en cabinet, un commerce",
+    example: "un charpentier, un plombier, un restaurant",
     what: "Il vérifie la zone d'intervention, les pages par service, les réalisations datées et localisées. Il rappelle que la fiche Google de l'établissement et les avis pèsent souvent plus lourd que le blog : ces points-là, il vous les liste, sans pouvoir les auditer.",
   },
   {
@@ -154,8 +159,12 @@ const FAQ = [
     a: "Le SEO sert à être trouvé par les moteurs de recherche. L'AEO (Answer Engine Optimization) sert à être compris et extrait par les moteurs de réponse comme ChatGPT ou Perplexity. Le GEO (Generative Engine Optimization) sert à être choisi et cité par une IA plutôt qu'un concurrent. Les trois s'empilent : sans SEO, pas d'AEO ; sans AEO, pas de GEO.",
   },
   {
-    q: "Le skill fonctionne-t-il pour un artisan ou un thérapeute ?",
-    a: "Oui. Il audite le contenu de n'importe quel site. Pour une activité locale, il ajoute les contrôles propres au local et liste ce qui se joue hors du site, comme la fiche Google et les avis. Pour la santé et le bien-être, il renforce l'exigence sur les sources et les promesses de résultat.",
+    q: "Le skill fonctionne-t-il pour un artisan ou un conseiller ?",
+    a: "Oui. Il audite le contenu de n'importe quel site. Pour une activité locale, il ajoute les contrôles propres au local et liste ce qui se joue hors du site, comme la fiche Google et les avis. Pour l'argent, le droit et les sujets qui engagent le lecteur, il renforce l'exigence sur les sources et signale les promesses de résultat.",
+  },
+  {
+    q: "Le skill aide-t-il à relier mes pages entre elles ?",
+    a: "Oui, c'est son troisième mode. Demandez « trouve les pages orphelines de mon site » : il repère les pages qui ne reçoivent aucun lien, les articles qui ne mènent nulle part et les liens qui manquent, puis vous donne chaque lien à ajouter avec la phrase exacte à coller. Quand il écrit un nouvel article, il indique aussi quels anciens articles doivent renvoyer vers lui.",
   },
   {
     q: "Le skill peut-il écrire mes articles ?",
@@ -263,10 +272,11 @@ function SkillPage() {
         <h1 className="mt-3 mb-6 text-[clamp(36px,5vw,58px)] leading-[1.05]">{SKILL_NAME}</h1>
         <p className="m-0 max-w-[680px] text-xl leading-relaxed text-ink-soft">
           Un skill pour Claude qui écrit vos articles de blog pour que Google vous trouve et que
-          ChatGPT vous recommande, et qui vérifie ceux que vous avez déjà publiés. Si vous êtes
-          tombé sur ce site, vous avez déjà vu ce skill à l'œuvre : il m'aide à rédiger puis à
-          vérifier chaque article, pour qu'il soit trouvé par Google, compris par les IA et cité par
-          elles. Je l'ai construit pour mes propres sites. Le voici, prêt à installer dans Claude.
+          ChatGPT vous recommande, qui vérifie ceux que vous avez déjà publiés et qui les relie
+          entre eux. Si vous êtes tombé sur ce site, vous avez déjà vu ce skill à l'œuvre : il
+          m'aide à rédiger puis à vérifier chaque article, pour qu'il soit trouvé par Google,
+          compris par les IA et cité par elles. Je l'ai construit pour mes propres sites. Le voici,
+          prêt à installer dans Claude.
         </p>
         <BuyBox className="mt-8" />
       </section>
@@ -285,7 +295,10 @@ function SkillPage() {
           "Vous n'avez pas de compte Claude.",
           <>
             Vous ne voulez pas toucher au texte vous-même : l'
-            <a href="/audit-seo" className="underline">audit personnalisé</a> est alors plus adapté.
+            <a href="/audit-seo" className="underline">
+              audit personnalisé
+            </a>{" "}
+            est alors plus adapté.
           </>,
         ]}
       />
