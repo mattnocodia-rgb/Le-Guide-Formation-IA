@@ -19,6 +19,9 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_PROMISE } from "../lib/site";
 function NotFoundComponent() {
   return (
     <PageFrame>
+      <title>{`Page introuvable — ${SITE_NAME}`}</title>
+      <meta name="description" content="Cette page n'existe pas ou a changé d'adresse. Retrouvez tous les guides depuis l'accueil." />
+      <meta name="robots" content="noindex" />
       <div className="container-wide flex min-h-[60vh] flex-col items-start justify-center gap-6 py-20">
         <p className="note m-0 -rotate-2 text-[30px]">Oups, page introuvable</p>
         <h1 className="m-0 text-5xl leading-none">Cette page n'existe pas (ou plus).</h1>
