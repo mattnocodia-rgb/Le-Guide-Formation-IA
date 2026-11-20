@@ -56,7 +56,7 @@ const ETAPES = [
 const FAQ = [
   {
     q: "Faut-il changer tous mes outils pour automatiser ?",
-    a: "Non. Le but est de connecter les outils que vous utilisez déjà (Gmail, Google Sheets, Airtable, Notion, votre CRM ou votre logiciel de facturation) plutôt que d'en ajouter de nouveaux.",
+    a: "Non. Le but est de connecter les outils que vous utilisez déjà (Gmail, Google Sheets, Airtable, Notion, votre CRM ou votre logiciel de facturation). Seul l'outil qui fait le lien entre eux, Make ou n8n, vient s'y ajouter.",
   },
   {
     q: "Que se passe-t-il si une automatisation tombe en panne ?",
@@ -149,7 +149,7 @@ function AutomatisationPage() {
         <p className="m-0 max-w-[680px] text-xl leading-relaxed text-ink-soft">
           <strong className="text-ink">On repère ensemble la tâche répétitive qui freine votre activité,</strong>{" "}
           puis je construis l'automatisation qui la fait à votre place, connectée aux outils que vous
-          utilisez déjà, sans empiler de nouveaux abonnements.
+          utilisez déjà.
         </p>
         <Cta />
       </section>
