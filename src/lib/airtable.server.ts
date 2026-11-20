@@ -285,6 +285,8 @@ export type Realisation = {
   image: string | null;
   /** Screenshot shown beside the card (field "Illustration"), file in public/img/realisations/. */
   illustration: string | null;
+  /** Short shown over the illustration (attachment field "Vidéo"), served by /realisations/video. */
+  video: string | null;
   projet: string;
   probleme: string;
   outils: string[];
@@ -317,6 +319,48 @@ function linkIds(value: unknown) {
     : [];
 }
 
+type Attachment = { id?: string; url?: string; type?: string; filename?: string };
+
+function firstVideo(value: unknown): Attachment | null {
+  if (!Array.isArray(value)) return null;
+  const v = (value as Attachment[]).find((a) => a?.url && (a.type ?? "").startsWith("video/"));
+  return v ?? null;
+}
+
+/** Stable proxy URL (the attachment id busts caches when the file changes in Airtable). */
+function videoPath(recordId: string, value: unknown) {
+  const v = firstVideo(value);
+  return v?.id ? `/realisations/video?r=${recordId}&v=${v.id}` : null;
+}
+
+/**
+ * Fresh signed URL of a case study's video. Read without the shared cache: Airtable
+ * attachment URLs expire after a few hours.
+ */
+export async function getRealisationVideo(
+  recordId: string,
+): Promise<{ url: string; type: string } | null> {
+  const token = readToken();
+  if (!token || !/^rec[A-Za-z0-9]{14}$/.test(recordId)) return null;
+  try {
+    const res = await fetch(
+      `https://api.airtable.com/v0/${BASE_ID}/${TABLES.realisations}/${recordId}`,
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
+    if (!res.ok) {
+      console.error(`Airtable réalisation vidéo [${res.status}]: ${await res.text()}`);
+      return null;
+    }
+    const rec = (await res.json()) as AirtableRecord;
+    if (rec.fields["Visible"] !== true) return null;
+    const v = firstVideo(rec.fields["Vidéo"]);
+    return v?.url ? { url: v.url, type: v.type || "video/mp4" } : null;
+  } catch (e) {
+    console.error("Airtable video read failed", e);
+    return null;
+  }
+}
+
 /** Case studies for /realisations. Only rows ticked "Visible" with a project name are shown. */
 export async function getRealisations(): Promise<Realisation[]> {
   const records = await fetchAll(TABLES.realisations, { filterByFormula: "{Visible}" });
@@ -330,6 +374,7 @@ export async function getRealisations(): Promise<Realisation[]> {
         : "Projet personnel",
       image: imageName(str(r.fields["Image"])),
       illustration: imageName(str(r.fields["Illustration"])),
+      video: videoPath(r.id, r.fields["Vidéo"]),
       projet: str(r.fields["Projet"]),
       probleme: clean(str(r.fields["Problème"])),
       outils: str(r.fields["Outils"])

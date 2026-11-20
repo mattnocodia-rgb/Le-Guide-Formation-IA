@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import type React from "react";
 
+import { ShortOverlay } from "@/components/short-overlay";
 import { PageFrame } from "@/components/site/SiteChrome";
 import { type RealisationCard, getRealisationsData } from "@/lib/content.functions";
 import { LINKEDIN_URL, SITE_NAME, pageHead } from "@/lib/site";
@@ -157,6 +158,7 @@ function LigneProjet({ r, index }: { r: RealisationCard; index: number }) {
           ) : (
             <Illustration r={r} />
           )}
+          {r.video && <ShortOverlay src={r.video} projet={r.projet} left={imageFirst} />}
         </div>
       </figure>
     </div>
