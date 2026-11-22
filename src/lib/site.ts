@@ -171,6 +171,13 @@ export const AUTHOR_PHOTO_224_AVIF = "/photo-auteur-224.avif";
 /** Full-size (800 px) modern copies of the JPEG, served through <picture>. */
 export const AUTHOR_PHOTO_WEBP = "/photo-auteur.webp";
 export const AUTHOR_PHOTO_AVIF = "/photo-auteur.avif";
+/**
+ * Silent 6 s loop of the same photo (breathing, blink, glance, smile), 600 px square, shown in the
+ * home hero once the page is hydrated, unless the visitor prefers reduced motion. WebM first (92 KB),
+ * MP4 fallback for Safari.
+ */
+export const AUTHOR_LOOP_WEBM = "/video/hero-boucle.webm";
+export const AUTHOR_LOOP_MP4 = "/video/hero-boucle.mp4";
 
 /** Stable identifiers that tie the structured-data entities together across every page. */
 export const WEBSITE_ID = `${SITE_URL}/#website`;

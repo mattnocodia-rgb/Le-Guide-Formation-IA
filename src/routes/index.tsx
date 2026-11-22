@@ -1,11 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { track } from "@/lib/track";
 import type React from "react";
+import { useEffect, useState } from "react";
 
 import { ArticleCard, LinkedInIcon } from "@/components/site/Cards";
 import { PageFrame } from "@/components/site/SiteChrome";
 import { getHomeData } from "@/lib/content.functions";
 import {
+  AUTHOR_LOOP_MP4,
+  AUTHOR_LOOP_WEBM,
   AUTHOR_PHOTO_AVIF,
   AUTHOR_PHOTO_PATH,
   AUTHOR_PHOTO_WEBP,
@@ -31,14 +34,22 @@ export const Route = createFileRoute("/")({
       path: "/",
     });
     return {
-    ...base,
-    links: [
-      ...(base.links ?? []),
-      ...(loaderData?.photoUrl === AUTHOR_PHOTO_PATH
-        ? [{ rel: "preload", as: "image", href: AUTHOR_PHOTO_WEBP, type: "image/webp", fetchPriority: "high" as const }]
-        : []),
-    ],
-    scripts: [jsonLdScript({ "@context": "https://schema.org", "@graph": siteEntitiesLd() })],
+      ...base,
+      links: [
+        ...(base.links ?? []),
+        ...(loaderData?.photoUrl === AUTHOR_PHOTO_PATH
+          ? [
+              {
+                rel: "preload",
+                as: "image",
+                href: AUTHOR_PHOTO_WEBP,
+                type: "image/webp",
+                fetchPriority: "high" as const,
+              },
+            ]
+          : []),
+      ],
+      scripts: [jsonLdScript({ "@context": "https://schema.org", "@graph": siteEntitiesLd() })],
     };
   },
   component: Home,
@@ -140,9 +151,9 @@ function Home() {
             </p>
             <p className="m-0">
               Aujourd'hui, je transforme des besoins métiers en sites web, outils internes et
-              automatisations, y compris pour mon propre métier de responsable commercial. Je ne vous
-              dirai pas quelle école de formation IA choisir : je partage de l'information et mon
-              parcours pour que vous décidiez vous-même.{" "}
+              automatisations, y compris pour mon propre métier de responsable commercial. Je ne
+              vous dirai pas quelle école de formation IA choisir : je partage de l'information et
+              mon parcours pour que vous décidiez vous-même.{" "}
               <Link to="/a-propos" className="font-semibold text-ink underline underline-offset-4">
                 Mon parcours en détail
               </Link>{" "}
@@ -449,7 +460,26 @@ function Home() {
   );
 }
 
+/**
+ * The local author photo gets a silent loop once hydrated. The server render (and every visitor who
+ * prefers reduced motion) keeps the plain <picture>, so the LCP image and its preload are unchanged;
+ * the video uses the same WebP as its poster, so the swap is invisible.
+ */
+function useHeroLoop(enabled: boolean) {
+  const [loop, setLoop] = useState(false);
+  useEffect(() => {
+    if (!enabled || typeof window === "undefined") return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setLoop(!mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [enabled]);
+  return loop;
+}
+
 function HeroVisual({ photoUrl }: { photoUrl: string | null }) {
+  const loop = useHeroLoop(photoUrl === AUTHOR_PHOTO_PATH);
   return (
     <div className="relative flex min-w-0 flex-[1_1_380px] flex-col items-center gap-8 pb-4 sm:block sm:h-[600px] sm:pb-0">
       {photoUrl ? (
@@ -459,22 +489,40 @@ function HeroVisual({ photoUrl }: { photoUrl: string | null }) {
             style={r("3deg")}
           >
             <figure className="sheet tilt m-0 px-3.5 pt-3.5 pb-12" style={r("0deg")}>
-              <picture>
-                {photoUrl === AUTHOR_PHOTO_PATH && (
-                  <>
-                    <source srcSet={AUTHOR_PHOTO_AVIF} type="image/avif" />
-                    <source srcSet={AUTHOR_PHOTO_WEBP} type="image/webp" />
-                  </>
-                )}
-                <img
-                  src={photoUrl}
-                  alt="L'auteur du guide au travail"
+              {loop ? (
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  poster={AUTHOR_PHOTO_WEBP}
                   width={312}
                   height={360}
-                  fetchPriority="high"
+                  aria-label="L'auteur du guide au travail"
                   className="block h-[340px] w-full object-cover sm:h-[360px]"
-                />
-              </picture>
+                >
+                  <source src={AUTHOR_LOOP_WEBM} type="video/webm" />
+                  <source src={AUTHOR_LOOP_MP4} type="video/mp4" />
+                </video>
+              ) : (
+                <picture>
+                  {photoUrl === AUTHOR_PHOTO_PATH && (
+                    <>
+                      <source srcSet={AUTHOR_PHOTO_AVIF} type="image/avif" />
+                      <source srcSet={AUTHOR_PHOTO_WEBP} type="image/webp" />
+                    </>
+                  )}
+                  <img
+                    src={photoUrl}
+                    alt="L'auteur du guide au travail"
+                    width={312}
+                    height={360}
+                    fetchPriority="high"
+                    className="block h-[340px] w-full object-cover sm:h-[360px]"
+                  />
+                </picture>
+              )}
               <figcaption className="note mt-3.5 text-center text-[26px] text-ink">
                 moi, avec un vrai projet
               </figcaption>
