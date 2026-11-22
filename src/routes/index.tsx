@@ -499,6 +499,7 @@ function HeroVisual({ photoUrl }: { photoUrl: string | null }) {
                   poster={AUTHOR_PHOTO_WEBP}
                   width={312}
                   height={360}
+                  role="img"
                   aria-label="L'auteur du guide au travail"
                   className="block h-[340px] w-full object-cover sm:h-[360px]"
                 >
