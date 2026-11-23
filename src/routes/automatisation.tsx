@@ -2,6 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
 import { ForWho } from "@/components/for-who";
+import { PageVideo } from "@/components/page-video";
 import { PageFrame } from "@/components/site/SiteChrome";
 import {
   AUTHOR_REF,
@@ -113,7 +114,17 @@ export const Route = createFileRoute("/automatisation")({
   component: AutomatisationPage,
 });
 
-function Section({ id, kicker, title, children }: { id: string; kicker?: string; title: string; children: ReactNode }) {
+function Section({
+  id,
+  kicker,
+  title,
+  children,
+}: {
+  id: string;
+  kicker?: string;
+  title: string;
+  children: ReactNode;
+}) {
   return (
     <section aria-labelledby={id} className="container-wide max-w-[880px] pt-16">
       {kicker ? <p className="note m-0 -rotate-1 text-[24px]">{kicker}</p> : null}
@@ -147,12 +158,27 @@ function AutomatisationPage() {
           Automatiser une tâche qui vous fait perdre du temps chaque semaine
         </h1>
         <p className="m-0 max-w-[680px] text-xl leading-relaxed text-ink-soft">
-          <strong className="text-ink">On repère ensemble la tâche répétitive qui freine votre activité,</strong>{" "}
-          puis je construis l'automatisation qui la fait à votre place, connectée aux outils que vous
-          utilisez déjà.
+          <strong className="text-ink">
+            On repère ensemble la tâche répétitive qui freine votre activité,
+          </strong>{" "}
+          puis je construis l'automatisation qui la fait à votre place, connectée aux outils que
+          vous utilisez déjà.
         </p>
         <Cta />
       </section>
+
+      <PageVideo
+        webm="/video/page-automatisation.webm"
+        mp4="/video/page-automatisation.mp4"
+        poster="/video/page-automatisation-poster.webp"
+        title="Automatiser une tâche de votre activité, résumé en vidéo"
+        duration="1 min 48"
+      >
+        <p className="m-0">
+          Toute la page en une vidéo : les tâches qu'on peut automatiser, les quatre étapes de
+          l'accompagnement et ce qui se passe si une automatisation tombe en panne.
+        </p>
+      </PageVideo>
 
       <ForWho
         id="pour-qui"
@@ -192,7 +218,9 @@ function AutomatisationPage() {
         <ol className="m-0 flex list-none flex-col gap-4 p-0">
           {ETAPES.map((s, i) => (
             <li key={s.title} className="sheet flex gap-4 p-5">
-              <span className="note text-[28px] text-accent-ink" aria-hidden="true">{i + 1}</span>
+              <span className="note text-[28px] text-accent-ink" aria-hidden="true">
+                {i + 1}
+              </span>
               <div>
                 <h3 className="m-0 text-[20px]">{s.title}</h3>
                 <p className="m-0 mt-1 text-[16px] leading-relaxed text-ink-soft">{s.text}</p>
@@ -208,12 +236,17 @@ function AutomatisationPage() {
             Je suis responsable commercial en entreprise et product builder certifié no-code et IA
             (RNCP niveau 6). Les automatisations que je propose, je les ai d'abord construites et
             utilisées au quotidien avec mon équipe.{" "}
-            <Link to="/realisations" hash="en-entreprise">Voir ce que j'ai automatisé en entreprise</Link>.
+            <Link to="/realisations" hash="en-entreprise">
+              Voir ce que j'ai automatisé en entreprise
+            </Link>
+            .
           </p>
           <p>
             Vous hésitez entre deux outils ? Mon comparatif{" "}
-            <Link to="/$slug" params={{ slug: "n8n-ou-make" }}>n8n ou Make</Link> détaille leurs
-            différences.
+            <Link to="/$slug" params={{ slug: "n8n-ou-make" }}>
+              n8n ou Make
+            </Link>{" "}
+            détaille leurs différences.
           </p>
         </div>
       </Section>
@@ -232,7 +265,10 @@ function AutomatisationPage() {
       <section className="container-wide max-w-[880px] pt-16 pb-20">
         <p className="m-0 text-[17px] leading-relaxed">
           Écrivez-moi à <a href="mailto:contact@optimatt.fr">contact@optimatt.fr</a>, sur{" "}
-          <a href={LINKEDIN_URL} target="_blank" rel="noopener">LinkedIn</a>, ou via le formulaire.
+          <a href={LINKEDIN_URL} target="_blank" rel="noopener">
+            LinkedIn
+          </a>
+          , ou via le formulaire.
         </p>
         <Cta />
       </section>
