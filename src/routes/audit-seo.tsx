@@ -1,4 +1,5 @@
 import { ForWho } from "@/components/for-who";
+import { PageVideo } from "@/components/page-video";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import type { CSSProperties, ReactNode } from "react";
 
@@ -251,6 +252,19 @@ function AuditPage() {
         <OrderBox className="mt-8" />
         <DiyBox />
       </section>
+
+      <PageVideo
+        webm="/video/page-audit.webm"
+        mp4="/video/page-audit.mp4"
+        poster="/video/page-audit-poster.webp"
+        title="L'audit SEO, AEO et GEO résumé en vidéo"
+        duration="1 min 42"
+      >
+        <p className="m-0">
+          Toute la page en une vidéo : les 7 domaines contrôlés, le déroulé en quatre temps, ce que
+          contient le rapport et l'exemple de ce site.
+        </p>
+      </PageVideo>
 
       <ForWho
         id="pour-qui"
