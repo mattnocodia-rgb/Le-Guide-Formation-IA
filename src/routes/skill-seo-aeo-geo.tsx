@@ -1,4 +1,5 @@
 import { ForWho } from "@/components/for-who";
+import { PageVideo } from "@/components/page-video";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import type { CSSProperties, ReactNode } from "react";
 
@@ -280,6 +281,19 @@ function SkillPage() {
         </p>
         <BuyBox className="mt-8" />
       </section>
+
+      <PageVideo
+        webm="/video/page-skill-seo.webm"
+        mp4="/video/page-skill-seo.mp4"
+        poster="/video/page-skill-seo-poster.webp"
+        title="Le skill Claude pour Google et ChatGPT, résumé en vidéo"
+        duration="1 min 44"
+      >
+        <p className="m-0">
+          Toute la page en une vidéo : les trois couches SEO, AEO et GEO, les trois modes du skill,
+          un exemple réel et ce qu'il ne fait pas.
+        </p>
+      </PageVideo>
 
       <ForWho
         id="pour-qui"
