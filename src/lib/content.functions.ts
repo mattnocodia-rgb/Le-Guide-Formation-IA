@@ -90,6 +90,9 @@ function replayTitle(label: string) {
 
 /** Button wording for a partner link, depending on what it points to. */
 function ctaFor(link: CubeLink) {
+  // A label ending with « ↗ » is a ready-made button text written in Airtable: use it as is.
+  const label = link.label.trim();
+  if (/↗$/.test(label)) return label.replace(/\s*↗$/, "");
   switch (link.type) {
     case "ressources":
       return "Voir les masterclass gratuites";
