@@ -253,12 +253,12 @@ function ArticlePage() {
               style={r("0.6deg")}
             >
               <p className="m-0 font-hand text-[26px] font-semibold text-[#f1a08f]">
-                Pour aller plus loin
+                Ressource offerte
               </p>
               <p className="m-0 text-lg leading-normal">
                 {a.masterclass
                   ? `L'École Cube propose des masterclass gratuites en replay, dont une sur ce sujet : « ${a.masterclass} ».`
-                  : "L'École Cube propose des masterclass gratuites et des formations certifiantes sur ce sujet."}
+                  : "Pour creuser la pratique, l'École Cube met à disposition ses programmes détaillés, ses grilles de financement (dont le CPF) et des masterclass en replay."}
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <a
@@ -317,8 +317,7 @@ function ArticlePage() {
                   Et maintenant ?
                 </h2>
                 <p className="m-0 text-[15px] leading-normal text-[#3a362f]">
-                  Regardez une masterclass gratuite, ou parlez directement à un conseiller de
-                  l'école.
+                  Regardez une masterclass en replay, ou échangez sur votre projet avec l'école.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3">
@@ -329,7 +328,7 @@ function ArticlePage() {
                     target="_blank"
                     className="btn-ink text-[15px]"
                   >
-                    Les masterclass ↗
+                    Replays gratuits ↗
                   </a>
                 ) : null}
                 {a.rdv ? (
@@ -339,7 +338,7 @@ function ArticlePage() {
                     target="_blank"
                     className="px-1.5 py-3 text-[15px] font-semibold text-ink"
                   >
-                    Un conseiller ↗
+                    Échanger sur mon projet ↗
                   </a>
                 ) : null}
               </div>
