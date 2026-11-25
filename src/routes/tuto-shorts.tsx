@@ -12,7 +12,7 @@ const PATH = "/tuto-shorts";
 const r = (deg: string) => ({ "--r": deg }) as CSSProperties;
 
 /** A real short made with this method (Airtable « Vidéos »): Dario voice + avatar version, scheduled 02/12/2026 18:00. */
-const EXAMPLE = { id: "Gcm1-z_NNmE", title: "Un chatbot explique. Un agent IA agit." };
+const EXAMPLE = { id: "WWaG_i4nTro", title: "Un chatbot explique. Un agent IA agit." };
 
 const STEPS = [
   {
