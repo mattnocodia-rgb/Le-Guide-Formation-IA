@@ -12,7 +12,7 @@ export const Route = createFileRoute("/conditions-de-vente")({
     const head = pageHead({
       title: `Conditions générales de vente — ${SITE_NAME}`,
       description:
-        "Conditions de vente de la boutique : skills et tutos à télécharger, audit de site web, accompagnements sur devis. Prix, paiement, livraison, rétractation, garanties.",
+        "Conditions de vente des outils et prestations : skills et tutos à télécharger, audit de site web, accompagnements sur devis. Paiement, livraison et garanties.",
       path: "/conditions-de-vente",
     });
     return { ...head, meta: [...head.meta, { name: "robots", content: "noindex, follow" }] };
@@ -43,8 +43,9 @@ function Terms() {
 
           <h2 id="objet">2. Objet et offres concernées</h2>
           <p>
-            Les présentes conditions s'appliquent aux ventes de la{" "}
-            <Link to="/boutique">boutique</Link>. Elles distinguent trois types d'offres :
+            Les présentes conditions s'appliquent aux ventes de mes{" "}
+            <Link to="/realisations">outils et prestations</Link>, et non aux formations de l'École
+            Cube. Elles distinguent trois types d'offres :
           </p>
           <ul>
             <li>
@@ -95,7 +96,7 @@ function Terms() {
 
           <h2 id="garantie-resultat">5. Absence de garantie de résultat</h2>
           <p>
-            Les offres de la boutique aident à améliorer un site, à rédiger du contenu ou à produire
+            Mes outils et prestations aident à améliorer un site, à rédiger du contenu ou à produire
             des vidéos. Elles ne garantissent aucun résultat de positionnement dans les moteurs de
             recherche, aucune citation par une intelligence artificielle, ni aucun niveau
             d'audience. Les contenus produits et les corrections appliquées restent sous la

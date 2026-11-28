@@ -47,14 +47,13 @@ export const INDEXNOW_KEY = "8419d695fed04a5b559c6e45d1de56d0";
  * Update the date when a page's content changes (not for style or code-only edits).
  */
 export const STATIC_PAGES_UPDATED: Record<string, string> = {
-  "/a-propos": "2026-11-09",
+  "/a-propos": "2026-11-28",
   "/skill-seo-aeo-geo": "2026-11-09",
   "/audit-seo": "2026-11-09",
   "/contact": "2026-11-09",
   "/tuto-shorts": "2026-11-09",
-  "/boutique": "2026-11-09",
   "/simulateur-roi": "2026-11-05",
-  "/realisations": "2026-11-09",
+  "/realisations": "2026-11-28",
   "/creation-site-web": "2026-11-12",
   "/automatisation": "2026-11-13",
 };

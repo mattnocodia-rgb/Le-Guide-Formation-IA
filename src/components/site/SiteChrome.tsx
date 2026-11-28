@@ -50,14 +50,14 @@ export function SiteHeader({
             );
           })}
           <Link
-            to="/boutique"
+            to="/realisations"
             activeProps={{
               className:
                 "py-2.5 font-semibold text-ink underline decoration-accent decoration-[3px] underline-offset-8",
             }}
             inactiveProps={{ className: "py-2.5 text-ink-soft no-underline hover:text-ink" }}
           >
-            Boutique
+            Ce que j'ai construit
           </Link>
           {ressources ? (
             <a
@@ -114,8 +114,11 @@ export function SiteFooter({
             <Link to="/realisations" className="text-[#d8d1c2] no-underline hover:text-paper">
               Ce que j'ai construit
             </Link>
-            <Link to="/boutique" className="text-[#d8d1c2] no-underline hover:text-paper">
-              Boutique
+            <Link to="/automatisation" className="text-[#d8d1c2] no-underline hover:text-paper">
+              Automatisation
+            </Link>
+            <Link to="/creation-site-web" className="text-[#d8d1c2] no-underline hover:text-paper">
+              Création de site web
             </Link>
             <Link to="/simulateur-roi" className="text-[#d8d1c2] no-underline hover:text-paper">
               Simulateur ROI

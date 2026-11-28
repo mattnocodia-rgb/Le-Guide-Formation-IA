@@ -316,29 +316,29 @@ function Home() {
         </section>
       ) : null}
 
-      {/* Boutique */}
+      {/* Réalisations et choix entre prestation et formation */}
       <section aria-labelledby="outils" className="container-wide pt-20">
         <div
           className="sheet tilt flex flex-wrap items-center justify-between gap-6 p-7 shadow-[var(--shadow-card)] md:p-9"
           style={r("-0.4deg")}
         >
           <div className="flex max-w-[620px] flex-col gap-2">
-            <p className="note m-0 -rotate-1 self-start text-[24px]">la boutique</p>
+            <p className="note m-0 -rotate-1 self-start text-[24px]">mes réalisations</p>
             <h2 id="outils" className="m-0 text-[clamp(28px,3vw,36px)] leading-[1.1]">
-              Votre site trouvé sur Google et ChatGPT
+              Ce que j'ai construit
             </h2>
             <p className="m-0 text-[17px] leading-relaxed text-ink-soft">
-              Faites vérifier votre site, ou faites-le vous-même avec le skill Claude qui m'aide à
-              écrire et à auditer ce guide. Et si vous voulez aller plus loin : automatisation et
-              création de site sur mesure.
+              Applications, sites web, audits et automatisations : découvrez mes projets concrets.
+              Vous pouvez me confier un besoin similaire, ou vous former avec l'École Cube pour
+              apprendre à le faire vous-même.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-5">
-            <Link to="/boutique" className="btn-ink">
-              Voir la boutique
+            <Link to="/realisations" className="btn-ink">
+              Découvrir mes réalisations
             </Link>
-            <Link to="/audit-seo" className="py-3 font-semibold">
-              Faire vérifier mon site →
+            <Link to="/contact" className="py-3 font-semibold">
+              Me parler de votre projet →
             </Link>
           </div>
         </div>

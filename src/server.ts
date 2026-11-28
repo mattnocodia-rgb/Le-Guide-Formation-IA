@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { permanentRedirectLocation } from "./lib/permanent-redirect";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -115,16 +116,19 @@ function withHeaders(request: Request, response: Response): Response {
 
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
-    // Trailing slash: permanent redirect to the slash-less URL (the router would answer 307).
+    // Retired URLs and trailing slashes share a single permanent redirect before SSR.
     const url = new URL(request.url);
-    if (url.pathname.length > 1 && url.pathname.endsWith("/")) {
-      url.pathname = url.pathname.replace(/\/+$/, "") || "/";
-      return withHeaders(request, new Response(null, { status: 301, headers: { location: url.pathname + url.search } }));
+    const location = permanentRedirectLocation(url);
+    if (location) {
+      return withHeaders(request, new Response(null, { status: 301, headers: { location } }));
     }
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return withHeaders(request, await fixNotFoundHead(await normalizeCatastrophicSsrResponse(response)));
+      return withHeaders(
+        request,
+        await fixNotFoundHead(await normalizeCatastrophicSsrResponse(response)),
+      );
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {

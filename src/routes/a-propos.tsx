@@ -454,8 +454,8 @@ function About() {
           ))}
         </ul>
         <p className="m-0 mt-6">
-          <Link to="/boutique" className="btn-ink text-[15px]">
-            Voir la boutique
+          <Link to="/realisations" className="btn-ink text-[15px]">
+            Découvrir mes réalisations et les deux parcours
           </Link>
         </p>
       </section>

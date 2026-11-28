@@ -3,13 +3,17 @@ import type React from "react";
 
 import { ShortOverlay } from "@/components/short-overlay";
 import { PageFrame } from "@/components/site/SiteChrome";
-import { type RealisationCard, getRealisationsData } from "@/lib/content.functions";
-import { LINKEDIN_URL, SITE_NAME, pageHead } from "@/lib/site";
+import {
+  type PartnerLink,
+  type RealisationCard,
+  getRealisationsData,
+} from "@/lib/content.functions";
+import { SITE_NAME, pageHead } from "@/lib/site";
 import { track } from "@/lib/track";
 
-const TITLE = `Études de cas no-code et IA — ${SITE_NAME}`;
+const TITLE = `Ce que j'ai construit : projets no-code et IA — ${SITE_NAME}`;
 const DESCRIPTION =
-  "Sites, automatisations n8n et Make, outils internes : les projets que je construis avec le no-code et l'IA, avec pour chacun le problème, les outils et le résultat.";
+  "Applications, sites web, audits et automatisations : découvrez mes réalisations, confiez-moi votre projet ou formez-vous avec l’École Cube pour le faire vous-même.";
 
 export const Route = createFileRoute("/realisations")({
   head: () => pageHead({ title: TITLE, description: DESCRIPTION, path: "/realisations" }),
@@ -78,35 +82,38 @@ function Carte({ r, lienSurImage = false }: { r: RealisationCard; lienSurImage?:
         <Bloc label="Ce que j'ai construit" text={r.construit} />
         <Bloc label="Le résultat" text={r.resultat} />
         <Bloc label="Ce que la formation m'a apporté" text={r.formation} />
-        {(r.payant || lien || r.cube.length > 0) && (
-          <p className="m-0 mt-auto flex flex-wrap gap-3 pt-5">
-            {r.payant && (
-              <a
-                href={r.payant.url}
-                rel={r.payant.url.startsWith("/") ? undefined : "noopener"}
-                className="btn-ink text-[15px]"
-              >
-                {r.payant.label}
-              </a>
-            )}
-            {lien && (
-              <a href={lien} target="_blank" rel="noopener" className="btn-outline text-[15px]">
-                Voir le projet
-              </a>
-            )}
-            {r.cube.map((c) => (
-              <a
-                key={c.url}
-                href={track(c.url, "realisations")}
-                rel="sponsored noopener"
-                title={`École Cube : ${c.label}`}
-                className="btn-outline text-[15px]"
-              >
-                {c.cta}
-              </a>
-            ))}
-          </p>
-        )}
+        <p className="m-0 mt-auto flex flex-wrap gap-3 pt-5">
+          {r.payant && (
+            <a
+              href={r.payant.url}
+              rel={r.payant.url.startsWith("/") ? undefined : "noopener"}
+              className="btn-ink text-[15px]"
+            >
+              {r.payant.label}
+            </a>
+          )}
+          {!r.payant && (
+            <Link to="/contact" className="btn-ink text-[15px]">
+              Un besoin similaire ? En discuter
+            </Link>
+          )}
+          {lien && (
+            <a href={lien} target="_blank" rel="noopener" className="btn-outline text-[15px]">
+              Voir le projet
+            </a>
+          )}
+          {r.cube.map((c) => (
+            <a
+              key={c.url}
+              href={track(c.url, "realisations")}
+              rel="sponsored noopener"
+              title={`École Cube : ${c.label}`}
+              className="btn-outline text-[15px]"
+            >
+              {c.cta.startsWith("La masterclass") ? c.cta : "Apprendre à le faire avec Cube ↗"}
+            </a>
+          ))}
+        </p>
       </div>
     </article>
   );
@@ -134,7 +141,7 @@ function LigneProjet({ r, index }: { r: RealisationCard; index: number }) {
         <Carte r={r} lienSurImage={!!r.lien} />
       </div>
       <figure
-        className={`tilt m-0 ${imageFirst ? "lg:order-1" : ""}`}
+        className={`tilt mx-1 my-0 sm:mx-0 ${imageFirst ? "lg:order-1" : ""}`}
         style={{ "--r": imageFirst ? "-1deg" : "1deg" } as React.CSSProperties}
       >
         <div className="sheet relative p-2.5">
@@ -165,6 +172,88 @@ function LigneProjet({ r, index }: { r: RealisationCard; index: number }) {
   );
 }
 
+/** Same two choices before and after the project evidence; partner destinations stay in Airtable. */
+function ProjectChoices({
+  formations,
+  rdv,
+  closing = false,
+}: {
+  formations: Pick<PartnerLink, "url" | "label"> | null;
+  rdv: PartnerLink | null;
+  closing?: boolean;
+}) {
+  return (
+    <section
+      aria-label={closing ? "Votre prochaine étape" : "Choisir votre parcours"}
+      className={`container-wide ${closing ? "pt-16 pb-10" : "pt-8"}`}
+    >
+      {closing && <h2 className="m-0 mb-6 text-[30px]">Et pour votre projet ?</h2>}
+      <div className="grid grid-cols-1 gap-8 border-y border-rule py-7 md:grid-cols-2 md:gap-12">
+        <div>
+          <p className="note m-0 text-[24px]">je le réalise pour vous</p>
+          <h2 className="m-0 mt-2 text-[27px] leading-tight">Me confier votre projet</h2>
+          <p className="m-0 mt-3 text-[17px] leading-relaxed text-ink-soft">
+            Une application pour votre activité, un site web, un audit ou une automatisation :
+            parlons de votre besoin et de ce que je peux construire pour vous.
+          </p>
+          <ul className="m-0 mt-4 grid list-none gap-2 p-0 text-[16px] font-semibold">
+            <li>
+              <Link to="/automatisation">Automatisation Make / n8n →</Link>
+            </li>
+            <li>
+              <Link to="/creation-site-web">Création de site web →</Link>
+            </li>
+            <li>
+              <Link to="/audit-seo">Audit SEO et visibilité IA →</Link>
+            </li>
+            <li>
+              <Link to="/contact" search={{ besoin: "autre" }}>
+                Application ou outil sur mesure →
+              </Link>
+            </li>
+          </ul>
+          <Link to="/contact" className="btn-ink mt-5 text-[15px]">
+            Me parler de votre projet
+          </Link>
+        </div>
+        <div className="border-t border-rule pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-10">
+          <p className="note m-0 text-[24px]">vous apprenez à le faire</p>
+          <h2 className="m-0 mt-2 text-[27px] leading-tight">Le faire vous-même</h2>
+          <p className="m-0 mt-3 text-[17px] leading-relaxed text-ink-soft">
+            Vous voulez apprendre à créer vos applications, sites ou automatisations ? Découvrez les
+            formations no-code et IA de l'École Cube, puis échangez avec l'école pour trouver le
+            parcours qui vous correspond.
+          </p>
+          <div className="mt-5 flex flex-col items-start gap-3">
+            {formations && (
+              <a
+                href={track(formations.url, "realisations")}
+                rel="sponsored noopener"
+                className="btn-ink text-[15px]"
+              >
+                Découvrir les formations de l'École Cube ↗
+              </a>
+            )}
+            {rdv && (
+              <a
+                href={track(rdv.url, "realisations")}
+                rel="sponsored noopener"
+                className="btn-outline text-[15px]"
+              >
+                Parler à un conseiller Cube ↗
+              </a>
+            )}
+          </div>
+          <p className="m-0 mt-4 text-sm leading-relaxed text-ink-soft">
+            Liens partenaires : je peux percevoir une commission si vous vous inscrivez via ces
+            liens. Mes prestations sont indépendantes de l'École Cube.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Realisations() {
   const { items, rdv, formations } = Route.useLoaderData();
   const groups = GROUPES.map((g) => ({
@@ -185,11 +274,14 @@ function Realisations() {
               Je ne suis pas développeur : tout ce qui suit est construit avec des outils no-code et
               l'IA.
             </strong>{" "}
-            Pour chaque projet, le même plan : le problème de départ, ce que j'ai construit et le
-            résultat. D'abord ce que j'ai mis en place en entreprise, puis mes propres projets.
+            Applications, sites et automatisations : voici le problème de départ, ce que j'ai
+            construit et le résultat. Pour votre propre projet, deux voies : me le confier ou
+            apprendre à le faire vous-même.
           </p>
         </div>
       </section>
+
+      <ProjectChoices formations={formations} rdv={rdv} />
 
       {items.length === 0 ? (
         <section className="container-wide max-w-[780px] pt-10">
@@ -246,49 +338,25 @@ function Realisations() {
         </>
       )}
 
-      <section className="container-wide max-w-[780px] pt-14 pb-4">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          <aside className="lined p-6 pl-14 shadow-[var(--shadow-card)]">
-            <p className="note m-0 text-[22px]">vous voulez apprendre à le faire ?</p>
-            <p className="m-0 mt-2 text-[17px] leading-relaxed">
-              J'ai appris tout cela pendant ma formation de product builder. Le métier est détaillé
-              dans{" "}
-              <Link to="/$slug" params={{ slug: "devenir-product-builder" }}>
-                devenir product builder
-              </Link>
-              .
-            </p>
-            {formations && (
-              <a
-                href={track(formations.url, "realisations")}
-                rel="sponsored noopener"
-                className="btn-ink mt-4 text-[15px]"
-              >
-                Voir les formations de l'École Cube
-              </a>
-            )}
-            {rdv && (
-              <a
-                href={track(rdv.url, "realisations")}
-                rel="sponsored noopener"
-                className="btn-outline mt-3 text-[15px]"
-              >
-                {rdv.label}
-              </a>
-            )}
-          </aside>
-          <aside className="postit relative rotate-1 rounded-sm p-6 md:p-7">
-            <span className="tape -top-3 left-8" aria-hidden="true" />
-            <p className="note m-0 text-[22px]">vous voulez que je le fasse ?</p>
-            <p className="m-0 mt-2 text-[17px] leading-relaxed text-ink">
-              Je réalise aussi des sites et des automatisations pour les entreprises. Écrivez-moi à{" "}
-              <a href="mailto:contact@optimatt.fr">contact@optimatt.fr</a> ou sur{" "}
-              <a href={LINKEDIN_URL} target="_blank" rel="noopener">
-                LinkedIn
-              </a>
-              .
-            </p>
-          </aside>
+      <ProjectChoices formations={formations} rdv={rdv} closing />
+      <section aria-labelledby="outils-disponibles" className="container-wide pb-16">
+        <p className="note m-0 text-[23px]">mes outils à télécharger</p>
+        <h2 id="outils-disponibles" className="m-0 mt-2 text-[27px]">
+          Un besoin précis, sans suivre une formation ?
+        </h2>
+        <p className="m-0 mt-3 text-[17px] text-ink-soft">
+          Mes skills et tutoriels restent disponibles séparément des formations Cube.
+        </p>
+        <div className="mt-4 flex flex-wrap gap-4">
+          <Link to="/skill-seo-aeo-geo" className="btn-outline text-[15px]">
+            Skill Claude : articles et audit SEO / AEO / GEO →
+          </Link>
+          <Link to="/tuto-shorts" className="btn-outline text-[15px]">
+            Skill et tutoriel : créer des shorts →
+          </Link>
+          <Link to="/simulateur-roi" className="py-3 font-semibold">
+            Estimer mes gains d'automatisation →
+          </Link>
         </div>
       </section>
     </PageFrame>

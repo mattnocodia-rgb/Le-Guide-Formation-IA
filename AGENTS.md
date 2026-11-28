@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep permanent URL normalization in the browser-safe `permanent-redirect` helper and apply it before SSR; retired pages must redirect without loading external data.
+- Use `/realisations` as the shared destination for project evidence, service links and partner training links; keep individual sales pages accessible after retiring a catalogue route.
