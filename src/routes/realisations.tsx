@@ -131,10 +131,47 @@ function Illustration({ r }: { r: RealisationCard }) {
   );
 }
 
-/** One project per row: the card on one side, its screenshot on the other, alternating. */
+/** Silent square animation shown beside a card that has no screenshot (attachment "Vidéo"). */
+function VideoCarree({ r, imageFirst }: { r: RealisationCard; imageFirst: boolean }) {
+  return (
+    <figure
+      className={`tilt mx-1 my-0 sm:mx-0 ${imageFirst ? "lg:order-1" : ""}`}
+      style={{ "--r": imageFirst ? "-1deg" : "1deg" } as React.CSSProperties}
+    >
+      <div className="sheet relative mx-auto max-w-[520px] p-2.5">
+        <div
+          aria-hidden="true"
+          className={`tape tape-yellow top-[-10px] ${imageFirst ? "right-8 rotate-3" : "left-8 -rotate-3"}`}
+        />
+        <video
+          src={r.video ?? undefined}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          aria-label={`Animation du projet « ${r.projet} »`}
+          className="block aspect-square w-full bg-paper object-contain"
+        />
+      </div>
+    </figure>
+  );
+}
+
+/** One project per row: the card on one side, its screenshot or video on the other, alternating. */
 function LigneProjet({ r, index }: { r: RealisationCard; index: number }) {
-  if (!r.illustration) return <Carte r={r} />;
   const imageFirst = index % 2 === 1;
+  if (!r.illustration) {
+    if (!r.video) return <Carte r={r} />;
+    return (
+      <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-10">
+        <div className={imageFirst ? "lg:order-2" : undefined}>
+          <Carte r={r} />
+        </div>
+        <VideoCarree r={r} imageFirst={imageFirst} />
+      </div>
+    );
+  }
   return (
     <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-10">
       <div className={imageFirst ? "lg:order-2" : undefined}>
@@ -322,19 +359,11 @@ function Realisations() {
                 </h2>
                 <p className="m-0 mt-2 text-[17px] leading-relaxed text-ink-soft">{g.intro}</p>
               </div>
-              {g.id === "projets-personnels" ? (
-                <div className="mt-8 flex flex-col gap-12 lg:gap-16">
-                  {g.items.map((r, i) => (
-                    <LigneProjet key={r.id} r={r} index={i} />
-                  ))}
-                </div>
-              ) : (
-                <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
-                  {g.items.map((r) => (
-                    <Carte key={r.id} r={r} />
-                  ))}
-                </div>
-              )}
+              <div className="mt-8 flex flex-col gap-12 lg:gap-16">
+                {g.items.map((r, i) => (
+                  <LigneProjet key={r.id} r={r} index={i} />
+                ))}
+              </div>
             </section>
           ))}
         </>
