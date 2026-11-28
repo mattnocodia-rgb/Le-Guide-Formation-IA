@@ -224,6 +224,13 @@ function ProjectChoices({
             formations no-code et IA de l'École Cube, puis échangez avec l'école pour trouver le
             parcours qui vous correspond.
           </p>
+          <ul className="m-0 mt-4 grid list-none gap-2 p-0 text-[16px] font-semibold">
+            <li>
+              <Link to="/$slug" params={{ slug: "bootcamp-product-builder-retour-experience" }}>
+                Mon avis sur l'École Cube →
+              </Link>
+            </li>
+          </ul>
           <div className="mt-5 flex flex-col items-start gap-3">
             {formations && (
               <a
@@ -270,13 +277,8 @@ function Realisations() {
         </h1>
         <div className="prose-article">
           <p>
-            <strong>
-              Je ne suis pas développeur : tout ce qui suit est construit avec des outils no-code et
-              l'IA.
-            </strong>{" "}
-            Applications, sites et automatisations : voici le problème de départ, ce que j'ai
-            construit et le résultat. Pour votre propre projet, deux voies : me le confier ou
-            apprendre à le faire vous-même.
+            Applications sur mesure, automatisations métier et sites web : découvrez mes projets
+            récents conçus avec le no-code et l'IA.
           </p>
         </div>
       </section>
