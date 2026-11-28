@@ -86,8 +86,8 @@ export function SiteFooter({
 }) {
   return (
     <footer className="bg-ink text-[#d8d1c2]">
-      <div className="container-wide flex flex-col gap-10 py-12 text-sm">
-        <div className="flex flex-wrap justify-between gap-8">
+      <div className="container-wide flex flex-col gap-8 py-10 text-sm">
+        <div className="flex flex-wrap justify-between gap-x-8 gap-y-8">
           <div className="flex max-w-md flex-col gap-2">
             <span className="font-serif text-lg font-extrabold text-paper">{SITE_NAME}</span>
             <span className="leading-relaxed">
@@ -108,72 +108,67 @@ export function SiteFooter({
             ))}
           </nav>
           <nav aria-label="Pied de page" className="flex flex-col gap-2">
-            <Link to="/a-propos" className="text-[#d8d1c2] no-underline hover:text-paper">
-              À propos
-            </Link>
             <Link to="/realisations" className="text-[#d8d1c2] no-underline hover:text-paper">
               Ce que j'ai construit
             </Link>
-            <Link to="/automatisation" className="text-[#d8d1c2] no-underline hover:text-paper">
-              Automatisation
-            </Link>
-            <Link to="/creation-site-web" className="text-[#d8d1c2] no-underline hover:text-paper">
-              Création de site web
-            </Link>
-            <Link to="/simulateur-roi" className="text-[#d8d1c2] no-underline hover:text-paper">
-              Simulateur ROI
-            </Link>
-            <Link to="/audit-seo" className="text-[#d8d1c2] no-underline hover:text-paper">
-              Audit de votre site
-            </Link>
-            <Link to="/skill-seo-aeo-geo" className="text-[#d8d1c2] no-underline hover:text-paper">
-              Skill : rédiger des articles pour Google et ChatGPT
+            <Link to="/a-propos" className="text-[#d8d1c2] no-underline hover:text-paper">
+              À propos
             </Link>
             <Link to="/contact" className="text-[#d8d1c2] no-underline hover:text-paper">
               Contact
             </Link>
-            <Link to="/mentions-legales" className="text-[#d8d1c2] no-underline hover:text-paper">
-              Mentions légales
-            </Link>
-            <Link
-              to="/conditions-de-vente"
-              className="text-[#d8d1c2] no-underline hover:text-paper"
-            >
-              Conditions de vente
-            </Link>
-            {ressources ? (
-              <a
-                href={track(ressources.url, "pied")}
-                rel="sponsored noopener"
-                target="_blank"
-                className="text-[#f1a08f]"
-              >
-                Masterclass gratuites
-              </a>
-            ) : null}
-            {rdv ? (
-              <a
-                href={track(rdv.url, "pied")}
-                rel="sponsored noopener"
-                target="_blank"
-                className="text-[#f1a08f]"
-              >
-                Parler à un conseiller Cube
-              </a>
-            ) : null}
-            {communaute ? (
-              <a
-                href={track(communaute.url, "pied")}
-                rel="sponsored noopener"
-                target="_blank"
-                className="text-[#f1a08f]"
-              >
-                Communauté Cube (ouverte à tous)
-              </a>
-            ) : null}
           </nav>
         </div>
-        <p className="text-xs text-[#b7af9f]">Liens partenaires signalés · Aucun cookie de suivi</p>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-[#d8d1c2]/15 pt-5 text-xs">
+          <Link
+            to="/mentions-legales"
+            className="text-[#b7af9f] no-underline hover:text-paper"
+          >
+            Mentions légales
+          </Link>
+          <Link
+            to="/conditions-de-vente"
+            className="text-[#b7af9f] no-underline hover:text-paper"
+          >
+            Conditions de vente
+          </Link>
+          <span aria-hidden="true" className="text-[#b7af9f]">
+            ·
+          </span>
+          {ressources ? (
+            <a
+              href={track(ressources.url, "pied")}
+              rel="sponsored noopener"
+              target="_blank"
+              className="text-[#f1a08f] no-underline"
+            >
+              Masterclass gratuites
+            </a>
+          ) : null}
+          {rdv ? (
+            <a
+              href={track(rdv.url, "pied")}
+              rel="sponsored noopener"
+              target="_blank"
+              className="text-[#f1a08f] no-underline"
+            >
+              Parler à un conseiller Cube
+            </a>
+          ) : null}
+          {communaute ? (
+            <a
+              href={track(communaute.url, "pied")}
+              rel="sponsored noopener"
+              target="_blank"
+              className="text-[#f1a08f] no-underline"
+            >
+              Communauté Cube (ouverte à tous)
+            </a>
+          ) : null}
+          <span className="text-[#b7af9f]">
+            Liens partenaires signalés · Aucun cookie de suivi
+          </span>
+        </div>
       </div>
     </footer>
   );
